@@ -1,0 +1,117 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:learning_management_system/core/helper/extention.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
+import 'package:learning_management_system/core/theming/colors.dart';
+import 'package:learning_management_system/core/widgets/app_text_button.dart';
+import 'package:learning_management_system/core/widgets/app_text_form_field.dart';
+import 'package:learning_management_system/core/widgets/page_title_bar.dart';
+import 'package:learning_management_system/core/widgets/rounded_button.dart';
+import 'package:learning_management_system/core/widgets/rounded_input_field.dart';
+import 'package:learning_management_system/core/widgets/under_part.dart';
+import 'package:learning_management_system/core/widgets/upside.dart';
+import 'package:learning_management_system/generated/l10n.dart';
+
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return SafeArea(
+      child: Scaffold(
+        body: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                const Upside(
+                  imgUrl: "assets/images/register/register.json",
+                ),
+                PageTitleBar(title: "create new account"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 320.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration:  BoxDecoration(
+                      color: CustomColors.backgroundColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 20),
+                        Form(
+                          child: Column(
+                            children: [
+                              AppTextFormField(
+                                
+                                hintText:"first name",
+                                icon: Icons.person,
+                              ),
+                              AppTextFormField(
+                                hintText: "last name",
+                                icon: Icons.phone,
+                              ),
+                              AppTextFormField(
+                                hintText:"email",
+                                icon: Icons.email,
+                              ),
+                              AppTextFormField(
+                                hintText: "password",
+                                icon: Icons.password,
+                              ),
+                  SizedBox(height: 20.h,),
+                              AppTextButton(
+                                textStyle: TextStyle(
+                                  color: CustomColors.neutralColor,
+                                  fontSize: 17.sp
+                                ),
+                                buttonText: "register",
+                                onpressed: () {
+                                //  validateThenDoSignup(context);
+                                },
+                              ),
+                              SizedBox(height: 20.h),
+                              UnderPart(
+                                title:"Already have an account",
+                                navigatorText: "Login here",
+                                onTap: () {
+                                  // context.pushNamed(Routes.loginScreen);
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // void validateThenDoSignup(BuildContext context) {
+  //   if (context.read<SignUpCubit>().formKey.currentState!.validate()) {
+  //     context.read<SignUpCubit>().eitherFailureOrSignUp();
+  //   } else {}
+  // }
+}

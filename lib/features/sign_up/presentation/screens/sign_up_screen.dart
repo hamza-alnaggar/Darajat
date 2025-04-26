@@ -1,19 +1,12 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:learning_management_system/core/helper/extention.dart';
-import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/widgets/app_text_button.dart';
 import 'package:learning_management_system/core/widgets/app_text_form_field.dart';
 import 'package:learning_management_system/core/widgets/page_title_bar.dart';
-import 'package:learning_management_system/core/widgets/rounded_button.dart';
-import 'package:learning_management_system/core/widgets/rounded_input_field.dart';
 import 'package:learning_management_system/core/widgets/under_part.dart';
 import 'package:learning_management_system/core/widgets/upside.dart';
-import 'package:learning_management_system/generated/l10n.dart';
 
 
 class SignUpScreen extends StatefulWidget {

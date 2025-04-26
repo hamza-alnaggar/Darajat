@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:concentric_transition/page_view.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
-import 'package:learning_management_system/features/onboarding/screen/home_page.dart';
 import 'package:learning_management_system/features/onboarding/widget/card_onboarding_data.dart';
 import 'package:learning_management_system/features/sign_up/presentation/screens/sign_up_screen.dart';
 import 'package:learning_management_system/generated/l10n.dart';

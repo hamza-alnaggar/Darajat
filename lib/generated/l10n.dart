@@ -55,31 +55,81 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `sub title in page one`
+  /// `Title In Page One`
+  String get on_boarding_title_page_one {
+    return Intl.message(
+      'Title In Page One',
+      name: 'on_boarding_title_page_one',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title In Page Two`
+  String get on_boarding_title_page_two {
+    return Intl.message(
+      'Title In Page Two',
+      name: 'on_boarding_title_page_two',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title In Page Three`
+  String get on_boarding_title_page_three {
+    return Intl.message(
+      'Title In Page Three',
+      name: 'on_boarding_title_page_three',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title In Page Four`
+  String get on_boarding_title_page_four {
+    return Intl.message(
+      'Title In Page Four',
+      name: 'on_boarding_title_page_four',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sub Title In Page One`
   String get on_boarding_sub_title_page_one {
     return Intl.message(
-      'sub title in page one',
+      'Sub Title In Page One',
       name: 'on_boarding_sub_title_page_one',
       desc: '',
       args: [],
     );
   }
 
-  /// `sub title in page two`
+  /// `Sub Title In Page Two`
   String get on_boarding_sub_title_page_two {
     return Intl.message(
-      'sub title in page two',
+      'Sub Title In Page Two',
       name: 'on_boarding_sub_title_page_two',
       desc: '',
       args: [],
     );
   }
 
-  /// `sub title in page three`
+  /// `Sub Title In Page Three`
   String get on_boarding_sub_title_page_three {
     return Intl.message(
-      'sub title in page three',
+      'Sub Title In Page Three',
       name: 'on_boarding_sub_title_page_three',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sub Title In Page Four`
+  String get on_boarding_sub_title_page_four {
+    return Intl.message(
+      'Sub Title In Page Four',
+      name: 'on_boarding_sub_title_page_four',
       desc: '',
       args: [],
     );

@@ -1,6 +1,14 @@
 {
-    "on_boarding_sub_title_page_one":"sub title in page one",
-    "on_boarding_sub_title_page_two":"sub title in page two",
-    "on_boarding_sub_title_page_three":"sub title in page three"
+
+    "on_boarding_title_page_one":"Title In Page One",
+    "on_boarding_title_page_two":"Title In Page Two",
+    "on_boarding_title_page_three":"Title In Page Three",
+    "on_boarding_title_page_four":"Title In Page Four",
+    
+    
+    "on_boarding_sub_title_page_one":"Sub Title In Page One",
+    "on_boarding_sub_title_page_two":"Sub Title In Page Two",
+    "on_boarding_sub_title_page_three":"Sub Title In Page Three",
+    "on_boarding_sub_title_page_four":"Sub Title In Page Four"
 
 }

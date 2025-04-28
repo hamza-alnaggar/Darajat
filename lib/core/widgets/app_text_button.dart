@@ -31,47 +31,22 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context).textButtonTheme;
     return Container(
       width:size.width*0.8 ,
       decoration: BoxDecoration(
-        boxShadow: [
-        ],
         gradient: LinearGradient(colors: [
           CustomColors.primary2,
           CustomColors.primary,
-          
         ]),
-        borderRadius: BorderRadius.circular(borderRadius ?? 25.0.r)
+        borderRadius: BorderRadius.circular(borderRadius ?? 29.0.r)
       ),
       child: TextButton(
-        style: ButtonStyle(
-          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 16.0.r),
-            ),
-          ),
-          // backgroundColor: WidgetStateProperty.all(
-          //   backgroundColor ?? Colors.black,
-          // ),
-          padding: WidgetStateProperty.all(
-            EdgeInsets.symmetric(
-              horizontal: horizontalPadding?.w ?? 12.w,
-              vertical: verticalPadding?.h ?? 10.h,
-            ),
-          ),
-          minimumSize: WidgetStateProperty.all(Size(0, buttonHeight ?? 50.h)),
-        ),
+        style: theme.style,
         onPressed: onpressed,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+        child: 
             Text(buttonText, style: textStyle),
-            SizedBox(width: 10.w),
-            buttonIcon ?? const SizedBox(),
-          ],
         ),
-      ),
     );
   }
 }

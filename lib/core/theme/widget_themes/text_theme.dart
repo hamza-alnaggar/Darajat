@@ -26,19 +26,19 @@ class CustomTextTheme {
 
   /// Customizable Dark Text Theme
   static TextTheme darkTextTheme = TextTheme(
-    headlineLarge:  TextStyle().copyWith(fontSize: 32.0.sp, fontWeight: FontWeight.bold, color: CustomColors.light),
-    headlineMedium:  TextStyle().copyWith(fontSize: 24.0.sp, fontWeight: FontWeight.w600, color: CustomColors.light),
-    headlineSmall:  TextStyle().copyWith(fontSize: 18.0.sp, fontWeight: FontWeight.w600, color: CustomColors.light),
+    headlineLarge:  TextStyle().copyWith(fontSize: 32.0.sp, fontWeight: FontWeight.bold, color: CustomColors.textPrimary),
+    headlineMedium:  TextStyle().copyWith(fontSize: 24.0.sp, fontWeight: FontWeight.w600, color: CustomColors.textPrimary),
+    headlineSmall:  TextStyle().copyWith(fontSize: 18.0.sp, fontWeight: FontWeight.w600, color: CustomColors.textPrimary),
 
-    titleLarge:  TextStyle().copyWith(fontSize: 16.0.sp, fontWeight: FontWeight.w600, color: CustomColors.light),
-    titleMedium:  TextStyle().copyWith(fontSize: 16.0.sp, fontWeight: FontWeight.w500, color: CustomColors.light),
-    titleSmall:  TextStyle().copyWith(fontSize: 16.0.sp, fontWeight: FontWeight.w400, color: CustomColors.light),
+    titleLarge:  TextStyle().copyWith(fontSize: 16.0.sp, fontWeight: FontWeight.w600, color: CustomColors.textPrimary),
+    titleMedium:  TextStyle().copyWith(fontSize: 16.0.sp, fontWeight: FontWeight.w500, color: CustomColors.textPrimary),
+    titleSmall:  TextStyle().copyWith(fontSize: 16.0.sp, fontWeight: FontWeight.w400, color: CustomColors.textPrimary),
 
-    bodyLarge:  TextStyle().copyWith(fontSize: 14.0.sp, fontWeight: FontWeight.w500, color: CustomColors.light),
-    bodyMedium:  TextStyle().copyWith(fontSize: 14.0.sp, fontWeight: FontWeight.normal, color: CustomColors.light),
-    bodySmall:  TextStyle().copyWith(fontSize: 14.0.sp, fontWeight: FontWeight.w500, color: CustomColors.light.withOpacity(0.5)),
+    bodyLarge:  TextStyle().copyWith(fontSize: 14.0.sp, fontWeight: FontWeight.w500, color: CustomColors.textPrimary),
+    bodyMedium:  TextStyle().copyWith(fontSize: 14.0.sp, fontWeight: FontWeight.normal, color: CustomColors.textPrimary),
+    bodySmall:  TextStyle().copyWith(fontSize: 14.0.sp, fontWeight: FontWeight.w500, color: CustomColors.textPrimary.withOpacity(0.5)),
 
-    labelLarge:  TextStyle().copyWith(fontSize: 12.0.sp, fontWeight: FontWeight.normal, color: CustomColors.light),
-    labelMedium:  TextStyle().copyWith(fontSize: 12.0.sp, fontWeight: FontWeight.normal, color: CustomColors.light.withOpacity(0.5)),
+    labelLarge:  TextStyle().copyWith(fontSize: 12.0.sp, fontWeight: FontWeight.normal, color: CustomColors.textPrimary),
+    labelMedium:  TextStyle().copyWith(fontSize: 12.0.sp, fontWeight: FontWeight.normal, color: CustomColors.textPrimary.withOpacity(0.5)),
   );
 }

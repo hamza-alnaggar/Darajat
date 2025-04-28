@@ -4,12 +4,12 @@ import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/theming/sizes.dart';
 
 /* -- Light & Dark Elevated Button Themes -- */
-class CustomElevatedButtonTheme {
-  CustomElevatedButtonTheme._(); //To avoid creating instances
+class CustomTextButtonTheme {
+  CustomTextButtonTheme._(); //To avoid creating instances
 
 
   /* -- Light Theme -- */
-  static final lightElevatedButtonTheme  = ElevatedButtonThemeData(
+  static final lightElevatedButtonTheme  = TextButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: CustomColors.light,
@@ -24,7 +24,7 @@ class CustomElevatedButtonTheme {
   );
 
   /* -- Dark Theme -- */
-  static final darkElevatedButtonTheme = ElevatedButtonThemeData(
+  static final darkElevatedButtonTheme = TextButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: CustomColors.light,

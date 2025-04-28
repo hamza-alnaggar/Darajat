@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/theming/sizes.dart';
 
@@ -8,13 +9,13 @@ class CustomTextFormFieldTheme {
 
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     errorMaxLines: 3,
-    prefixIconColor: CustomColors.neutralColor,
-    suffixIconColor: CustomColors.neutralColor,
+    prefixIconColor: CustomColors.textPrimary,
+    suffixIconColor: CustomColors.textPrimary,
     fillColor: CustomColors.secondary,
     filled: true,
     // constraints: const BoxConstraints.expand(height: TSizes.inputFieldHeight),
-    labelStyle: const TextStyle().copyWith(fontSize: CustomSizes.fontSizeMd, color: CustomColors.neutralColor),
-    hintStyle: const TextStyle().copyWith(fontSize: CustomSizes.fontSizeSm, color: CustomColors.textSecondary),
+    labelStyle: TextStyle().copyWith(fontSize:16.sp, color: CustomColors.textPrimary),
+    hintStyle:  TextStyle().copyWith(fontSize:14.sp, color: CustomColors.textSecondary),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
     border: InputBorder.none,
     // enabledBorder: const OutlineInputBorder().copyWith(
@@ -40,9 +41,8 @@ class CustomTextFormFieldTheme {
     prefixIconColor: CustomColors.darkGrey,
     suffixIconColor: CustomColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: TSizes.inputFieldHeight),
-    labelStyle: const TextStyle().copyWith(fontSize: CustomSizes.fontSizeMd, color: CustomColors.white),
-    hintStyle: const TextStyle().copyWith(fontSize: CustomSizes.fontSizeSm, color: CustomColors.textSecondary),
-    floatingLabelStyle: const TextStyle().copyWith(color: CustomColors.white.withOpacity(0.8)),
+    labelStyle:  TextStyle().copyWith(fontSize:16.sp, color: CustomColors.white),
+    hintStyle:  TextStyle().copyWith(fontSize: 14.sp, color: CustomColors.textSecondary),
     border: InputBorder.none,
     fillColor: CustomColors.secondary,
     filled: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 
 class AppTextFormField extends StatelessWidget {
@@ -37,12 +38,12 @@ class AppTextFormField extends StatelessWidget {
     final inputDecorationTheme = Theme.of(context).inputDecorationTheme;
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal:20,vertical:10),
+      margin: EdgeInsets.symmetric(vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal:20.w,vertical:10.h),
       width: size.width *0.8,
       decoration: BoxDecoration(
         color:CustomColors.secondary,
-        borderRadius: BorderRadius.circular(29),
+        borderRadius: BorderRadius.circular(29.r),
       ),
       child: TextFormField(
         controller: controller,

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:learning_management_system/core/helper/spacing.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/widgets/app_text_button.dart';
 import 'package:learning_management_system/core/widgets/app_text_form_field.dart';
@@ -33,25 +34,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 PageTitleBar(title: "create new account"),
                 Padding(
-                  padding: const EdgeInsets.only(top: 320.0),
+                  padding:  EdgeInsets.only(top: 320.0.h),
                   child: Container(
                     width: double.infinity,
                     decoration:  BoxDecoration(
                       color: CustomColors.backgroundColor,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
+                        topLeft: Radius.circular(50.r),
+                        topRight: Radius.circular(50.r),
                       ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 20),
+                      verticalSpace(20),
                         Form(
                           child: Column(
                             children: [
                               AppTextFormField(
-                                
                                 hintText:"first name",
                                 icon: Icons.person,
                               ),
@@ -67,10 +67,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: "password",
                                 icon: Icons.password,
                               ),
-                  SizedBox(height: 20.h,),
+                  verticalSpace(20),
                               AppTextButton(
                                 textStyle: TextStyle(
-                                  color: CustomColors.neutralColor,
+                                  color: CustomColors.textPrimary,
                                   fontSize: 17.sp
                                 ),
                                 buttonText: "register",
@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 //  validateThenDoSignup(context);
                                 },
                               ),
-                              SizedBox(height: 20.h),
+                              verticalSpace(20),
                               UnderPart(
                                 title:"Already have an account",
                                 navigatorText: "Login here",
@@ -86,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   // context.pushNamed(Routes.loginScreen);
                                 },
                               ),
-                              const SizedBox(height: 20),
+                              verticalSpace(20),
                             ],
                           ),
                         )

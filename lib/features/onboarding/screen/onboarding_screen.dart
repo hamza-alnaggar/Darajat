@@ -14,28 +14,36 @@ class OnboardingPage extends StatelessWidget {
 
     final data = [
       CardOnboardingData(
-        title: "observe",
+        title: S.of(context).on_boarding_title_page_one,
         subtitle: S.of(context).on_boarding_sub_title_page_one,
         image: "assets/images/splash/splash_screen.json",
-        backgroundColor: isDark ? CustomColors.darkContainer : const Color.fromRGBO(0, 10, 56, 1),
-        titleColor: isDark ? CustomColors.primary : Colors.pink,
-        subtitleColor: isDark ? CustomColors.light : Colors.white,
+        backgroundColor: isDark ? CustomColors.backgroundColor : const Color.fromRGBO(0, 10, 56, 1),
+        titleColor: isDark ? CustomColors.textPrimary : Colors.pink,
+        subtitleColor: isDark ? CustomColors.textSecondary : Colors.white,
       ),
       CardOnboardingData(
-        title: "imagine",
+        title: S.of(context).on_boarding_title_page_two,
         subtitle: S.of(context).on_boarding_sub_title_page_two,
         image: "assets/images/onboarding/image1.json",
-        backgroundColor: isDark ? CustomColors.dark : Colors.white,
-        titleColor: isDark ? CustomColors.primary : Colors.purple,
-        subtitleColor: isDark ? CustomColors.light : CustomColors.dark,
+        backgroundColor: isDark ? CustomColors.white : Colors.white,
+        titleColor: isDark ? CustomColors.textDark : Colors.purple,
+        subtitleColor: isDark ? CustomColors.textDark2 : CustomColors.dark,
       ),
       CardOnboardingData(
-        title: "stargaze",
+        title: S.of(context).on_boarding_title_page_three,
         subtitle: S.of(context).on_boarding_sub_title_page_three,
         image: "assets/images/onboarding/image2.json",
-        backgroundColor: isDark ? CustomColors.darkContainer : const Color.fromRGBO(71, 59, 117, 1),
-        titleColor: isDark ? CustomColors.primary : Colors.yellow,
-        subtitleColor: isDark ? CustomColors.light : Colors.white,
+        backgroundColor: isDark ? CustomColors.backgroundColor : const Color.fromRGBO(71, 59, 117, 1),
+        titleColor: isDark ? CustomColors.textPrimary : Colors.yellow,
+        subtitleColor: isDark ? CustomColors.textSecondary : Colors.white,
+      ),
+      CardOnboardingData(
+        title: S.of(context).on_boarding_title_page_four,
+        subtitle: S.of(context).on_boarding_sub_title_page_four,
+        image: "assets/images/onboarding/image2.json",
+        backgroundColor: isDark ? CustomColors.white : const Color.fromRGBO(71, 59, 117, 1),
+        titleColor: isDark ? CustomColors.textDark : Colors.yellow,
+        subtitleColor: isDark ? CustomColors.textDark2 : Colors.white,
       ),
     ];
 

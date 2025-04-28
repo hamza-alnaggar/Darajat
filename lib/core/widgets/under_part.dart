@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learning_management_system/core/helper/spacing.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 
 
@@ -14,31 +15,26 @@ class UnderPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           title,
-          style: const TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 13,
-              color: CustomColors.neutralColor,
-              fontWeight: FontWeight.w600),
+          style: theme.textTheme.bodyLarge?.copyWith(
+          color: CustomColors.textPrimary
+          )
         ),
-        const SizedBox(
-          width: 20,
-        ),
+        horizontalSpace(20),
         InkWell(
           onTap: () {
             onTap();
           },
           child: Text(
             navigatorText,
-            style: const TextStyle(
-                color: CustomColors.primary2,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Opensans'),
+            style: theme.textTheme.bodyLarge?.copyWith(
+            color: CustomColors.primary2
+          ), 
           ),
         )
       ],

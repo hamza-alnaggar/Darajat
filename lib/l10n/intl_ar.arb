@@ -1,6 +1,13 @@
 {
-    "on_boarding_sub_title_page_one":"العنوان في الصفحة الاولى",
-    "on_boarding_sub_title_page_two":"العنوان في الصفحة الثانية",
-    "on_boarding_sub_title_page_three":"العنوان في الصفحة الثالثة"
+
+    "on_boarding_title_page_one":"العنوان الرئيسي في الصفحة الاولى",
+    "on_boarding_title_page_two":"العنوان الرئيسي في الصفحة الثانية",
+    "on_boarding_title_page_three":"العنوان الرئيسي في الصفحة الثالثة",
+    "on_boarding_title_page_four":"العنوان الرئيسي في الصفحة الرابعة",
+
+    "on_boarding_sub_title_page_one":"العنوان الفرعي في الصفحة الاولى",
+    "on_boarding_sub_title_page_two":"العنوان الفرعي في الصفحة الثانية",
+    "on_boarding_sub_title_page_three":"العنوان الفرعي في الصفحة الثالثة",
+    "on_boarding_sub_title_page_four":"العنوان الفرعي في الصفحة الرابعة"
 
 }

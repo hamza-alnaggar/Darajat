@@ -22,14 +22,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "on_boarding_sub_title_page_four": MessageLookupByLibrary.simpleMessage(
+      "العنوان الفرعي في الصفحة الرابعة",
+    ),
     "on_boarding_sub_title_page_one": MessageLookupByLibrary.simpleMessage(
-      "العنوان في الصفحة الاولى",
+      "العنوان الفرعي في الصفحة الاولى",
     ),
     "on_boarding_sub_title_page_three": MessageLookupByLibrary.simpleMessage(
-      "العنوان في الصفحة الثالثة",
+      "العنوان الفرعي في الصفحة الثالثة",
     ),
     "on_boarding_sub_title_page_two": MessageLookupByLibrary.simpleMessage(
-      "العنوان في الصفحة الثانية",
+      "العنوان الفرعي في الصفحة الثانية",
+    ),
+    "on_boarding_title_page_four": MessageLookupByLibrary.simpleMessage(
+      "العنوان الرئيسي في الصفحة الرابعة",
+    ),
+    "on_boarding_title_page_one": MessageLookupByLibrary.simpleMessage(
+      "العنوان الرئيسي في الصفحة الاولى",
+    ),
+    "on_boarding_title_page_three": MessageLookupByLibrary.simpleMessage(
+      "العنوان الرئيسي في الصفحة الثالثة",
+    ),
+    "on_boarding_title_page_two": MessageLookupByLibrary.simpleMessage(
+      "العنوان الرئيسي في الصفحة الثانية",
     ),
   };
 }

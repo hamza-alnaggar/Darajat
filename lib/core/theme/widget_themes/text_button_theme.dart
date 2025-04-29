@@ -12,14 +12,11 @@ class CustomTextButtonTheme {
   static final lightElevatedButtonTheme  = TextButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: CustomColors.light,
-      backgroundColor: CustomColors.primary,
       disabledForegroundColor: CustomColors.darkGrey,
       disabledBackgroundColor: CustomColors.buttonDisabled,
-      side: const BorderSide(color: CustomColors.primary),
+     
       padding: const EdgeInsets.symmetric(vertical: CustomSizes.buttonHeight),
       textStyle:  TextStyle(fontSize: 16.sp, color: CustomColors.textWhite, fontWeight: FontWeight.w600),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(CustomSizes.buttonRadius)),
     ),
   );
 
@@ -27,14 +24,13 @@ class CustomTextButtonTheme {
   static final darkElevatedButtonTheme = TextButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      foregroundColor: CustomColors.light,
-      backgroundColor: CustomColors.primary,
+     
       disabledForegroundColor: CustomColors.darkGrey,
       disabledBackgroundColor: CustomColors.darkerGrey,
-      side: const BorderSide(color: CustomColors.primary),
+     
       padding: const EdgeInsets.symmetric(vertical: CustomSizes.buttonHeight),
       textStyle:  TextStyle(fontSize: 16.sp, color: CustomColors.textWhite, fontWeight: FontWeight.w600),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(CustomSizes.buttonRadius)),
+    
     ),
   );
 }

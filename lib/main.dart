@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:learning_management_system/core/di/dependency_injection.dart';
@@ -8,15 +9,18 @@ import 'package:learning_management_system/learnging_management_system.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+   await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   await getItInit();
   await ScreenUtil.ensureScreenSize();
 
- 
-
   runApp(
     LearngingManagementSystem(
-        appRouter: AppRouter(),
-        initialRoute:Routes.splashScreen,
-      ),
+      appRouter: AppRouter(),
+      initialRoute: Routes.splashScreen,
+    ),
   );
 }

@@ -1,26 +1,31 @@
 class EndPoints {
-  static const String baserUrl = "https://jsonplaceholder.typicode.com/";
-  static const String template = "template/";
-  static const String user = "users/";
-  static const String post = "posts/";
+  static const String baserUrl = "http://192.168.1.9:8000/api/";
+  static const String register = "users/register";
+  static const String login = "users/login";
+  static const String logout = "users/logout";
+  static const String getCountry = "countries";
+
 }
 
 class ApiKey {
+ 
+  static String firstName=  "first_name";
+  static String message=  "message";
+  static String lastName = "last_name";
+  static String email = "email";
+  static String password = "password";
+  static String passwordConfirm = "password_confirmation";
+  static String countryId = "country_id";
+  static String country = "country";
+  static String user = "user";
+  static String accessToken = "access_token";
+
+
   static String id = "id";
   static String name = "name";
-  static String username = "username";
-  static String email = "email";
-  static String address = "address";
-  static String street = "street";
-  static String suite = "suite";
-  static String city = "city";
-  static String zipcode = "zipcode";
-  static String geo = "geo";
-  static String lat = "lat";
-  static String lng = "lng";
-  static String phone = "phone";
-  static String website = "website";
-  static String company = "company";
-  static String catchPhrase = "catchPhrase";
-  static String bs = "bs";
+  static String data = "data";
+
+
+
+ 
 }

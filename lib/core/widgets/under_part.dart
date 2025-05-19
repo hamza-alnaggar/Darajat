@@ -21,9 +21,7 @@ class UnderPart extends StatelessWidget {
       children: [
         Text(
           title,
-          style: theme.textTheme.bodyLarge?.copyWith(
-          color: CustomColors.textPrimary
-          )
+          style: theme.textTheme.bodyLarge
         ),
         horizontalSpace(20),
         InkWell(

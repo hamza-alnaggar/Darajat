@@ -22,6 +22,23 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "Dont_have_an_account": MessageLookupByLibrary.simpleMessage(
+      "ليس لديك حساب ؟",
+    ),
+    "already_have_an_account": MessageLookupByLibrary.simpleMessage(
+      "لديك حساب بالفعل ؟",
+    ),
+    "create_new_account": MessageLookupByLibrary.simpleMessage(
+      "إنشاء حساب جديد",
+    ),
+    "email": MessageLookupByLibrary.simpleMessage("الحساب"),
+    "fist_name": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
+    "last_name": MessageLookupByLibrary.simpleMessage("الاسم الأخير"),
+    "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
+    "login_here": MessageLookupByLibrary.simpleMessage("تسجيل الدخول من هنا ؟"),
+    "login_with_your_account": MessageLookupByLibrary.simpleMessage(
+      "تسجيل الدخول بحسابك",
+    ),
     "on_boarding_sub_title_page_four": MessageLookupByLibrary.simpleMessage(
       "العنوان الفرعي في الصفحة الرابعة",
     ),
@@ -46,5 +63,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "on_boarding_title_page_two": MessageLookupByLibrary.simpleMessage(
       "العنوان الرئيسي في الصفحة الثانية",
     ),
+    "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
+    "password_confirmation": MessageLookupByLibrary.simpleMessage(
+      "تأكيد كلمة السر",
+    ),
+    "register": MessageLookupByLibrary.simpleMessage("تسجيل"),
+    "register_here": MessageLookupByLibrary.simpleMessage("تسجيل هنا !"),
   };
 }

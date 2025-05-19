@@ -8,6 +8,23 @@
     "on_boarding_sub_title_page_one":"العنوان الفرعي في الصفحة الاولى",
     "on_boarding_sub_title_page_two":"العنوان الفرعي في الصفحة الثانية",
     "on_boarding_sub_title_page_three":"العنوان الفرعي في الصفحة الثالثة",
-    "on_boarding_sub_title_page_four":"العنوان الفرعي في الصفحة الرابعة"
+    "on_boarding_sub_title_page_four":"العنوان الفرعي في الصفحة الرابعة",
+
+
+
+    "create_new_account" : "إنشاء حساب جديد",
+    "login_with_your_account" : "تسجيل الدخول بحسابك",
+    "register" : "تسجيل",
+    "already_have_an_account" : "لديك حساب بالفعل ؟",
+    "login_here" : "تسجيل الدخول من هنا ؟",
+    "Dont_have_an_account" : "ليس لديك حساب ؟",
+    "register_here" : "تسجيل هنا !",
+    "login" : "تسجيل دخول",
+
+    "fist_name":"الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "email": "الحساب",
+    "password":"كلمة السر",
+    "password_confirmation":"تأكيد كلمة السر"
 
 }

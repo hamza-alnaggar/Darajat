@@ -35,7 +35,7 @@ class CustomAppTheme {
     primaryColor: CustomColors.primary,
     textTheme: CustomTextTheme.darkTextTheme,
     chipTheme: CustomChipTheme.darkChipTheme,
-    scaffoldBackgroundColor: CustomColors.black,
+    scaffoldBackgroundColor: CustomColors.backgroundColor,
     appBarTheme: CustomAppBarTheme.darkAppBarTheme,
     checkboxTheme: CustomCheckboxTheme.darkCheckboxTheme,
     bottomSheetTheme: CustomBottomSheetTheme.darkBottomSheetTheme,

@@ -134,6 +134,101 @@ class S {
       args: [],
     );
   }
+
+  /// `Create new account`
+  String get create_new_account {
+    return Intl.message(
+      'Create new account',
+      name: 'create_new_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login with your account`
+  String get login_with_your_account {
+    return Intl.message(
+      'Login with your account',
+      name: 'login_with_your_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message('Register', name: 'register', desc: '', args: []);
+  }
+
+  /// `Already have an account ?`
+  String get already_have_an_account {
+    return Intl.message(
+      'Already have an account ?',
+      name: 'already_have_an_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login here !`
+  String get login_here {
+    return Intl.message('Login here !', name: 'login_here', desc: '', args: []);
+  }
+
+  /// `Dont have an account ?`
+  String get Dont_have_an_account {
+    return Intl.message(
+      'Dont have an account ?',
+      name: 'Dont_have_an_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register here !`
+  String get register_here {
+    return Intl.message(
+      'Register here !',
+      name: 'register_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message('Login', name: 'login', desc: '', args: []);
+  }
+
+  /// `Fist Name`
+  String get fist_name {
+    return Intl.message('Fist Name', name: 'fist_name', desc: '', args: []);
+  }
+
+  /// `Last Nmae`
+  String get last_name {
+    return Intl.message('Last Nmae', name: 'last_name', desc: '', args: []);
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message('Email', name: 'email', desc: '', args: []);
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message('Password', name: 'password', desc: '', args: []);
+  }
+
+  /// `passwordConfirmation`
+  String get password_confirmation {
+    return Intl.message(
+      'passwordConfirmation',
+      name: 'password_confirmation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

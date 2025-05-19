@@ -1,90 +1,125 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:learning_management_system/core/helper/constant.dart';
+import 'package:learning_management_system/core/routing/app_router.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theme/widget_themes/bottom_nav_bar.dart';
 import 'package:learning_management_system/core/theming/bottom_app_bar_size.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/widgets/custom_clipper.dart';
 
-//
-// Created by CodeWithFlexZ
-// Tutorials on my YouTube
-//
-//! Instagram
-//! @CodeWithFlexZ
-//
-//? GitHub
-//? AmirBayat0
-//
-//* YouTube
-//* Programming with FlexZ
-//
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class EntryPoint extends StatefulWidget {
+  const EntryPoint({super.key});
 
   @override
   FinalViewState createState() => FinalViewState();
 }
 
-class FinalViewState extends State<HomeScreen> {
+class FinalViewState extends State<EntryPoint> {
   int _currentIndex = 0;
-  final PageController pageController = PageController();
 
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  final Set<int> _tabHistory = {};
+
+  // Navigator keys for each tab.
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    
+  ];
+
+  
+  final List<Widget?> _navigatorWidgets = List.filled(4, null, growable: false);
+
+  String _getInitialRouteForIndex(int index) {
+    switch (index) {
+      case 0:
+        return Routes.homeScreen;
+      case 1:
+        return Routes.profileScreen;
+      case 2:
+        return Routes.instructionView;
+      case 3:
+        return Routes.courseDetailsScreen;
+      default:
+        return Routes.homeScreen;
+    }
   }
 
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
+  // When a new tab is selected, update the selected index and maintain tab history.
+  void _onItemTapped(int index) {
+    if (index != _currentIndex) {
+      _tabHistory.add(_currentIndex);
+    }
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
-  void animateToPage(int page) {
-    pageController.animateToPage(
-      page,
-      duration: const Duration(
-        milliseconds: 400,
+
+    Widget _buildOffstageNavigator(int index) {
+    if (index != _currentIndex && _navigatorWidgets[index] == null) {
+      return Container();
+    }
+    if (_navigatorWidgets[index] == null) {
+      _navigatorWidgets[index] = Navigator(
+        key: _navigatorKeys[index],
+        observers: [],
+        initialRoute: _getInitialRouteForIndex(index),
+        onGenerateRoute: AppRouter().generateRoute,
+      );
+    }
+    return Offstage(
+      offstage: _currentIndex != index,
+      child: TickerMode(
+        enabled: _currentIndex == index,
+        child: _navigatorWidgets[index]!,
       ),
-      curve: Curves.decelerate,
     );
+  }
+
+
+  Widget _buildTransformedContent() {
+    return WillPopScope(
+              onWillPop: () async {
+                final currentNavigator =
+                    _navigatorKeys[_currentIndex].currentState;
+                if (currentNavigator != null && currentNavigator.canPop()) {
+                  currentNavigator.pop();
+                  return false;
+                }
+                if (_tabHistory.isNotEmpty) {
+                  setState(() {
+                    _currentIndex = _tabHistory.last;
+                    _tabHistory.remove(_currentIndex);
+                  });
+                  return false;
+                }
+                return true;
+              },
+              child: Stack(
+                children: List.generate(
+                  _navigatorKeys.length,
+                  (index) => _buildOffstageNavigator(index),
+                ),
+              ),
+            );
   }
 
   @override
   Widget build(BuildContext context) {
     BottomAppBarSize().init(context);
     return Scaffold(
-      backgroundColor: Colors.black,
+      bottomNavigationBar: bottomNav(),
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
-        title: const Text(
-          "Custom Bottom Navigation Bar",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text('درجات',style: TextStyle(letterSpacing: 1.3)),
       ),
       body: SafeArea(
         bottom: false,
         child: Stack(
           children: [
-            Positioned.fill(
-                child: PageView(
-              onPageChanged: (value) {
-                setState(() {
-                  _currentIndex = value;
-                });
-              },
-              controller: pageController,
-              children: screens,
-            )),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: bottomNav(),
-            ),
+            _buildTransformedContent(),
           ],
         ),
       ),
@@ -92,18 +127,22 @@ class FinalViewState extends State<HomeScreen> {
   }
 
   Widget bottomNav() {
+        final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(BottomAppBarSize.blockSizeHorizontal * 4.5, 0,
-          BottomAppBarSize.blockSizeHorizontal * 4.5, 50),
+          BottomAppBarSize.blockSizeHorizontal * 4.5, 0),
       child: Material(
         borderRadius: BorderRadius.circular(30),
-        
         elevation: 6,
         child: Container(
             height: BottomAppBarSize.blockSizeHorizontal * 18,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: CustomColors.secondary,
+            
+              color:
+              // Color(0xffcfebf7),
+              isDark ?CustomColors.secondary.withOpacity(0.9): CustomColors.white,
               borderRadius: BorderRadius.circular(30),
             ),
             child: Stack(
@@ -118,59 +157,28 @@ class FinalViewState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       BottomNavBTN(
-                        onPressed: (val) {
-                          animateToPage(val);
-                          setState(() {
-                            _currentIndex = val;
-                          });
-                        },
+                        onPressed: _onItemTapped,
                         icon: IconlyLight.home,
                         currentIndex: _currentIndex,
                         index: 0,
                       ),
                       BottomNavBTN(
-                        onPressed: (val) {
-                          animateToPage(val);
-                          setState(() {
-                            _currentIndex = val;
-                          });
-                        },
+                        onPressed: _onItemTapped,
                         icon: IconlyLight.search,
                         currentIndex: _currentIndex,
                         index: 1,
                       ),
                       BottomNavBTN(
-                        onPressed: (val) {
-                          animateToPage(val);
-                          setState(() {
-                            _currentIndex = val;
-                          });
-                        },
+                        onPressed: _onItemTapped,
                         icon: IconlyLight.category,
                         currentIndex: _currentIndex,
                         index: 2,
                       ),
                       BottomNavBTN(
-                        onPressed: (val) {
-                          animateToPage(val);
-                          setState(() {
-                            _currentIndex = val;
-                          });
-                        },
+                        onPressed:_onItemTapped,
                         icon: IconlyLight.setting,
                         currentIndex: _currentIndex,
                         index: 3,
-                      ),
-                      BottomNavBTN(
-                        onPressed: (val) {
-                          animateToPage(val);
-                          setState(() {
-                            _currentIndex = val;
-                          });
-                        },
-                        icon: IconlyLight.profile,
-                        currentIndex: _currentIndex,
-                        index: 4,
                       ),
                     ],
                   ),

@@ -8,23 +8,23 @@ class CustomAppBarTheme{
   CustomAppBarTheme._();
 
   static var lightAppBarTheme = AppBarTheme(
-    elevation: 0,
-    centerTitle: false,
+    elevation: 3,
+    centerTitle: true,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
+    backgroundColor: CustomColors.primary2,
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: CustomColors.black, size: CustomSizes.iconMd),
     actionsIconTheme: IconThemeData(color: CustomColors.black, size: CustomSizes.iconMd),
-    titleTextStyle: TextStyle(fontSize: 18.0.sp, fontWeight: FontWeight.w600, color: CustomColors.black),
+    titleTextStyle: TextStyle(fontSize: 25.0.sp, fontWeight: FontWeight.bold, color: CustomColors.textPrimary),
   );
   static var darkAppBarTheme = AppBarTheme(
-    elevation: 0,
-    centerTitle: false,
+    elevation: 3,
+    centerTitle: true,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
+    backgroundColor: CustomColors.secondary,
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: CustomColors.black, size: CustomSizes.iconMd),
     actionsIconTheme: IconThemeData(color: CustomColors.white, size: CustomSizes.iconMd),
-    titleTextStyle: TextStyle(fontSize: 18.0.sp, fontWeight: FontWeight.w600, color: CustomColors.white),
+    titleTextStyle: TextStyle(fontSize: 25.0.sp, fontWeight: FontWeight.bold, color: CustomColors.textPrimary),
   );
 }

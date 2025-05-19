@@ -2,13 +2,24 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
   // App theme colors
+
+  // Dark Theme
   static const Color primary = Color(0xff29C3CD);
   static const Color primary2 = Color(0xFFD27DF4);
   static const Color secondary = Color(0xFF1b1344);
 
+
+  static const Color background= Color(0xff8087f4);
+
+
+
+
   // Text colors
   static const Color textPrimary = Color(0xffF5F5F5);
   static const Color textSecondary = Color(0xFF655c7a);
+  static const Color backgroundColor = Color(0xFF130830);
+
+
   static const Color textWhite = Colors.white;
   static const Color textDark = Colors.black;
   static const Color textDark2 = Color(0xFF232323);
@@ -16,12 +27,14 @@ class CustomColors {
   // Background colors
   static const Color light = Color(0xFFF6F6F6);
   static const Color dark = Color(0xFF272727);
-  static const Color backgroundColor = Color(0xFF130830);
-  static const Color primaryBackground = Color(0xFFF3F5FF);
 
+  static const Color primaryBackground = Color(0xFFF3F5FF);
   // Background Container colors
   static const Color lightContainer = Color(0xFFF6F6F6);
-  static Color darkContainer = CustomColors.white.withOpacity(0.1);
+  static Color darkContainer = Color(0xFF1b1344);
+  static Color containerSecondColor = Color(0xFFf6f7f9);
+
+  
 
   // Button colors
   static const Color buttonPrimary = Color(0xFF4b68ff);

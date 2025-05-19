@@ -8,19 +8,7 @@ class BottomNavBTN extends StatelessWidget {
   final int index;
   final int currentIndex;
 
-//
-// Created by CodeWithFlexZ
-// Tutorials on my YouTube
-//
-//! Instagram
-//! @CodeWithFlexZ
-//
-//? GitHub
-//? AmirBayat0
-//
-//* YouTube
-//* Programming with FlexZ
-//
+
   const BottomNavBTN({
     super.key,
     required this.icon,
@@ -31,6 +19,7 @@ class BottomNavBTN extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     BottomAppBarSize().init(context);
     return InkWell(
       onTap: () {
@@ -47,17 +36,17 @@ class BottomNavBTN extends StatelessWidget {
           children: [
             (currentIndex == index)
                 ? Positioned(
-                    left: BottomAppBarSize.blockSizeHorizontal * 4,
-                    bottom: BottomAppBarSize.blockSizeHorizontal * 1.5,
+                    left: BottomAppBarSize.blockSizeHorizontal * 3.9,
+                    bottom: BottomAppBarSize.blockSizeHorizontal * 1.8,
                     child: Icon(
                       icon,
-                      color: Colors.black,
+                      color:isDark? Colors.white : Colors.grey,
                       size: BottomAppBarSize.blockSizeHorizontal * 8,
                     ),
                   )
                 : Container(),
             AnimatedOpacity(
-              opacity: (currentIndex == index) ? 1 : 0.2,
+              opacity: (currentIndex == index) ? 1 : 0.8,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeIn,
               child: Icon(

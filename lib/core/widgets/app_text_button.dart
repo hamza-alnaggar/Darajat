@@ -11,7 +11,7 @@ class AppTextButton extends StatelessWidget {
   final double? buttonHeight;
   final Widget? buttonIcon;
   final String buttonText;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   final VoidCallback onpressed;
 
   const AppTextButton({
@@ -24,14 +24,14 @@ class AppTextButton extends StatelessWidget {
     this.buttonHeight,
     this.buttonIcon,
     required this.buttonText,
-    required this.textStyle,
+    this.textStyle,
     required this.onpressed,
   });
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context).textButtonTheme;
+    final theme = Theme.of(context).textButtonTheme.style!;
     return Container(
       width:size.width*0.8 ,
       decoration: BoxDecoration(
@@ -39,13 +39,32 @@ class AppTextButton extends StatelessWidget {
           CustomColors.primary2,
           CustomColors.primary,
         ]),
+          boxShadow: [
+      // darker/outer glow
+      BoxShadow(
+        color: CustomColors.primary.withOpacity(0.6),
+        blurRadius: 16.r,
+        spreadRadius: 2.r,
+        offset: Offset(4, 4.h),
+      ),
+      // lighter/inner glow
+      BoxShadow(
+        color: CustomColors.primary2.withOpacity(0.6),
+        blurRadius: 8.r,
+        spreadRadius: 1.r,
+        offset: Offset(2, 2.h),
+      ),
+    ],
         borderRadius: BorderRadius.circular(borderRadius ?? 29.0.r)
       ),
       child: TextButton(
-        style: theme.style,
+        style: theme,
         onPressed: onpressed,
         child: 
-            Text(buttonText, style: textStyle),
+            Text(
+            buttonText,
+            style:textStyle ?? theme.textStyle?.resolve({})
+            ),
         ),
     );
   }

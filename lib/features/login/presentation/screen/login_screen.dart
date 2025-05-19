@@ -1,13 +1,19 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:learning_management_system/core/helper/extention.dart';
 import 'package:learning_management_system/core/helper/spacing.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/widgets/app_text_button.dart';
 import 'package:learning_management_system/core/widgets/app_text_form_field.dart';
 import 'package:learning_management_system/core/widgets/page_title_bar.dart';
 import 'package:learning_management_system/core/widgets/under_part.dart';
 import 'package:learning_management_system/core/widgets/upside.dart';
+import 'package:learning_management_system/features/login/presentation/cubit/login_cubit.dart';
+import 'package:learning_management_system/features/login/presentation/widgets/login_bloc_listener.dart';
+import 'package:learning_management_system/generated/l10n.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -21,9 +27,11 @@ class _SignUpScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+      final loginCubit = context.read<LoginCubit>();
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: CustomColors.backgroundColor,
         body: SizedBox(
           width: size.width,
           height: size.height,
@@ -33,13 +41,13 @@ class _SignUpScreenState extends State<LoginScreen> {
                 const Upside(
                   imgUrl: "assets/images/register/register.json",
                 ),
-                PageTitleBar(title: "Login with your account"),
+                PageTitleBar(title: S.of(context).login_with_your_account),
                 Padding(
                   padding:  EdgeInsets.only(top: 320.0.h),
                   child: Container(
                     width: double.infinity,
                     decoration:  BoxDecoration(
-                      color: CustomColors.backgroundColor,
+                      color:isDark? CustomColors.backgroundColor : CustomColors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(50.r),
                         topRight: Radius.circular(50.r),
@@ -50,16 +58,26 @@ class _SignUpScreenState extends State<LoginScreen> {
                       children: [
                       verticalSpace(20),
                         Form(
+                          key: loginCubit.formKey,
                           child: Column(
                             children: [
-                              
                               AppTextFormField(
-                                hintText:"email",
+                                hintText:S.of(context).email,
                                 icon: Icons.email,
+                                controller: loginCubit.emailController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "this field can not be empty";
+                                  }}
                               ),
                               AppTextFormField(
-                                hintText: "password",
+                                hintText: S.of(context).password,
                                 icon: Icons.password,
+                                controller: loginCubit.passwordController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "this field can not be empty";
+                                  }}
                               ),
                   verticalSpace(20),
                               AppTextButton(
@@ -67,20 +85,25 @@ class _SignUpScreenState extends State<LoginScreen> {
                                   color: CustomColors.textPrimary,
                                   fontSize: 17.sp
                                 ),
-                                buttonText: "Login",
+                                buttonText: S.of(context).login,
                                 onpressed: () {
-                                //  validateThenDoSignup(context);
+                                validateThenDoSignup(context);
                                 },
                               ),
                               verticalSpace(20),
                               UnderPart(
-                                title:"Dont have an account ?",
-                                navigatorText: "Register here",
+                                title:S.of(context).Dont_have_an_account,
+                                navigatorText: S.of(context).register_here,
                                 onTap: () {
-                                  // context.pushNamed(Routes.loginScreen);
+                                  context.pushNamed(Routes.signUpScreen);
                                 },
                               ),
+                              SizedBox(height: 20.h,),
+                              GestureDetector(child: Text('Go To Home'),onTap: (){
+                                context.pushNamed(Routes.entryPoint);
+                              },),
                               verticalSpace(20),
+                              LoginBlocListener()
                             ],
                           ),
                         )
@@ -96,9 +119,9 @@ class _SignUpScreenState extends State<LoginScreen> {
     );
   }
 
-  // void validateThenDoSignup(BuildContext context) {
-  //   if (context.read<SignUpCubit>().formKey.currentState!.validate()) {
-  //     context.read<SignUpCubit>().eitherFailureOrSignUp();
-  //   } else {}
-  // }
+  void validateThenDoSignup(BuildContext context) {
+    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+      context.read<LoginCubit>().eitherFailureOrLogin();
+    } else {}
+  }
 }

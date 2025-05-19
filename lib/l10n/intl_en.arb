@@ -9,6 +9,22 @@
     "on_boarding_sub_title_page_one":"Sub Title In Page One",
     "on_boarding_sub_title_page_two":"Sub Title In Page Two",
     "on_boarding_sub_title_page_three":"Sub Title In Page Three",
-    "on_boarding_sub_title_page_four":"Sub Title In Page Four"
+    "on_boarding_sub_title_page_four":"Sub Title In Page Four",
+
+
+    "create_new_account" : "Create new account",
+    "login_with_your_account" : "Login with your account",
+    "register" : "Register",
+    "already_have_an_account" : "Already have an account ?",
+    "login_here" : "Login here !",
+    "Dont_have_an_account" : "Dont have an account ?",
+    "register_here" : "Register here !",
+    "login" : "Login",
+
+    "fist_name":"Fist Name",
+    "last_name": "Last Nmae",
+    "email": "Email",
+    "password":"Password",
+    "password_confirmation":"passwordConfirmation"
 
 }

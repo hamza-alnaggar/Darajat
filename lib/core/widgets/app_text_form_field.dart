@@ -9,6 +9,8 @@ class AppTextFormField extends StatelessWidget {
   final TextStyle? inputTextStyle;
   final TextStyle? hintStyle;
   final String hintText;
+  final int ?maxLength;
+  final String ?counterText;
   final bool? isObscureText;
   final Widget? suffixIcon;
   final Color? backgroundColor;
@@ -19,6 +21,8 @@ class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
     super.key,
     this.contentPadding,
+    this.counterText,
+    this.maxLength,
     this.focusedBorder,
     this.enabledBorder,
     this.inputTextStyle,
@@ -36,18 +40,21 @@ class AppTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final inputDecorationTheme = Theme.of(context).inputDecorationTheme;
+     final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.h),
       padding: EdgeInsets.symmetric(horizontal:20.w,vertical:10.h),
       width: size.width *0.8,
       decoration: BoxDecoration(
-        color:CustomColors.secondary,
+        color: isDark? CustomColors.secondary : Color(0xffF6F6F6),
         borderRadius: BorderRadius.circular(29.r),
       ),
       child: TextFormField(
+        maxLength: maxLength,
         controller: controller,
         decoration: InputDecoration(
+          counterText: counterText,
           isDense: true,
           icon: Icon(
             icon,
@@ -66,10 +73,6 @@ class AppTextFormField extends StatelessWidget {
           fillColor: backgroundColor ??
               inputDecorationTheme.fillColor ,
           border: inputDecorationTheme.border,
-          // enabledBorder: enabledBorder ?? inputDecorationTheme.enabledBorder,
-          // focusedBorder: focusedBorder ?? inputDecorationTheme.focusedBorder,
-          // errorBorder: inputDecorationTheme.errorBorder,
-          // focusedErrorBorder: inputDecorationTheme.focusedErrorBorder,
           errorStyle: inputDecorationTheme.errorStyle,
           errorMaxLines: inputDecorationTheme.errorMaxLines,
           prefixIconColor: inputDecorationTheme.prefixIconColor,

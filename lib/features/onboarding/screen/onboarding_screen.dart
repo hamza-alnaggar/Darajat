@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:concentric_transition/page_view.dart';
+import 'package:learning_management_system/core/helper/extention.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/features/onboarding/widget/card_onboarding_data.dart';
-import 'package:learning_management_system/features/sign_up/presentation/screens/sign_up_screen.dart';
 import 'package:learning_management_system/generated/l10n.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -40,10 +41,10 @@ class OnboardingPage extends StatelessWidget {
       CardOnboardingData(
         title: S.of(context).on_boarding_title_page_four,
         subtitle: S.of(context).on_boarding_sub_title_page_four,
-        image: "assets/images/onboarding/image2.json",
-        backgroundColor: isDark ? CustomColors.white : const Color.fromRGBO(71, 59, 117, 1),
-        titleColor: isDark ? CustomColors.textDark : Colors.yellow,
-        subtitleColor: isDark ? CustomColors.textDark2 : Colors.white,
+        image: "assets/images/onboarding/image3.json",
+        backgroundColor: isDark ? CustomColors.white :  Colors.white,
+        titleColor: isDark ? CustomColors.textDark :  Colors.purple,
+        subtitleColor: isDark ? CustomColors.textDark2 :  CustomColors.dark
       ),
     ];
 
@@ -52,10 +53,7 @@ class OnboardingPage extends StatelessWidget {
         colors: data.map((e) => e.backgroundColor).toList(),
         itemCount: data.length,
         itemBuilder: (int index) => CardOnboarding(data: data[index]),
-        onFinish: () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SignUpScreen()),
-        ),
+        onFinish: () => context.pushNamed(Routes.signUpScreen)
       ),
     );
   }

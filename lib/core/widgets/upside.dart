@@ -10,13 +10,14 @@ class Upside extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final bool isDark = Theme.of(context).brightness == Brightness.dark;
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
         Container(
           width: size.width,
           height: size.height / 2,
-          color: CustomColors.backgroundColor,
+          color: isDark? CustomColors.backgroundColor : CustomColors.white,
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child:Lottie.asset(
@@ -25,15 +26,15 @@ class Upside extends StatelessWidget {
             ),
           ),
         ),
-        iconBackButton(context),
+        iconBackButton(context,isDark),
       ],
     );
   }
 }
 
-iconBackButton(BuildContext context) {
+iconBackButton(BuildContext context,bool isDark) {
   return IconButton(
-    color: Colors.white,
+    color: isDark ? Colors.white : Colors.black ,
     iconSize: 28,
     icon: const Icon(CupertinoIcons.arrow_left),
     onPressed: (){

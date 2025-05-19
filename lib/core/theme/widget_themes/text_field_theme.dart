@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
-import 'package:learning_management_system/core/theming/sizes.dart';
 
 
 class CustomTextFormFieldTheme {
@@ -11,11 +10,11 @@ class CustomTextFormFieldTheme {
     errorMaxLines: 3,
     prefixIconColor: CustomColors.textPrimary,
     suffixIconColor: CustomColors.textPrimary,
-    fillColor: CustomColors.secondary,
+    fillColor: CustomColors.lightContainer,
     filled: true,
     // constraints: const BoxConstraints.expand(height: TSizes.inputFieldHeight),
-    labelStyle: TextStyle().copyWith(fontSize:16.sp, color: CustomColors.textPrimary),
-    hintStyle:  TextStyle().copyWith(fontSize:14.sp, color: CustomColors.textSecondary),
+    labelStyle: TextStyle().copyWith(fontSize:16.sp, color: CustomColors.textDark),
+    hintStyle:  TextStyle().copyWith(fontSize:14.sp, color: CustomColors.textDark),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
     border: InputBorder.none,
     // enabledBorder: const OutlineInputBorder().copyWith(
@@ -41,7 +40,7 @@ class CustomTextFormFieldTheme {
     prefixIconColor: CustomColors.darkGrey,
     suffixIconColor: CustomColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: TSizes.inputFieldHeight),
-    labelStyle:  TextStyle().copyWith(fontSize:16.sp, color: CustomColors.white),
+    labelStyle:  TextStyle().copyWith(fontSize:16.sp, color: CustomColors.textPrimary),
     hintStyle:  TextStyle().copyWith(fontSize: 14.sp, color: CustomColors.textSecondary),
     border: InputBorder.none,
     fillColor: CustomColors.secondary,

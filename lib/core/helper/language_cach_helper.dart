@@ -3,12 +3,12 @@ import 'package:learning_management_system/core/databases/cache/cache_helper.dar
 class LanguageCacheHelper {
   Future<void> cacheLanguageCode(String languageCode) async {
     
-    SharedPrefHelper.setData("LOCALE", languageCode);
+  await SharedPrefHelper.setData("LOCALE", languageCode);
   }
 
   Future<String> getCachedLanguageCode() async {
-    final cachedLanguageCode = SharedPrefHelper.getString("LOCALE");
-    if (cachedLanguageCode != null) {
+    final cachedLanguageCode = await SharedPrefHelper.getString("LOCALE");
+    if (cachedLanguageCode != null && cachedLanguageCode.isNotEmpty) {
       return cachedLanguageCode;
     } else {
       return "en";

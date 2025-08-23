@@ -1,15 +1,15 @@
 import 'package:learning_management_system/core/databases/api/end_points.dart';
 import 'package:learning_management_system/features/sign_up/data/models/sub_models/country_sub_model.dart';
 
-class GetCountryResponseModel {
-  List<CountrySubModel> countryList;
+class GetCountryOrLanguageResponseModel {
+  List<CountryOrLanguageSubModel> list;
 
-  GetCountryResponseModel({required this.countryList});
+  GetCountryOrLanguageResponseModel({required this.list});
 
-  factory GetCountryResponseModel.fromJson(Map<String, dynamic> json) {
-    List<CountrySubModel> countries = (json[ApiKey.data] as List<dynamic>)
-        .map((country) => CountrySubModel.fromJson(country))
+  factory GetCountryOrLanguageResponseModel.fromJson(Map<String, dynamic> json,bool isJobTilte) {
+    List<CountryOrLanguageSubModel> countries = (json[ApiKey.data] as List<dynamic>)
+        .map((country) => CountryOrLanguageSubModel.fromJson(country,isJobTilte))
         .toList(); 
-    return GetCountryResponseModel(countryList: countries);
+    return GetCountryOrLanguageResponseModel(list: countries);
   }
 }

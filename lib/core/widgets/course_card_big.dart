@@ -1,10 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 
 
 class CourseCardBig extends StatelessWidget {
-  const CourseCardBig({super.key});
+   CourseCardBig({super.key,this.status});
+  String ?status;
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +73,45 @@ class CourseCardBig extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 6.h,),
-                Text("100.0 \$",style:theme.headlineSmall)
+                Text("100.0 \$",style:theme.headlineSmall),
+                if(status!=null)
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: _getStatusColor(status!),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        status!.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+   Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'published':
+        return Colors.green;
+      case 'pending':
+        return Colors.orange;
+      case 'rejected':
+        return Colors.red;
+      case 'draft':
+      default:
+        return Colors.grey;
+    }
   }
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learning_management_system/core/helper/extention.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:lottie/lottie.dart';
 
 
 class Upside extends StatelessWidget {
-  const Upside({super.key, required this.imgUrl});
+  const Upside({super.key, required this.imgUrl,required this.canBack});
   final String imgUrl;
+  final bool canBack;
 
   @override
   Widget build(BuildContext context) {
-     final bool isDark = Theme.of(context).brightness == Brightness.dark;
+  final bool isDark = Theme.of(context).brightness == Brightness.dark;
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
@@ -26,6 +28,7 @@ class Upside extends StatelessWidget {
             ),
           ),
         ),
+        if(canBack)
         iconBackButton(context,isDark),
       ],
     );
@@ -38,7 +41,7 @@ iconBackButton(BuildContext context,bool isDark) {
     iconSize: 28,
     icon: const Icon(CupertinoIcons.arrow_left),
     onPressed: (){
-      Navigator.pop(context);
+      context.pop();
     },
   );
 }

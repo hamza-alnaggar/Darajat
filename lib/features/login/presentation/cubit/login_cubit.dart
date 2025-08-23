@@ -31,7 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
     failureOrSignUp.fold(
       (failure) => emit(LoginFailure(errMessage: failure.errMessage)),
       (user) async{
-           await saveUserToken(user.accessToken);
+          await saveUserToken(user.user.token!);
           emit(LoginSuccessfully(loginResponseModel: user));
       } 
     );

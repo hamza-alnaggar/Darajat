@@ -135,6 +135,346 @@ class S {
     );
   }
 
+  /// `Categories`
+  String get categories {
+    return Intl.message('Categories', name: 'categories', desc: '', args: []);
+  }
+
+  /// `Category Courses`
+  String get category_courses {
+    return Intl.message(
+      'Category Courses',
+      name: 'category_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No courses found in this category`
+  String get no_courses_in_category {
+    return Intl.message(
+      'No courses found in this category',
+      name: 'no_courses_in_category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check other categories for more courses`
+  String get check_other_categories {
+    return Intl.message(
+      'Check other categories for more courses',
+      name: 'check_other_categories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Languages`
+  String get Languages {
+    return Intl.message('Languages', name: 'Languages', desc: '', args: []);
+  }
+
+  /// `Skills`
+  String get Skills {
+    return Intl.message('Skills', name: 'Skills', desc: '', args: []);
+  }
+
+  /// `Badges`
+  String get Badges {
+    return Intl.message('Badges', name: 'Badges', desc: '', args: []);
+  }
+
+  /// `App Language`
+  String get App_Language {
+    return Intl.message(
+      'App Language',
+      name: 'App_Language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Become a Teacher`
+  String get Become_a_Teacher {
+    return Intl.message(
+      'Become a Teacher',
+      name: 'Become_a_Teacher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Out`
+  String get Sign_Out {
+    return Intl.message('Sign Out', name: 'Sign_Out', desc: '', args: []);
+  }
+
+  /// `Add Language`
+  String get Add_Language {
+    return Intl.message(
+      'Add Language',
+      name: 'Add_Language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to upgrade to a teacher account? This will give you access to create courses and manage students.`
+  String get Are_you_sure_you_want_to_upgrade {
+    return Intl.message(
+      'Are you sure you want to upgrade to a teacher account? This will give you access to create courses and manage students.',
+      name: 'Are_you_sure_you_want_to_upgrade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get Cancel {
+    return Intl.message('Cancel', name: 'Cancel', desc: '', args: []);
+  }
+
+  /// `Upgrade`
+  String get Upgrade {
+    return Intl.message('Upgrade', name: 'Upgrade', desc: '', args: []);
+  }
+
+  /// `Account Upgraded!`
+  String get Account_Upgraded {
+    return Intl.message(
+      'Account Upgraded!',
+      name: 'Account_Upgraded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're now a verified teacher. Start creating your first course!`
+  String get You_are_now_a_verified_teacher {
+    return Intl.message(
+      'You\'re now a verified teacher. Start creating your first course!',
+      name: 'You_are_now_a_verified_teacher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get Started`
+  String get Get_Started {
+    return Intl.message('Get Started', name: 'Get_Started', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to sign out?`
+  String get Are_you_sure_you_want_to_sign_out {
+    return Intl.message(
+      'Are you sure you want to sign out?',
+      name: 'Are_you_sure_you_want_to_sign_out',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discover Courses`
+  String get discover_courses {
+    return Intl.message(
+      'Discover Courses',
+      name: 'discover_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top Categories`
+  String get top_categories {
+    return Intl.message(
+      'Top Categories',
+      name: 'top_categories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search Results`
+  String get search_results {
+    return Intl.message(
+      'Search Results',
+      name: 'search_results',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search courses`
+  String get search_courses_hint {
+    return Intl.message(
+      'Search courses',
+      name: 'search_courses_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No courses found`
+  String get no_courses_found {
+    return Intl.message(
+      'No courses found',
+      name: 'no_courses_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try different keywords or browse categories`
+  String get try_different_keywords {
+    return Intl.message(
+      'Try different keywords or browse categories',
+      name: 'try_different_keywords',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear Search`
+  String get clear_search {
+    return Intl.message(
+      'Clear Search',
+      name: 'clear_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Premium Courses`
+  String get premium_courses {
+    return Intl.message(
+      'Premium Courses',
+      name: 'premium_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Courses`
+  String get courses {
+    return Intl.message('Courses', name: 'courses', desc: '', args: []);
+  }
+
+  /// `Failed to load courses`
+  String get failed_to_load_courses {
+    return Intl.message(
+      'Failed to load courses',
+      name: 'failed_to_load_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try Again`
+  String get try_again {
+    return Intl.message('Try Again', name: 'try_again', desc: '', args: []);
+  }
+
+  /// `No courses available`
+  String get no_courses_available {
+    return Intl.message(
+      'No courses available',
+      name: 'no_courses_available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check back later for new courses`
+  String get check_back_later {
+    return Intl.message(
+      'Check back later for new courses',
+      name: 'check_back_later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Browse our curated collection`
+  String get browse_curated_collection {
+    return Intl.message(
+      'Browse our curated collection',
+      name: 'browse_curated_collection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You've reached the end`
+  String get end_of_list {
+    return Intl.message(
+      'You\'ve reached the end',
+      name: 'end_of_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exit App`
+  String get exitApp {
+    return Intl.message('Exit App', name: 'exitApp', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to exit?`
+  String get exitAppConfirmation {
+    return Intl.message(
+      'Are you sure you want to exit?',
+      name: 'exitAppConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Exit`
+  String get exit {
+    return Intl.message('Exit', name: 'exit', desc: '', args: []);
+  }
+
+  /// `Darajat`
+  String get app_name {
+    return Intl.message('Darajat', name: 'app_name', desc: '', args: []);
+  }
+
+  /// `Free Courses`
+  String get free_courses {
+    return Intl.message(
+      'Free Courses',
+      name: 'free_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid Courses`
+  String get paid_courses {
+    return Intl.message(
+      'Paid Courses',
+      name: 'paid_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Courses`
+  String get all_courses {
+    return Intl.message('All Courses', name: 'all_courses', desc: '', args: []);
+  }
+
+  /// `See All`
+  String get see_all {
+    return Intl.message('See All', name: 'see_all', desc: '', args: []);
+  }
+
   /// `Create new account`
   String get create_new_account {
     return Intl.message(
@@ -225,6 +565,51 @@ class S {
     return Intl.message(
       'passwordConfirmation',
       name: 'password_confirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Otp`
+  String get verify_otp {
+    return Intl.message('Verify Otp', name: 'verify_otp', desc: '', args: []);
+  }
+
+  /// `Forget Password`
+  String get forget_password {
+    return Intl.message(
+      'Forget Password',
+      name: 'forget_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check email`
+  String get check_email {
+    return Intl.message('Check email', name: 'check_email', desc: '', args: []);
+  }
+
+  /// `Check code`
+  String get check_code {
+    return Intl.message('Check code', name: 'check_code', desc: '', args: []);
+  }
+
+  /// `Set password`
+  String get set_password {
+    return Intl.message(
+      'Set password',
+      name: 'set_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change password`
+  String get change_password {
+    return Intl.message(
+      'Change password',
+      name: 'change_password',
       desc: '',
       args: [],
     );

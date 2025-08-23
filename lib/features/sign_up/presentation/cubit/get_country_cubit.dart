@@ -7,11 +7,11 @@ import 'package:learning_management_system/features/sign_up/presentation/cubit/g
 class GetCountryCubit extends Cubit<GetCountryState> {
   final GetCountryRepository getCountryRepository;
 
-  GetCountryCubit(this.getCountryRepository) : super(GetCountrynitial());
+  GetCountryCubit(this.getCountryRepository) : super(GetCountryInitial());
 
-  List<CountrySubModel> countryList = [];
+  List<CountryOrLanguageSubModel> countryList = [];
   List<String> countryListName = [];
-  CountrySubModel ?selectedCountry ;
+  CountryOrLanguageSubModel ?selectedCountry ;
 
 
 
@@ -20,14 +20,21 @@ class GetCountryCubit extends Cubit<GetCountryState> {
     failureOrGetCountry.fold(
       (failure) => emit(GetCountryFailure(errMessage: failure.errMessage)),
       (getCountry) {
-        countryList = getCountry.countryList;
+        countryList = getCountry.list;
         emit(GetCountrySuccessfully());
       },
     );
   }
+  void setInitialCountry(String Incountry) {
+  selectedCountry = countryList.firstWhere(
+    (country) => country.name == Incountry,
+    orElse: () => countryList.first,
+  );
+  emit(GetCountrySuccessfully());
+}
 
  
-  void selectCountry(CountrySubModel country) {
+  void selectCountry(CountryOrLanguageSubModel country) {
     selectedCountry = country;
     emit(ChangeData());  
   }

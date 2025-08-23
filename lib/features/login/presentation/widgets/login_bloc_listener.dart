@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,6 +6,7 @@ import 'package:learning_management_system/core/helper/extention.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/features/login/presentation/cubit/login_cubit.dart';
 import 'package:learning_management_system/features/login/presentation/cubit/login_state.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginBlocListener extends StatelessWidget {
   const LoginBlocListener({super.key});
@@ -27,9 +29,10 @@ class LoginBlocListener extends StatelessWidget {
           signUpSuccessfully(context);
         } else if (state is LoginLoading) {
           showDialog(
+            barrierDismissible: false,
             context: context,
-            builder: (context) => const Center(
-              child: CircularProgressIndicator(color: CustomColors.primary2),
+            builder: (context) =>  Center(
+              child: Lottie.asset('assets/images/loading.json')
             ),
           );
         }
@@ -48,20 +51,28 @@ class LoginBlocListener extends StatelessWidget {
   required Color backgroundColor,
 }) {
 
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: 
-          Text(message),
-        
-      
-      backgroundColor: backgroundColor,
-      behavior: SnackBarBehavior.floating,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      duration: const Duration(seconds: 3),
-    ),
-  );
-}
+final snackBar = SnackBar(
+                  /// need to set following properties for best effect of awesome_snackbar_content
+                  elevation: 0,
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  content: AwesomeSnackbarContent(
+                    color: backgroundColor,
+                    title: 'On Snap!',
+                    message:
+                        message,
+
+                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                    contentType: ContentType.failure,
+                  ),
+                );
+
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(snackBar);
+              }
+            
+
 
   void showSuccessDialog(BuildContext context) {
     showDialog(

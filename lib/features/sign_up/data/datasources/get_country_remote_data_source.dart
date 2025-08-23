@@ -9,11 +9,11 @@ class GetCountryRemoteDataSource {
     required this.api,
   });
 
-  Future<GetCountryResponseModel>getCountry()async{
+  Future<GetCountryOrLanguageResponseModel>getCountry()async{
 
     final response = await api.get(EndPoints.getCountry);
   
-    return GetCountryResponseModel.fromJson(response);
+    return GetCountryOrLanguageResponseModel.fromJson(response,false);
   }
 
 }

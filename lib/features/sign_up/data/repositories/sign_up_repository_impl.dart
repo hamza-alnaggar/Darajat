@@ -3,7 +3,7 @@ import 'package:learning_management_system/core/errors/expentions.dart';
 import 'package:learning_management_system/core/errors/failure.dart';
 import 'package:learning_management_system/features/sign_up/data/datasources/sign_up_remote_data_source.dart';
 import 'package:learning_management_system/features/sign_up/data/models/sign_up_body_model.dart';
-import 'package:learning_management_system/features/sign_up/data/models/sign_up_response_model.dart';
+import 'package:learning_management_system/features/sign_up/data/models/auth_response_model.dart';
 
 class SignUpRepository {
 
@@ -13,7 +13,7 @@ class SignUpRepository {
     required this.signUpRemoteDataSource,
   });
 
-Future<Either<Failure, SignUpResponseModel>> signup({
+Future<Either<Failure, AuthResponseModel>> signup({
   required SignUpBodyModel signUpBodyModel,
 }) async {
   try {
@@ -22,7 +22,7 @@ Future<Either<Failure, SignUpResponseModel>> signup({
     );
     return Right(response);
   } on ServerException catch (e) {
-   return Left(Failure(errMessage: e.errorModel.errorMessage)) ;
+   return Left(Failure(errMessage: e.errorModel.errMessage)) ;
 }
 }
 }

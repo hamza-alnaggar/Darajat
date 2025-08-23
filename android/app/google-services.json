@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "760396672882",
+    "project_id": "learning-management-syst-16b9f",
+    "storage_bucket": "learning-management-syst-16b9f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760396672882:android:8b11cc8f0ed6c3f2fe77eb",
+        "android_client_info": {
+          "package_name": "com.example.learning_management_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVB97DJVrGhJNf41nAb6FSNRtTxObAaxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

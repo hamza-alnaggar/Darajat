@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:learning_management_system/core/databases/cache/cache_helper.dart';
 import 'package:learning_management_system/core/helper/extention.dart';
 import 'package:learning_management_system/core/helper/spacing.dart';
 import 'package:learning_management_system/core/routing/routes.dart';
@@ -23,7 +24,23 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _SignUpScreenState();
 }
 
+
 class _SignUpScreenState extends State<LoginScreen> {
+  bool isSignedup = false;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isSignedUp();
+  }
+
+void isSignedUp() async{
+  isSignedup =  await SharedPrefHelper.getBool('isSignedUp') ?? false;
+  setState(() {
+    
+  });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,6 +56,7 @@ class _SignUpScreenState extends State<LoginScreen> {
             child: Stack(
               children: [
                 const Upside(
+                  canBack: false,
                   imgUrl: "assets/images/register/register.json",
                 ),
                 PageTitleBar(title: S.of(context).login_with_your_account),
@@ -99,9 +117,20 @@ class _SignUpScreenState extends State<LoginScreen> {
                                 },
                               ),
                               SizedBox(height: 20.h,),
-                              GestureDetector(child: Text('Go To Home'),onTap: (){
-                                context.pushNamed(Routes.entryPoint);
-                              },),
+                              Center(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children:[
+                                    GestureDetector(child: Text('Forget your password ?'),onTap: (){
+                                      context.pushNamed(Routes.forgotPasswordScreen);
+                                    },),
+                                    SizedBox(width: 20.w,),
+                                    if(isSignedup) GestureDetector(child: Text('VerfiyOtp ?'),onTap: (){
+                                      context.pushNamed(Routes.otpScreen);
+                                    },),
+                                  ],
+                                ),
+                              ),
                               verticalSpace(20),
                               LoginBlocListener()
                             ],
@@ -124,4 +153,5 @@ class _SignUpScreenState extends State<LoginScreen> {
       context.read<LoginCubit>().eitherFailureOrLogin();
     } else {}
   }
+  
 }

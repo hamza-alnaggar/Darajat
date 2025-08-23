@@ -17,7 +17,7 @@ class LogOutRemoteDataSource {
 
     final accessToekn = SharedPrefHelper.getString('accessToken');
 
-   final headers = {
+    final headers = {
       'Authorization': 'Bearer $accessToekn'
     };
 

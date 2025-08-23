@@ -62,6 +62,15 @@ class CancelException extends ServerException {
 class UnknownException extends ServerException {
   UnknownException(super.errorModel);
 }
+class UnhandledStatusCodeException implements Exception {
+  final ErrorModel errorModel;
+  UnhandledStatusCodeException(this.errorModel);
+}
+
+class UnhandledDioExceptionTypeException implements Exception {
+  final ErrorModel errorModel;
+  UnhandledDioExceptionTypeException(this.errorModel);
+}
 
 handleDioException(DioException e) {
   switch (e.type) {
@@ -70,7 +79,7 @@ handleDioException(DioException e) {
     case DioExceptionType.badCertificate:
       throw BadCertificateException(ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.connectionTimeout:
-      throw ConnectionTimeoutException(ErrorModel.fromJson(e.response!.data));
+      throw ConnectionTimeoutException(ErrorModel(errMessage: e.toString()));
 
     case DioExceptionType.receiveTimeout:
       throw ReceiveTimeoutException(ErrorModel.fromJson(e.response!.data));
@@ -81,38 +90,32 @@ handleDioException(DioException e) {
     case DioExceptionType.badResponse:
       switch (e.response?.statusCode) {
         case 400: // Bad request
-
           throw BadResponseException(ErrorModel.fromJson(e.response!.data));
-
-        case 401: //unauthorized
+        case 401: // unauthorized
           throw UnauthorizedException(ErrorModel.fromJson(e.response!.data));
-
-        case 403: //forbidden
+        case 403: // forbidden
           throw ForbiddenException(ErrorModel.fromJson(e.response!.data));
-
-        case 404: //not found
+        case 404: // not found
           throw NotFoundException(ErrorModel.fromJson(e.response!.data));
-
-        case 409: //cofficient
-
+        case 409: // conflict
           throw CofficientException(ErrorModel.fromJson(e.response!.data));
-
-        case 504: // Bad request
-
-          throw BadResponseException(
-              ErrorModel(errorMessage: e.toString()));
-
-        case 422: // Bad request
-
-          throw UnprocessableContent(
-              ErrorModel.fromJson(e.response!.data));
+        case 422: // unprocessable content
+          throw UnprocessableContent(ErrorModel.fromJson(e.response!.data));
+        case 504: // gateway timeout
+          throw BadResponseException(ErrorModel(errMessage: e.toString()));
+        case 500: // gateway timeout
+          throw BadResponseException(ErrorModel(errMessage: e.toString()));
+        default: // Handle any other status code
+          throw UnhandledStatusCodeException(
+            ErrorModel(
+              errMessage: e.toString()
+            ),
+          );
       }
     case DioExceptionType.cancel:
-      throw CancelException(
-          ErrorModel(errorMessage: e.toString(),));
-
+      throw CancelException(ErrorModel(errMessage: e.toString()));
     case DioExceptionType.unknown:
-      throw UnknownException(
-          ErrorModel(errorMessage: e.toString(),));
+      throw UnknownException(ErrorModel(errMessage: e.toString()));
+    
   }
 }

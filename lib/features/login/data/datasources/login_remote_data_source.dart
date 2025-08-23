@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:learning_management_system/core/databases/api/api_consumer.dart';
 import 'package:learning_management_system/core/databases/api/end_points.dart';
 import 'package:learning_management_system/features/login/data/models/login_body_model.dart';
-import 'package:learning_management_system/features/login/data/models/login_response_model.dart';
+import 'package:learning_management_system/features/sign_up/data/models/auth_response_model.dart';
 
 class LoginRemoteDataSource{
   ApiConsumer api;
@@ -11,7 +11,7 @@ class LoginRemoteDataSource{
     required this.api,
   });
 
-  Future<LoginResponseModel>login({required LoginBodyModel loginBodyModel})async{
+  Future<AuthResponseModel>login({required LoginBodyModel loginBodyModel})async{
 
   final headers = {
   'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ class LoginRemoteDataSource{
 };
     final response = await api.post(EndPoints.login,data: loginBodyModel.toJson(),options: Options(headers: headers));
   
-    return LoginResponseModel.fromJson(response);
+    return AuthResponseModel.fromJson(response);
   }
 
 }

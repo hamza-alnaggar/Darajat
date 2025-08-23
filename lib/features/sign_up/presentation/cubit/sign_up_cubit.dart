@@ -30,20 +30,25 @@ final _symbolRegExp    = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
 
 
   // Sign Up Method
-  Future<void> eitherFailureOrSignUp({required int ?countryId}) async {
+  Future<void> eitherFailureOrSignUp({required int ?countryId,required int ?languageId}) async {
     if (!formKey.currentState!.validate()) return;
     emit(SignUpLoading());
     final failureOrSignUp = await signUpRepository.signup(
       signUpBodyModel: SignUpBodyModel(
+        languageId: languageId,
         lastName: lastNameController.text, fistName: firstNameController.text, email: emailController.text, password: passwordController.text, passwordConfirm: passwordConfirmationController.text, countryId: countryId)
       );
     failureOrSignUp.fold(
       (failure) => emit(SignUpFailure(errMessage: failure.errMessage)),
       (user) async{
-        await saveUserToken(user.accessToken);
-        emit(SignUpSuccessfully(signUpResponse: user));
+        await saveUserEmail(user.user.email);
+        emit(SignUpSuccessfully(message:user.message));
       } 
     );
+  }
+  Future<void> saveUserEmail(String email ) async {
+    await SharedPrefHelper.setData("email", email);
+
   }
 
     String? validateName(String? value) {
@@ -78,9 +83,6 @@ final _symbolRegExp    = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
   }
 
   
-  Future<void> saveUserToken(String accessToken ) async {
-    await SharedPrefHelper.setData("accessToken", accessToken);
-    
-  }
+ 
 
 }

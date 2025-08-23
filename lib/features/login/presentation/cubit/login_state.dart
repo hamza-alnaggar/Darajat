@@ -1,5 +1,5 @@
 
-import 'package:learning_management_system/features/login/data/models/login_response_model.dart';
+import 'package:learning_management_system/features/sign_up/data/models/auth_response_model.dart';
 
 abstract class LoginState {}
 
@@ -15,7 +15,7 @@ final class LoginFailure extends LoginState{
   LoginFailure({required this.errMessage});
 }
 final class LoginSuccessfully extends LoginState{
-  final LoginResponseModel loginResponseModel;
+  final AuthResponseModel loginResponseModel;
 
   LoginSuccessfully({required this.loginResponseModel});
 }

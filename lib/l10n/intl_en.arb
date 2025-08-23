@@ -10,6 +10,54 @@
     "on_boarding_sub_title_page_two":"Sub Title In Page Two",
     "on_boarding_sub_title_page_three":"Sub Title In Page Three",
     "on_boarding_sub_title_page_four":"Sub Title In Page Four",
+    
+     "categories": "Categories",
+  "category_courses": "Category Courses",
+  "no_courses_in_category": "No courses found in this category",
+  "check_other_categories": "Check other categories for more courses",
+     "Languages": "Languages",
+  "Skills": "Skills",
+  "Badges": "Badges",
+  "App_Language": "App Language",
+  "Become_a_Teacher": "Become a Teacher",
+  "Sign_Out": "Sign Out",
+  "Add_Language": "Add Language",
+  "Are_you_sure_you_want_to_upgrade": "Are you sure you want to upgrade to a teacher account? This will give you access to create courses and manage students.",
+  "Cancel": "Cancel",
+  "Upgrade": "Upgrade",
+  "Account_Upgraded": "Account Upgraded!",
+  "You_are_now_a_verified_teacher": "You're now a verified teacher. Start creating your first course!",
+  "Get_Started": "Get Started",
+  "Are_you_sure_you_want_to_sign_out": "Are you sure you want to sign out?",
+
+  "discover_courses": "Discover Courses",
+  "top_categories": "Top Categories",
+  "search_results": "Search Results",
+  "search_courses_hint": "Search courses",
+  "no_courses_found": "No courses found",
+  "try_different_keywords": "Try different keywords or browse categories",
+  "clear_search": "Clear Search",
+
+  "premium_courses": "Premium Courses",
+  "courses": "Courses",
+  "failed_to_load_courses": "Failed to load courses",
+  "try_again": "Try Again",
+  "no_courses_available": "No courses available",
+  "check_back_later": "Check back later for new courses",
+  "browse_curated_collection": "Browse our curated collection",
+  "end_of_list": "You've reached the end",
+
+
+  "exitApp": "Exit App",
+  "exitAppConfirmation": "Are you sure you want to exit?",
+  "cancel": "Cancel",
+  "exit": "Exit",
+
+    "app_name": "Darajat",
+  "free_courses": "Free Courses",
+  "paid_courses": "Paid Courses",
+  "all_courses": "All Courses",
+  "see_all": "See All",
 
 
     "create_new_account" : "Create new account",
@@ -25,6 +73,14 @@
     "last_name": "Last Nmae",
     "email": "Email",
     "password":"Password",
-    "password_confirmation":"passwordConfirmation"
+    "password_confirmation":"passwordConfirmation",
+
+    "verify_otp":"Verify Otp",
+    "forget_password":"Forget Password",
+    "check_email":"Check email",
+    "check_code":"Check code",
+    "set_password":"Set password",
+    "change_password":"Change password"
+
 
 }

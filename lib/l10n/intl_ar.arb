@@ -10,7 +10,51 @@
     "on_boarding_sub_title_page_three":"العنوان الفرعي في الصفحة الثالثة",
     "on_boarding_sub_title_page_four":"العنوان الفرعي في الصفحة الرابعة",
 
+    "app_name": "درجات",
+  "free_courses": "كورسات مجانية",
+  "paid_courses": "كورسات مدفوعة",
+  "all_courses": "جميع الكورسات",
+  "see_all": "مشاهدة الكل",
+  "exitApp": "خروج",
+  "exitAppConfirmation": "هل أنت متأكد من أنك تريد الخروج؟",
+  "cancel": "إلغاء",
+  "exit": "خروج",
+"categories": "الفئات",
+  "category_courses": "دورات الفئة",
+  "no_courses_in_category": "لم يتم العثور على دورات في هذه الفئة",
+  "check_other_categories": "تحقق من الفئات الأخرى للمزيد من الدورات",
+  "Languages": "اللغات",
+  "Skills": "المهارات",
+  "Badges": "شارات",
+  "App_Language": "لغة التطبيق",
+  "Become_a_Teacher": "كن معلمًا",
+  "Sign_Out": "تسجيل الخروج",
+  "Add_Language": "إضافة لغة",
+  "Are_you_sure_you_want_to_upgrade": "هل أنت متأكد أنك تريد الترقية إلى حساب المعلم؟ سيمنحك هذا إمكانية إنشاء الدورات وإدارة الطلاب.",
+  "Cancel": "إلغاء",
+  "Upgrade": "ترقية",
+  "Account_Upgraded": "تم ترقية الحساب!",
+  "You_are_now_a_verified_teacher": "أنت الآن معلم معتمد. ابدأ في إنشاء دورتك الأولى!",
+  "Get_Started": "ابدأ الآن",
+  "Are_you_sure_you_want_to_sign_out": "هل أنت متأكد من أنك تريد تسجيل الخروج؟",
+  "discover_courses": "اكتشف الدورات",
+  "top_categories": "الفئات الأعلى",
+  "search_results": "نتائج البحث",
+  "search_courses_hint": "ابحث عن الدورات",
+  "no_courses_found": "لم يتم العثور على دورات",
+  "try_different_keywords": "جرب كلمات أخرى أو تصفح الفئات",
+  "clear_search": "مسح البحث",
 
+ 
+  "premium_courses": "كورسات مميزة",
+  "courses": "الكورسات",
+  "failed_to_load_courses": "فشل تحميل الكورسات",
+  "try_again": "حاول مرة أخرى",
+  "no_courses_available": "لا توجد كورسات متاحة",
+  "check_back_later": "ارجع لاحقًا للتحقق من الكورسات الجديدة",
+  "browse_curated_collection": "تصفح مجموعتنا المختارة",
+  "end_of_list": "لقد وصلت إلى نهاية القائمة"
+,
 
     "create_new_account" : "إنشاء حساب جديد",
     "login_with_your_account" : "تسجيل الدخول بحسابك",
@@ -25,6 +69,17 @@
     "last_name": "الاسم الأخير",
     "email": "الحساب",
     "password":"كلمة السر",
-    "password_confirmation":"تأكيد كلمة السر"
+    "password_confirmation":"تأكيد كلمة السر",
+
+    "verify_otp":"التحقق من الكود",
+    "forget_password":"نسيت كلمة السر",
+
+    "check_email":"تحقق من الحساب",
+    "check_code":"تحقق من الرمز",
+    "set_password":"ادخل كلمة المرور",
+
+    "change_password":"تغير كلمة المرور"
+
+
 
 }

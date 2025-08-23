@@ -12,13 +12,13 @@ class GetCountryRepository {
     required this.getCountryRemoteDataSource,
   });
 
-Future<Either<Failure, GetCountryResponseModel>> getCountry() async {
+Future<Either<Failure, GetCountryOrLanguageResponseModel>> getCountry() async {
   try {
     final response = await getCountryRemoteDataSource.getCountry(
     );
     return Right(response);
   } on ServerException catch (e) {
-   return Left(Failure(errMessage: e.errorModel.errorMessage)) ;
+   return Left(Failure(errMessage: e.errorModel.errMessage)) ;
 }
 }
 }

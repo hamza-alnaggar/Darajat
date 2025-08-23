@@ -18,7 +18,7 @@ class LogOutRepository  {
     final response =await  logoutRemoteDataSource.logout();
     return Right(response);
     } on ServerException catch (e) {
-      return Left(Failure(errMessage: e.errorModel.errorMessage));
+      return Left(Failure(errMessage: e.errorModel.errMessage));
   }
 }
 }

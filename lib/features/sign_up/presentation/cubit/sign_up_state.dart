@@ -1,5 +1,4 @@
 
-import 'package:learning_management_system/features/sign_up/data/models/sign_up_response_model.dart';
 
 abstract class SignUpState {}
 
@@ -15,8 +14,9 @@ final class SignUpFailure extends SignUpState{
   SignUpFailure({required this.errMessage});
 }
 final class SignUpSuccessfully extends SignUpState{
-  final SignUpResponseModel signUpResponse;
+  final String message ;
 
-  SignUpSuccessfully({required this.signUpResponse});
+  SignUpSuccessfully({required this.message});
+
 }
 

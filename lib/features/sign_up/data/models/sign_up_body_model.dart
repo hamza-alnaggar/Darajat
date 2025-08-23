@@ -9,6 +9,7 @@ class SignUpBodyModel {
   String password;
   String passwordConfirm;
   int ?countryId;
+  int ?languageId;
 
   SignUpBodyModel({
     required this.lastName,
@@ -17,6 +18,7 @@ class SignUpBodyModel {
     required this.password,
     required this.passwordConfirm,
     required this.countryId,
+    required this.languageId
   });
 
   Map<String, dynamic> toJson() {
@@ -27,6 +29,7 @@ class SignUpBodyModel {
     ApiKey.password: password,
     ApiKey.passwordConfirm: passwordConfirm,
     ApiKey.countryId: countryId,
+    ApiKey.languageId: languageId,
   };
 }
   

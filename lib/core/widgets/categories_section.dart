@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:learning_management_system/core/helper/extention.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
+import 'package:learning_management_system/core/theming/colors.dart';
 
 class CategoriesSection extends StatelessWidget {
   const CategoriesSection({super.key});
@@ -14,11 +17,13 @@ class CategoriesSection extends StatelessWidget {
           style:theme.headlineMedium
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            context.pushNamed(Routes.categoryScreen);
+          },
           child: Text(
             'See all',
             style:theme.titleSmall?.copyWith(
-              color: Colors.purpleAccent,
+              color: CustomColors.primary2,
             ),
           ),
         ),

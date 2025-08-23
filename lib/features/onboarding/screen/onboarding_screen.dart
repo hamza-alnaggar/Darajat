@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:concentric_transition/page_view.dart';
+import 'package:learning_management_system/core/databases/cache/cache_helper.dart';
 import 'package:learning_management_system/core/helper/extention.dart';
 import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
@@ -53,7 +54,10 @@ class OnboardingPage extends StatelessWidget {
         colors: data.map((e) => e.backgroundColor).toList(),
         itemCount: data.length,
         itemBuilder: (int index) => CardOnboarding(data: data[index]),
-        onFinish: () => context.pushNamed(Routes.signUpScreen)
+        onFinish: () {
+          context.pushNamed(Routes.signUpScreen);
+          SharedPrefHelper.setData('showOnBoarding', true);
+        } 
       ),
     );
   }

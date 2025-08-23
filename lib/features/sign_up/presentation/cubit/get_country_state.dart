@@ -1,6 +1,6 @@
 abstract class GetCountryState {}
 
-class GetCountrynitial extends GetCountryState {}
+class GetCountryInitial extends GetCountryState {}
 
 class GetCountrySuccessfully extends GetCountryState {}
 

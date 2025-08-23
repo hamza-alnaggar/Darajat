@@ -13,6 +13,8 @@ class TextFormField2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return  SizedBox(
       child: TextField(
         minLines: minLines ?? 1,
@@ -26,14 +28,13 @@ class TextFormField2 extends StatelessWidget {
                     color: Colors.grey
                   )
                   ),
-                  fillColor:CustomColors.white ,
+                  fillColor:isDark?CustomColors.secondary: CustomColors.white ,
                   filled: true,
                   border: const OutlineInputBorder(),
                   counterText:'${controller?.text.length}',
                   hintText: hint,
                   hintStyle: TextStyle(color: CustomColors.textSecondary)
                 ),
-                
                 maxLength: maxLength,
               ),
     );

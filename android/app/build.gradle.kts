@@ -45,9 +45,11 @@ dependencies {
     
     // Add multidex support
     implementation("androidx.multidex:multidex:2.0.1")
+
+
     
     // Add Flutter dependencies
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.google.firebase:firebase-messaging:23.4.1")
 }
 

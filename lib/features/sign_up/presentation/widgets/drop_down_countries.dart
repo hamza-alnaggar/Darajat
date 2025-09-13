@@ -43,7 +43,7 @@ class _CustomDropDownState<T> extends State<CustomDropDown<T>> {
               widget.hint,
               style: TextStyle(
                 fontSize: 16.r,
-                color: CustomColors.textSecondary,
+                color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -92,14 +92,14 @@ class _CustomDropDownState<T> extends State<CustomDropDown<T>> {
                         widget.itemToString(item),
                         style: TextStyle(
                           fontSize: 16.r,
-                          color: CustomColors.textSecondary,
+                          color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       if (widget.selectedVal == item)
                         Icon(
                           Icons.check_circle,
-                          color: CustomColors.primary,
+                          color: CustomColors.primary2,
                           size: 18.r,
                         ),
                     ],

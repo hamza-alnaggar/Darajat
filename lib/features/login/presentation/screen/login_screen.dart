@@ -132,6 +132,27 @@ void isSignedUp() async{
                                 ),
                               ),
                               verticalSpace(20),
+                              ElevatedButton(
+                          onPressed: () {
+                            context.read<LoginCubit>().signInWithGoogle();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                'assets/images/google.png',
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 10),
+                              Text('Sign in with Google'),
+                            ],
+                          ),
+                        ),
                               LoginBlocListener()
                             ],
                           ),

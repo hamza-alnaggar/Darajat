@@ -4,7 +4,7 @@ import 'package:learning_management_system/core/databases/api/end_points.dart';
 class QuizResultModel {
   final String mark;
   final String percentageMark;
-  final int success;
+  final bool success;
   String message;
   QuizResultModel({
     required this.mark,

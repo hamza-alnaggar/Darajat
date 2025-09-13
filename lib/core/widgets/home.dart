@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learning_management_system/core/di/dependency_injection.dart';
+import 'package:learning_management_system/core/helper/extention.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/core/widgets/categories_section.dart';
 import 'package:learning_management_system/core/widgets/category_chips.dart';
@@ -23,6 +25,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+   @override
+  Size get preferredSize => const Size.fromHeight(1);
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +50,20 @@ class _HomeState extends State<Home> {
       ],
       child: Scaffold(
         appBar:  AppBar(
+
           leadingWidth: 75,
+          flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+            Color(0xFF130830),
+              Color(0xFF1b1344),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+      ),
           leading: Padding(
             padding: const EdgeInsets.only(left: 10,bottom: 10),
             child: Image.asset('assets/images/Darajat.png'),
@@ -55,12 +73,12 @@ class _HomeState extends State<Home> {
             color: colors.onSurface,
           ),),
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: colors.surface,
-      ),
+        elevation: 10,
+backgroundColor: Colors.transparent,
+      foregroundColor: const Color(0xffF5F5F5),      ),
         body: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric( vertical: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,7 +98,7 @@ class _HomeState extends State<Home> {
                   // Paid Courses Section
                   _buildSectionHeader(
                     context: context,
-                    title: S.of(context).paid_courses, // استخدام الترجمة
+                    title: S.of(context).paid_courses,
                     type: "paid",
                     theme: theme,
                     isDark: isDark,
@@ -91,7 +109,10 @@ class _HomeState extends State<Home> {
                   SizedBox(height: 30.h),
                   
                   const CategoriesSection(),
-                  const CategoryChips(),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                    child: const CategoryChips(),
+                  ),
                   
                   SizedBox(height: 20.h),
                   
@@ -119,33 +140,36 @@ class _HomeState extends State<Home> {
     required TextTheme theme,
     required bool isDark,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title, 
-          style: theme.headlineMedium?.copyWith(
-            color: isDark ? CustomColors.white : Colors.black // تغيير لون النص حسب الوضع
+    return Padding(
+      padding:  EdgeInsets.symmetric(horizontal: 16.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title, 
+            style: theme.headlineMedium?.copyWith(
+              color: isDark ? CustomColors.white : Colors.black // تغيير لون النص حسب الوضع
+            ),
           ),
-        ),
-        TextButton(
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => BlocProvider(
-                create: (context) => sl<CoursesCubit>(),
-                child: AllCoursesScreen(type: type),
+          TextButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (context) => sl<CoursesCubit>(),
+                  child: AllCoursesScreen(type: type),
+                ),
+              ),
+            ),
+            child: Text(
+              S.of(context).see_all, // استخدام الترجمة
+              style: theme.titleSmall?.copyWith(
+                color: CustomColors.primary2,
               ),
             ),
           ),
-          child: Text(
-            S.of(context).see_all, // استخدام الترجمة
-            style: theme.titleSmall?.copyWith(
-              color: CustomColors.primary2,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -209,15 +233,18 @@ class _HomeState extends State<Home> {
         }
 
         if (isLoading && courses.isEmpty) {
-          return SizedBox(
-            height: 372.h,
-            child: Skeletonizer(
-              enabled: true,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index) =>courseLoading(),
-                separatorBuilder: (context, index) => SizedBox(width: 15.w),
+          return Padding(
+            padding:  EdgeInsets.only(left: 16.w),
+            child: SizedBox(
+              height: 372.h,
+              child: Skeletonizer(
+                enabled: true,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 3,
+                  itemBuilder: (context, index) =>courseLoading(),
+                  separatorBuilder: (context, index) => SizedBox(width: 15.w),
+                ),
               ),
             ),
           );
@@ -300,9 +327,17 @@ SizedBox(
           : ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: courses.length,
-            itemBuilder: (context, index) => CourseCardBig2(
-              width: 250.w,
-              course: courses[index],
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: (){
+                context.pushNamed(Routes.courseDetailsScreen,arguments:{
+                  'course':courses[index].id,
+                  'profile':courses[index].teacherId
+                });
+              },
+              child: CourseCardBig2(
+                width: 250.w,
+                course: courses[index],
+              ),
             ),
             separatorBuilder: (context, index) => SizedBox(width: 15.w),
           ),

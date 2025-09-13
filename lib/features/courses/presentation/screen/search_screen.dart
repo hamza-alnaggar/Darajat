@@ -11,7 +11,6 @@ import 'package:learning_management_system/features/courses/data/models/course_r
 import 'package:learning_management_system/features/courses/presentation/cubit/course_search_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/category_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/category_state.dart';
-// Import your localization file
 import 'package:learning_management_system/generated/l10n.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -56,25 +55,14 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Row(
                 children: [
                   Text(
-                    S.of(context).top_categories, // Localized
+                    S.of(context).all_categories,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w700,
                       color: isDark ? Colors.white : Colors.black,
                     ),
                   ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      S.of(context).see_all, // Localized
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: CustomColors.primary2,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  
                 ],
               ),
             ),
@@ -91,7 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
             sliver: SliverToBoxAdapter(
               child: Text(
-                S.of(context).search_results, // Localized
+                S.of(context).search_results,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
@@ -316,14 +304,14 @@ class _SearchScreenState extends State<SearchScreen> {
           (context, index) => Padding(
             padding: EdgeInsets.only(bottom: 20.h),
             child: SizedBox(
-              height: 350.h,
+              height: 370.h,
               width: 280,
               child: GestureDetector(
-                child: CourseCardBig2(course: courses[index],width: 280,),
+                child: Center(child: CourseCardBig2(course: courses[index],width: 280,)),
                 onTap: () {
                   context.pushNamed(Routes.courseDetailsScreen, arguments: {
                     'course': courses[index].id,
-                    'profile': 2
+                    'profile': courses[index].teacherId
                   });
                 },
               ),

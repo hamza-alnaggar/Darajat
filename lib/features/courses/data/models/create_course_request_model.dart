@@ -7,10 +7,10 @@ class CreateCourseRequestModel {
   final int languageId;
   final String title;
   final String description;
-  final File image;
+  final File ?image;
   final String difficultyLevel;
   final double price;
-  final String? hasCertificate;
+  final int? hasCertificate;
 
   CreateCourseRequestModel({
     required this.topicId,
@@ -24,13 +24,15 @@ class CreateCourseRequestModel {
   });
 
   Map<String, dynamic> toJson() {
+      
+    
     return {
       'topic_id': topicId,
       'language_id': languageId,
       'title': title,
       'description': description,
       'difficulty_level': difficultyLevel,
-      'image_url':MultipartFile.fromFileSync(image.path),
+      if(image !=null ) 'image_url':MultipartFile.fromFileSync(image!.path) ,
       'price': price,
       if (hasCertificate != null) 'has_certificate': hasCertificate,
     };

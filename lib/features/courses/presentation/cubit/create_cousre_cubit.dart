@@ -22,7 +22,7 @@ class CreateCourseCubit extends Cubit<CreateCourseState> {
 
       response.fold(
         (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
-        (message) => emit(CourseSuccess(message: message)),
+        (course) => emit(CreateCourseSuccessfully(course:course)),
       );
     } catch (e) {
       emit(CourseFailure(errMessage: e.toString()));
@@ -36,7 +36,7 @@ class CreateCourseCubit extends Cubit<CreateCourseState> {
       final response = await repository.deleteCourse(courseId: courseId);
       response.fold(
         (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
-        (message) => emit(CourseSuccess(message: message)),
+        (message) => emit(UpdateStatusSuccessfully(message: message)),
       );
     } catch (e) {
       emit(CourseFailure(errMessage: e.toString()));
@@ -50,7 +50,7 @@ class CreateCourseCubit extends Cubit<CreateCourseState> {
       final response = await repository.restoreCourse(courseId: courseId);
       response.fold(
         (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
-        (message) => emit(CourseSuccess(message: message)),
+        (message) => emit(UpdateStatusSuccessfully(message: message)),
       );
     } catch (e) {
       emit(CourseFailure(errMessage: e.toString()));
@@ -63,7 +63,7 @@ class CreateCourseCubit extends Cubit<CreateCourseState> {
       final response = await repository.deleteDraftCourse(courseId: courseId);
       response.fold(
         (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
-        (message) => emit(CourseSuccess(message: message)),
+        (message) => emit(UpdateStatusSuccessfully(message: message)),
       );
     } catch (e) {
       emit(CourseFailure(errMessage: e.toString()));
@@ -136,14 +136,14 @@ class CreateCourseCubit extends Cubit<CreateCourseState> {
     final response = await repository.publishCourse(courseId,isCopy);
     response.fold(
       (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
-      (publishcourse) => emit(CourseSuccess(message: publishcourse)));
+      (publishcourse) => emit(UpdateStatusSuccessfully(message: publishcourse)));
   }
-   Future<void> cancelUpdate(int courseId) async {
-    emit(CourseLoading());
-    final response = await repository.cancelUpdate(courseId);
-    response.fold(
-      (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
-      (publishcourse) => emit(CourseSuccess(message: publishcourse)));
+    Future<void> cancelUpdate(int courseId) async {
+    //emit(CourseLoading());
+      await repository.cancelUpdate(courseId);
+    // response.fold(
+    //   (failure) => emit(CourseFailure(errMessage: failure.errMessage)),
+    //   (publishcourse) => emit(CourseSuccess(message: publishcourse)));
   }
 
 

@@ -17,20 +17,16 @@ class CalculatQuizResultRemoteDataSource {
     required int quizId,
     required List<AnswerModel> answers,
   }) async {
-    final accessToken = await SharedPrefHelper.getString('accessToken');
-    
-    final headers = {
-      'Authorization': 'Bearer $accessToken',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
+  
 
    
 
-    final response = await api.put(
+    final response = await api.post(
       '${EndPoints.calculateQuizResult}/$quizId', // Add to EndPoints
       data: answers.map((answer) => answer.toJson()).toList(),
-      options: Options(headers: headers),
+      options: Options(extra: {
+        'authRequired':true
+      }),
     );
     
     return QuizResultModel.fromJson(response);

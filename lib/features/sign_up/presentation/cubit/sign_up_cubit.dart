@@ -43,6 +43,8 @@ final _symbolRegExp    = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
       (user) async{
         await saveUserEmail(user.user.email);
         emit(SignUpSuccessfully(message:user.message));
+        await SharedPrefHelper.setData('userId',user.user.id);
+
       } 
     );
   }

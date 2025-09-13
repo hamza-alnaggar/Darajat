@@ -35,6 +35,7 @@ class _EditLanguageDialogState extends State<EditLanguageDialog> {
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       title: Text(widget.language != null ? "Edit Language" : "Add Language"),
       content: SingleChildScrollView(
@@ -42,17 +43,26 @@ class _EditLanguageDialogState extends State<EditLanguageDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             BlocBuilder<GetLanguageCubit, GetLanguageState>(
-              builder: (context, state) {
-                final cubit = context.read<GetLanguageCubit>();
-                return CustomDropDown<CountryOrLanguageSubModel>(
-                  selectedVal: _selectedLanguage,
-                  list: cubit.languageList,
-                  hint: "Choose Language",
-                  itemToString: (item) => item.name,
-                  onChanged: (value) => setState(() => _selectedLanguage = value),
-                );
-              },
-            ),
+  builder: (context, state) {
+    final cubit = context.read<GetLanguageCubit>();
+    List<CountryOrLanguageSubModel> languagesToShow = cubit.availableLanguage;
+
+    if (widget.language != null) {
+      final currentLanguage = widget.language!.countryOrLanguageSubModel;
+      if (!languagesToShow.any((lang) => lang.id == currentLanguage.id)) {
+        languagesToShow = List.from(languagesToShow)..add(currentLanguage);
+      }
+    }
+
+    return CustomDropDown<CountryOrLanguageSubModel>(
+      selectedVal: _selectedLanguage,
+      list: languagesToShow, 
+      hint: "Choose Language",
+      itemToString: (item) => item.name,
+      onChanged: (value) => setState(() => _selectedLanguage = value),
+    );
+  },
+),
             SizedBox(height: 25.h),
             BlocBuilder<GetLevelsCubit, GetLevelsState>(
               builder: (context, state) {

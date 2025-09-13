@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:learning_management_system/core/helper/extention.dart';
+import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
 import 'package:learning_management_system/features/login/presentation/cubit/login_cubit.dart';
 import 'package:learning_management_system/features/login/presentation/cubit/login_state.dart';
@@ -17,6 +18,7 @@ class LoginBlocListener extends StatelessWidget {
   listenWhen: (previous, current) {
     return current is LoginLoading ||
         current is LoginSuccessfully ||
+        current is LoginGoogleSuccessfully||
         current is LoginFailure;
   },
   
@@ -26,7 +28,7 @@ class LoginBlocListener extends StatelessWidget {
         _showSnackBar(context, message: state.errMessage, backgroundColor: CustomColors.secondary);
         } else if (state is LoginSuccessfully) {
           context.pop();
-          signUpSuccessfully(context);
+          context.pushReplacementNamed(Routes.entryPoint);
         } else if (state is LoginLoading) {
           showDialog(
             barrierDismissible: false,
@@ -36,14 +38,17 @@ class LoginBlocListener extends StatelessWidget {
             ),
           );
         }
+        else if(state is LoginGoogleSuccessfully){
+                    context.pop();
+context.pushReplacementNamed(Routes.entryPoint);
+
+        }
       },
       child: const SizedBox.shrink(),
     );
   }
 
-  void signUpSuccessfully(BuildContext context) {
-    showSuccessDialog(context);
-  }
+
 
   void _showSnackBar(
   BuildContext context, {
@@ -74,35 +79,7 @@ final snackBar = SnackBar(
             
 
 
-  void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Login Successful'),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Congratulations, you have signed up successfully!'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: CustomColors.primary2,
-              ),
-              onPressed: () {
-                //context.pushNamed(Routes.loginScreen);
-              },
-              child: const Text('Continue'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   void setupErrorState(BuildContext context, String error) {
     context.pop();

@@ -44,7 +44,6 @@ class buildMediaItem extends StatelessWidget {
       ),
       trailing:status!='approved' ?Row(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             onTap: onReplace,
@@ -55,6 +54,7 @@ class buildMediaItem extends StatelessWidget {
               color: isDark ? Colors.grey.shade300 : Colors.grey,
             ),
           ),
+          SizedBox(width: 20.w,),
           GestureDetector(
             onTap: onRemove,
             child: 

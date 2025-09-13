@@ -11,7 +11,7 @@ class QuizCreationRepository {
 
   QuizCreationRepository({required this.remoteDataSource});
 
-  Future<Either<Failure, QuizModel>> createQuiz({
+  Future<Either<Failure, QuizResponseModel>> createQuiz({
     required QuizCreateBody request,
     required int episodeId,
     required bool isCopy
@@ -24,7 +24,7 @@ class QuizCreationRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
-  Future<Either<Failure, QuizModel>> updateQuiz({
+  Future<Either<Failure, String>> updateQuiz({
     required QuizCreateBody request,
     required int episodeId,
     required bool isCopy
@@ -37,7 +37,7 @@ class QuizCreationRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
-  Future<Either<Failure, QuizModel>> deleteQuiz({
+  Future<Either<Failure, String>> deleteQuiz({
         required int episodeId,
         required bool isCopy
 

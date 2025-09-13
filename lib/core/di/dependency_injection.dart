@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:learning_management_system/core/databases/api/dio_consumer.dart';
+import 'package:learning_management_system/core/widgets/firebase_auth_service.dart';
+import 'package:learning_management_system/features/badges/data/datasource/badges_remote_data_source.dart';
+import 'package:learning_management_system/features/badges/data/repositories/badges_repository.dart';
+import 'package:learning_management_system/features/badges/presentation/cubit/badges_cubit.dart';
 import 'package:learning_management_system/features/comment/data/datasources/comment_remote_data_source.dart';
 import 'package:learning_management_system/features/comment/data/datasources/reply_remote_data_source.dart';
 import 'package:learning_management_system/features/comment/data/repositories/comment_repository.dart';
@@ -11,7 +15,10 @@ import 'package:learning_management_system/features/courses/data/datasources/cou
 import 'package:learning_management_system/features/courses/data/datasources/create_course_remote_data_source.dart';
 import 'package:learning_management_system/features/courses/data/datasources/create_update_episode_remote_data_source.dart';
 import 'package:learning_management_system/features/courses/data/datasources/episodes_remote_data_sourse.dart';
+import 'package:learning_management_system/features/courses/data/datasources/get_certificate_remote_data_source.dart';
 import 'package:learning_management_system/features/courses/data/datasources/get_course_for_techer_remote_data_source.dart';
+import 'package:learning_management_system/features/courses/data/datasources/get_followed_course_for_student_remote_data_source.dart';
+import 'package:learning_management_system/features/courses/data/datasources/rate_course_remote_data_source.dart';
 import 'package:learning_management_system/features/courses/data/datasources/show_course_for_student_remote_data_sourse.dart';
 import 'package:learning_management_system/features/courses/data/datasources/show_course_for_techer_remote_data_sourse.dart';
 import 'package:learning_management_system/features/courses/data/datasources/topic_remote_data_source.dart';
@@ -20,7 +27,10 @@ import 'package:learning_management_system/features/courses/data/repositories/co
 import 'package:learning_management_system/features/courses/data/repositories/course_status_repository.dart';
 import 'package:learning_management_system/features/courses/data/repositories/create_update_episode_repository.dart';
 import 'package:learning_management_system/features/courses/data/repositories/episodes_repository.dart';
+import 'package:learning_management_system/features/courses/data/repositories/get_certificate_repository.dart';
 import 'package:learning_management_system/features/courses/data/repositories/get_course_for_techer_repository.dart';
+import 'package:learning_management_system/features/courses/data/repositories/get_followed_course_for_student_repository.dart';
+import 'package:learning_management_system/features/courses/data/repositories/rate_course_repository.dart';
 import 'package:learning_management_system/features/courses/data/repositories/show_course_for_student_repository.dart';
 import 'package:learning_management_system/features/courses/data/repositories/show_course_for_techer_repository.dart';
 import 'package:learning_management_system/features/courses/data/repositories/topic_repository.dart';
@@ -29,9 +39,24 @@ import 'package:learning_management_system/features/courses/presentation/cubit/c
 import 'package:learning_management_system/features/courses/presentation/cubit/courses_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/create_cousre_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/create_update_episode_cubit.dart';
+import 'package:learning_management_system/features/courses/presentation/cubit/followed_course_for_student_cubit.dart';
+import 'package:learning_management_system/features/courses/presentation/cubit/get_certificate_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/get_course_for_techer_cubit.dart';
+import 'package:learning_management_system/features/courses/presentation/cubit/rate_course_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/show_course_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/topic_cubit.dart';
+import 'package:learning_management_system/features/logout/presentation/cubit/log_out_cubit.dart';
+import 'package:learning_management_system/features/paid/data/datasource/create_payment_intent_remote_data_sourse.dart';
+import 'package:learning_management_system/features/paid/data/repositories/create_payment_repository.dart';
+import 'package:learning_management_system/features/sign_up/data/datasources/get_specialized_remote_data_sourse.dart';
+import 'package:learning_management_system/features/sign_up/data/datasources/get_univercity_remote_data_sourse.dart';
+import 'package:learning_management_system/features/sign_up/data/repositories/get_speci_repository.dart';
+import 'package:learning_management_system/features/sign_up/data/repositories/get_univercity_repository.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_speci_cubit.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_speci_state.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_univercity_cubit.dart';
+import 'package:learning_management_system/features/statistics/data/datasource/statistics_remote_data_source.dart';
+import 'package:learning_management_system/features/statistics/data/repositories/statistics_repository.dart';
 import 'package:learning_management_system/features/student/educations/data/datasource/get_educations_remote_data_source.dart';
 import 'package:learning_management_system/features/student/educations/data/repository/get_educations_repository.dart';
 import 'package:learning_management_system/features/student/educations/presentation/cubit/get_educations_cubit.dart';
@@ -53,13 +78,17 @@ import 'package:learning_management_system/features/otp/data/repositories/verify
 import 'package:learning_management_system/features/otp/presentation/cubit/otp_cubit.dart';
 import 'package:learning_management_system/features/student/profile/data/datasource/change_password_profile_remote_data_source.dart';
 import 'package:learning_management_system/features/student/profile/data/datasource/get_profile_remote_data_source.dart';
+import 'package:learning_management_system/features/student/profile/data/datasource/promote_student_remote_data_sourse.dart';
 import 'package:learning_management_system/features/student/profile/data/datasource/update_profile_image_remote_data_source.dart';
 import 'package:learning_management_system/features/student/profile/data/datasource/update_profile_remote_data_source.dart';
 import 'package:learning_management_system/features/student/profile/data/repository/change_password_repository.dart';
 import 'package:learning_management_system/features/student/profile/data/repository/get_profile_repository.dart';
+import 'package:learning_management_system/features/student/profile/data/repository/promote_student_repository.dart';
 import 'package:learning_management_system/features/student/profile/data/repository/update_profile_image_repository.dart';
 import 'package:learning_management_system/features/student/profile/data/repository/update_profile_repository.dart';
+import 'package:learning_management_system/features/student/profile/presentation/cubit/change_password_cubit.dart';
 import 'package:learning_management_system/features/student/profile/presentation/cubit/profile_cubit.dart';
+import 'package:learning_management_system/features/student/profile/presentation/cubit/promote_student_cubit.dart';
 import 'package:learning_management_system/features/student/quiz/data/datasources/calculat_quiz_result_remote_data_source.dart';
 import 'package:learning_management_system/features/student/quiz/data/datasources/process_answer_remote_data_source.dart';
 import 'package:learning_management_system/features/student/quiz/data/datasources/quiz_remote_data_source.dart';
@@ -120,9 +149,30 @@ Future<void> getItInit() async {
   sl.registerLazySingleton<LoginRepository>(
     () => LoginRepository(loginRemoteDataSource: sl<LoginRemoteDataSource>()),
   );
+  sl.registerLazySingleton<StatisticsRemoteDataSource>(
+    () => StatisticsRemoteDataSource(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<StatisticsRepository>(
+    () => StatisticsRepository(remoteDataSource: sl<StatisticsRemoteDataSource>()),
+  );
+  sl.registerLazySingleton<BadgesRemoteDataSource>(
+    () => BadgesRemoteDataSource(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<BadgesRepository>(
+    () => BadgesRepository(remoteDataSource: sl<BadgesRemoteDataSource>()),
+  );
+  sl.registerLazySingleton<BadgesCubit>(
+    () => BadgesCubit(repository: sl<BadgesRepository>()),
+  );
+
+  sl.registerLazySingleton<GoogleAuthService>(
+    () => GoogleAuthService(),
+  );
 
   sl.registerFactory<LoginCubit>(
-    () => LoginCubit(loginRepository: sl<LoginRepository>()),
+    () => LoginCubit(loginRepository: sl<LoginRepository>(),googleAuthService: sl<GoogleAuthService>()),
   );
 
   sl.registerLazySingleton<GetCountryRemoteDataSource>(
@@ -252,6 +302,42 @@ Future<void> getItInit() async {
   sl.registerFactory<GetSkillsCubit>(
     () => GetSkillsCubit(sl<GetSkillsRepository>()),
   );
+  sl.registerLazySingleton<GetUnivercityRemoteDataSourse>(
+    () => GetUnivercityRemoteDataSourse(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<GetUnivercityRepository>(
+    () =>
+        GetUnivercityRepository(remoteDataSourse: sl<GetUnivercityRemoteDataSourse>()),
+  );
+
+  sl.registerFactory<GetUnivercityCubit>(
+    () => GetUnivercityCubit(sl<GetUnivercityRepository>()),
+  );
+  sl.registerLazySingleton<GetSpecializedRemoteDataSourse>(
+    () => GetSpecializedRemoteDataSourse(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<GetSpeciRepository>(
+    () =>
+        GetSpeciRepository(remoteDataSourse: sl<GetSpecializedRemoteDataSourse>()),
+  );
+
+  sl.registerFactory<GetSpeciCubit>(
+    () => GetSpeciCubit(sl<GetSpeciRepository>()),
+  );
+  sl.registerLazySingleton<GetCertificateRemoteDataSource>(
+    () => GetCertificateRemoteDataSource(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<GetCertificateRepository>(
+    () =>
+        GetCertificateRepository(remoteDataSource: sl<GetCertificateRemoteDataSource>()),
+  );
+
+  sl.registerFactory<GetCertificateCubit>(
+    () => GetCertificateCubit(repository:  sl<GetCertificateRepository>()),
+  );
 
   
 
@@ -298,14 +384,7 @@ Future<void> getItInit() async {
     () =>
         UpdateProfileRepository(remoteDataSource: sl<UpdateProfileRemoteDataSource>()),
   );
-  sl.registerLazySingleton<ChangePasswordProfileRemoteDataSource>(
-    () => ChangePasswordProfileRemoteDataSource(api: sl<DioConsumer>()),
-  );
-
-  sl.registerLazySingleton<ChangePasswordRepository>(
-    () =>
-        ChangePasswordRepository(remoteDataSource: sl<ChangePasswordProfileRemoteDataSource>()),
-  );
+ 
 
   sl.registerLazySingleton<GetProfileRemoteDataSource>(
     () => GetProfileRemoteDataSource(api: sl<DioConsumer>()),
@@ -317,7 +396,19 @@ Future<void> getItInit() async {
   );
 
   sl.registerFactory<ProfileCubit>(
-    () => ProfileCubit(sl<GetProfileRepository>(),sl<UpdateProfileRepository>(),sl<ChangePasswordRepository>(),sl<UpdateProfileImageRepository>()),
+    () => ProfileCubit(sl<GetProfileRepository>(),sl<UpdateProfileRepository>(),sl<UpdateProfileImageRepository>()),
+  );
+  sl.registerLazySingleton<PromoteStudentRemoteDataSourse>(
+    () => PromoteStudentRemoteDataSourse(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<PromoteStudentRepository>(
+    () =>
+        PromoteStudentRepository(remoteDataSource: sl<PromoteStudentRemoteDataSourse>()),
+  );
+
+  sl.registerFactory<PromoteStudentCubit>(
+    () => PromoteStudentCubit(sl<PromoteStudentRepository>()),
   );
 
   sl.registerLazySingleton<StartQuizRemoteDataSource>(
@@ -467,6 +558,7 @@ Future<void> getItInit() async {
   sl.registerLazySingleton<GetCourseForTecherRemoteDataSource>(
     () => GetCourseForTecherRemoteDataSource(api: sl<DioConsumer>()),
   );
+  
   sl.registerLazySingleton<GetCourseForTecherRepository>(
     () =>
         GetCourseForTecherRepository(remoteDataSource: sl<GetCourseForTecherRemoteDataSource>()),
@@ -474,6 +566,43 @@ Future<void> getItInit() async {
 
   sl.registerFactory<GetCourseForTecherCubit>(
     () => GetCourseForTecherCubit(repository: sl<GetCourseForTecherRepository>()),
+  );
+
+  sl.registerLazySingleton<GetFollowedCourseForStudentRemoteDataSource>(
+    () => GetFollowedCourseForStudentRemoteDataSource(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<GetFollowedCourseForStudentRepository>(
+    () =>
+        GetFollowedCourseForStudentRepository(remoteDataSource: sl<GetFollowedCourseForStudentRemoteDataSource>()),
+  );
+
+  sl.registerFactory<FollowedCourseForStudentCubit>(
+    () => FollowedCourseForStudentCubit(repository: sl<GetFollowedCourseForStudentRepository>()),
+  );
+
+  sl.registerLazySingleton<RateCourseRemoteDataSource>(
+    () => RateCourseRemoteDataSource(api: sl<DioConsumer>()),
+  );
+  sl.registerLazySingleton<RateCourseRepository>(
+    () =>
+        RateCourseRepository(remoteDataSource: sl<RateCourseRemoteDataSource>()),
+  );
+
+  sl.registerFactory<RateCourseCubit>(
+    () => RateCourseCubit(repository: sl<RateCourseRepository>()),
+  );
+
+  sl.registerLazySingleton<ChangePasswordProfileRemoteDataSource>(
+    () => ChangePasswordProfileRemoteDataSource(api: sl<DioConsumer>()),
+  );
+  sl.registerLazySingleton<ChangePasswordRepository>(
+    () =>
+        ChangePasswordRepository(remoteDataSource: sl<ChangePasswordProfileRemoteDataSource>()),
+  );
+
+  sl.registerFactory<ChangePasswordCubit>(
+    () => ChangePasswordCubit( sl<ChangePasswordRepository>()),
   );
 
   sl.registerLazySingleton<EpisodesRemoteDataSource>(
@@ -494,4 +623,16 @@ Future<void> getItInit() async {
     () =>
         LogOutRepository(logoutRemoteDataSource: sl<LogOutRemoteDataSource>()),
   );
+  sl.registerLazySingleton<CreatePaymentIntentRemoteDataSourse>(
+    () => CreatePaymentIntentRemoteDataSourse(api: sl<DioConsumer>()),
+  );
+
+  sl.registerLazySingleton<CreatePaymentRepository>(
+    () =>
+        CreatePaymentRepository(remoteDataSourse: sl<CreatePaymentIntentRemoteDataSourse>()),
+  );
+    sl.registerFactory<LogOutCubit>(
+    () => LogOutCubit(),
+  );
+
 }

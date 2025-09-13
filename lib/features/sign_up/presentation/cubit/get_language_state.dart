@@ -6,6 +6,9 @@ class GetLanguageInitial extends GetLanguageState {}
 class GetLanguageSuccessfully extends GetLanguageState {
 
 }
+class GetLanguageUpdate extends GetLanguageState {
+
+}
 
 class GetLanguageFailure extends GetLanguageState {
   final String errMessage;

@@ -1,12 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learning_management_system/core/di/dependency_injection.dart';
 import 'package:learning_management_system/core/routing/routes.dart';
-import 'package:learning_management_system/core/widgets/flame.dart';
+import 'package:learning_management_system/core/widgets/courses_by_topic_screen.dart';
 import 'package:learning_management_system/core/widgets/home.dart';
 import 'package:learning_management_system/core/widgets/side_bar.dart';
 import 'package:learning_management_system/features/category_screen.dart';
+import 'package:learning_management_system/features/courses/presentation/cubit/followed_course_for_student_cubit.dart';
+import 'package:learning_management_system/features/courses/presentation/cubit/rate_course_cubit.dart';
+import 'package:learning_management_system/features/courses/presentation/screen/followed_course_screen.dart';
 import 'package:learning_management_system/features/courses/presentation/screen/preview_course.dart';
 import 'package:learning_management_system/features/comment/presentation/cubit/comment_cubit.dart';
 import 'package:learning_management_system/features/comment/presentation/screen/chat_screen.dart';
@@ -25,7 +27,16 @@ import 'package:learning_management_system/features/courses/presentation/cubit/t
 import 'package:learning_management_system/features/courses/presentation/screen/courses_by_category_or_topic_screen.dart';
 import 'package:learning_management_system/features/courses/presentation/screen/search_screen.dart';
 import 'package:learning_management_system/features/flame.dart';
+import 'package:learning_management_system/features/logout/presentation/cubit/log_out_cubit.dart';
 import 'package:learning_management_system/features/onboarding/screen/onboarding_screen.dart';
+import 'package:learning_management_system/features/paid/presentation/cubit/payment_cubit.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_speci_cubit.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_univercity_cubit.dart';
+import 'package:learning_management_system/features/statistics/data/repositories/statistics_repository.dart';
+import 'package:learning_management_system/features/statistics/presentation/cubit/statistics_cubit.dart';
+import 'package:learning_management_system/features/statistics/presentation/statistics_screen.dart';
+import 'package:learning_management_system/features/student/profile/presentation/cubit/change_password_cubit.dart';
+import 'package:learning_management_system/features/student/profile/presentation/cubit/promote_student_cubit.dart';
 import 'package:learning_management_system/features/student/profile/presentation/screens/profile_screen.dart';
 import 'package:learning_management_system/features/student/cource_details/presentation/screen/course_details.dart';
 import 'package:learning_management_system/features/student/educations/presentation/cubit/get_educations_cubit.dart';
@@ -59,39 +70,80 @@ import 'package:learning_management_system/features/student/skills/presentation/
 import 'package:learning_management_system/features/splash_screen/splash_screen.dart';
 import 'package:learning_management_system/features/teacher/is_changed_cubit.dart';
 import 'package:learning_management_system/features/teacher/screens/create_episodes_screen.dart';
+import 'package:learning_management_system/features/teacher_rule_screen.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (context) => SplashScreen());
+      case Routes.staticsScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) =>
+                StatisticsCubit(repository: sl<StatisticsRepository>())
+                  ..getStatistics(false),
+            child: StatisticsPage(),
+          ),
+        );
+      case Routes.getCourseForTeacherByTopic:
+        return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                   sl<TopicCubit>(),
+              ),
+              BlocProvider(create: (context) => sl<CategoryCubit>()),
+            ],
+            child: CoursesByTopicScreen(),
+          ),
+        );
+      case Routes.teacherRulesScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<PromoteStudentCubit>(),
+            child: TeacherRulesScreen(),
+          ),
+        );
+      case Routes.followedCourses:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) =>
+                sl<FollowedCourseForStudentCubit>()..getFollowedCourse(),
+            child: FollowedCoursesScreen(),
+          ),
+        );
       case Routes.flameOfEnthusiasm:
         return MaterialPageRoute(
-          builder: (context) => FlameOfEnthusiasm(currentStreak: 1),
+          builder: (context) => FlameOfEnthusiasmPage(),
         );
       case Routes.onboarding:
         return MaterialPageRoute(builder: (context) => OnboardingPage());
       case Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => sl<LoginCubit>())
-              ],
+            providers: [BlocProvider(create: (context) => sl<LoginCubit>())],
             child: const LoginScreen(),
           ),
         );
       case Routes.categoryScreen:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
-            providers: [ BlocProvider(create: (context) => sl<CourseSearchCubit>()),
-                BlocProvider(create: (context) => sl<CategoryCubit>()),],
+            providers: [
+              BlocProvider(create: (context) => sl<CourseSearchCubit>()),
+              BlocProvider(create: (context) => sl<CategoryCubit>()),
+            ],
             child: const CategoryScreen(),
           ),
         );
       case Routes.startQuizScreen:
         final arg = settings.arguments as QuizModel;
         return MaterialPageRoute(
-          builder: (_) => StartQuizScreen(quizModel: arg,),
+          builder: (_) => BlocProvider(
+            create: (context) => sl<QuizCubit>(),
+            child: StartQuizScreen(quizModel: arg),
+          ),
         );
       case Routes.coursesByCategoryOrTopicScreen:
         return MaterialPageRoute(
@@ -161,7 +213,7 @@ class AppRouter {
       case Routes.resetPasswordScreen:
         return MaterialPageRoute(
           builder: (context) {
-            final code = settings.arguments as String ;
+            final code = settings.arguments as String;
             return BlocProvider(
               create: (context) => ResetPasswordCubit(
                 resetPasswordRepository: sl<ResetPasswordRepository>(),
@@ -174,14 +226,13 @@ class AppRouter {
       case Routes.commentScreen:
         return MaterialPageRoute(
           builder: (context) {
-            final postId = settings.arguments as int;
+            final postId = settings.arguments as int?;
             return BlocProvider(
               create: (context) => sl<CommentCubit>(),
-              child:  CommentsScreen(postId: postId),
+              child: CommentsScreen(postId: postId ?? 1),
             );
           },
         );
-      
 
       case Routes.searchScreen:
         return MaterialPageRoute(
@@ -236,76 +287,88 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => EntryPoint());
       case Routes.createEpisodesScreen:
         return MaterialPageRoute(
-          builder: (context) { 
+          builder: (context) {
             final arg = settings.arguments as Map?;
             return MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => sl<CreateCourseCubit>()),
-              BlocProvider.value(value:arg!['bloc'],),
-              BlocProvider(create: (context) => sl<CreateUpdateEpisodeCubit>()),
-              
-              BlocProvider(
-                create: (context) => EpisodesListCubit(
-                  repository: sl<EpisodesRepository>(),
-                  isStudent: false,
+              providers: [
+                BlocProvider(create: (context) => sl<CreateCourseCubit>()),
+                BlocProvider.value(value: arg!['bloc']),
+                BlocProvider(
+                  create: (context) => sl<CreateUpdateEpisodeCubit>(),
                 ),
+                BlocProvider(
+                  create: (context) => EpisodesListCubit(
+                    repository: sl<EpisodesRepository>(),
+                    isStudent: false,
+                  ),
+                ),
+              ],
+              child: CreateEpisodesScreen(
+                courseId: arg['courseId'],
+                isCopy:   arg['isCopy'],
+                status: arg['status'],
               ),
-            ],
-            child: CreateEpisodesScreen(courseId: arg['courseId'],isCopy:arg['isCopy'] ,status: arg['status'],),
-          );
+            );
           },
         );
       case Routes.createCourseScreen:
         return MaterialPageRoute(
-          builder: (context) { 
-            final arg = settings.arguments as Map;
+          builder: (context) {
+            final arg = settings.arguments as Map?;
             return MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) =>
-                    sl<GetLanguageCubit>()..eitherFailureOrGetLanguage(),
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetLanguageCubit>()..eitherFailureOrGetLanguage(),
+                ),
+                BlocProvider(
+                  create: (context) => sl<CategoryCubit>()..getAllCategories(),
+                ),
+                BlocProvider(create: (context) => sl<TopicCubit>()),
+                BlocProvider(create: (context) => sl<CreateCourseCubit>()),
+                BlocProvider(create: (context) => IsChangedCubit()),
+                BlocProvider(create: (context) => sl<ShowCourseCubit>()),
+              ],
+              child: CreateCourseScreen(
+                courseId:arg !=null? arg['courseId'] :null,
+                status: arg !=null?arg['status']:null,
+                isCopy: arg !=null?arg['isCopy']:null,
+                onSuccess:arg !=null? arg['onSuccess']:null,
               ),
-              BlocProvider(
-                create: (context) => sl<CategoryCubit>()..getAllCategories(),
-              ),
-              BlocProvider(create: (context) => sl<TopicCubit>()),
-              BlocProvider(create: (context) => sl<CreateCourseCubit>()),
-              BlocProvider(create: (context) => IsChangedCubit()),
-              BlocProvider(create: (context) => sl<ShowCourseCubit>()),
-            ],
-            child: CreateCourseScreen(courseId:arg['courseId'],status: arg['status'],isCopy: arg['isCopy'],),
-          );},
+            );
+          },
         );
       case Routes.episodesScreen:
         return MaterialPageRoute(
-          builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => EpisodesListCubit(
-                  repository: sl<EpisodesRepository>(),
-                  isStudent: false,
+          builder: (context) {
+            final arg = settings.arguments as int?;
+
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => EpisodesListCubit(
+                    repository: sl<EpisodesRepository>(),
+                    isStudent: false,
+                  ),
                 ),
-              ),
-              BlocProvider(create: (context) => sl<ShowCourseCubit>()),
-              BlocProvider(
-                create: (context) => EpisodeDetailCubit(
-                  isStudent: true,
-                  repository: sl<EpisodesRepository>(),
+                BlocProvider(create: (context) => sl<ShowCourseCubit>()),
+                BlocProvider(create: (context) => sl<RateCourseCubit>()),
+                BlocProvider(create: (context) => IsChangedCubit()),
+                BlocProvider(
+                  create: (context) => EpisodeDetailCubit(
+                    isStudent: true,
+                    repository: sl<EpisodesRepository>(),
+                  ),
                 ),
-              ),
-            ],
-            child: CoursePage(courseId: 1, isStudent: false),
-            // CreateCourse(courseId: 1,isInstructor: true,),
-          ),
+              ],
+              child: CoursePage(courseId: arg ?? 1),
+            );
+          },
         );
       case Routes.homeScreen:
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => sl<CoursesCubit>(),
-              ),
-            ],
+            providers: [BlocProvider(create: (context) => sl<CoursesCubit>())],
             child: Home(),
           ),
         );
@@ -314,22 +377,24 @@ class AppRouter {
           builder: (context) {
             final arg = settings.arguments as Map;
             return MultiBlocProvider(
-          providers: [
+              providers: [
                 BlocProvider(
                   create: (context) =>
-                      sl<ShowCourseCubit>()..showCourseForStudent(arg['course']),
+                      sl<ShowCourseCubit>()
+                        ..showCourseForStudent(arg['course']),
                 ),
                 BlocProvider(
                   create: (context) =>
                       sl<ProfileCubit>()..loadProfile(arg['profile']),
+                ),
+                BlocProvider(
+                  create: (context) =>PaymentCubit()
                 ),
               ],
               child: CourseDetails(),
             );
           },
         );
-      case Routes.flameScreen:
-        return MaterialPageRoute(builder: (context) => Flame());
       case Routes.sidebar:
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
@@ -343,49 +408,69 @@ class AppRouter {
         );
       case Routes.profileScreen:
         return MaterialPageRoute(
-          builder: (_) { 
-            final arg = settings.arguments as bool? ?? true ;
-          return 
-            MultiBlocProvider(
-            
-            providers: [
-              BlocProvider(
-                create: (context) =>
-                    sl<GetSkillsCubit>()..eitherFailureOrGetSkills(),
-                    lazy: false,
-              ),
-              BlocProvider(
-                create: (context) => sl<ProfileCubit>()..loadProfile(2),
-                lazy: false,
-              ),
-              BlocProvider(
-                create: (context) =>
-                    sl<JobTitleCubit>()..eitherFailureOrJobTitle(),
-                    lazy: false,
-              ),
-              BlocProvider(
-                create: (context) =>
-                    sl<GetEducationsCubit>()..eitherFailureOrGetEducations(),
-                    lazy: false,
-              ),
-              BlocProvider(
-                create: (context) =>
-                    sl<GetCountryCubit>()..eitherFailureOrGetCountry(),
-                    lazy: false,
-              ),
-              BlocProvider(
-                create: (context) =>
-                    sl<GetLevelsCubit>()..eitherFailureOrGetLevels(),
-                    lazy: false,
-            ),
-              BlocProvider(
-                create: (context) =>
-                    sl<GetLanguageCubit>()..eitherFailureOrGetLanguage(),
-                    lazy: false,
-              ),
-            ],
-            child:ProfileScreen(isUser:arg ,),
-          );},
+          builder: (_) {
+            final arg = settings.arguments as Map? ;
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetSkillsCubit>()..eitherFailureOrGetSkills(),
+                  lazy: false,
+                ),
+                arg !=null ? arg['isUser'] ?
+                BlocProvider(
+                  create: (context) => sl<ProfileCubit>()..loadMyProrile(),
+                  lazy: false,
+                ):
+                BlocProvider(
+                  create: (context) => sl<ProfileCubit>()..loadProfile(arg['userId']),
+                  lazy: false,
+                ): BlocProvider(
+                  create: (context) => sl<ProfileCubit>()..loadMyProrile(),
+                  lazy: false,
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      sl<JobTitleCubit>()..eitherFailureOrJobTitle(),
+                  lazy: false,
+                ),
+               
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetEducationsCubit>()..eitherFailureOrGetEducations(),
+                  lazy: false,
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetCountryCubit>()..eitherFailureOrGetCountry(),
+                  lazy: false,
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetSpeciCubit>()..eitherFailureOrGetSpeci(),
+                  lazy: false,
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetUnivercityCubit>()..eitherFailureOrGetUnivercity(),
+                  lazy: false,
+                ),
+                BlocProvider(create: (context) => sl<ChangePasswordCubit>()),
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetLevelsCubit>()..eitherFailureOrGetLevels(),
+                  lazy: false,
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      sl<GetLanguageCubit>()..eitherFailureOrGetLanguage(),
+                  lazy: false,
+                ),
+                BlocProvider(create: (context) => sl<LogOutCubit>()),
+              ],
+              child: ProfileScreen(isUser:arg != null? arg['isUser']: true,inTeacherView: arg!=null ? arg['isTeacherView'] : false,),
+            );
+          },
         );
       default:
         return null;

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MediaItem extends StatelessWidget {
   final String label;
+  final String status;
   final IconData icon;
   final Color color;
   final VoidCallback show;
@@ -12,6 +13,7 @@ class MediaItem extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.color,
+    required this.status,
     required this.show,
     required this.edit,
   });
@@ -37,8 +39,9 @@ class MediaItem extends StatelessWidget {
         trailing: Row(
           mainAxisSize:MainAxisSize.min ,
           children: [
-            GestureDetector(child: Icon(Icons.visibility, size: 20.r),onTap: show,),
-            SizedBox(width: 10.w,),
+            GestureDetector(child: Icon( label != 'PDF Document'?Icons.visibility:Icons.delete, size: 20.r),onTap: show,),
+            SizedBox(width: 20.w,),
+            if(status != 'approved')
             GestureDetector(child: Icon(Icons.edit, size: 20.r),onTap: edit,),
           ],
         ),

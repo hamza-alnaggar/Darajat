@@ -23,6 +23,7 @@ class OtpCubit extends Cubit<OtpState> {
     failureOrResendOtp.fold(
       (failure) => emit(ResendFailure(errMessage: failure.errMessage)),
       (resendOtp) async{
+      
         emit(ResendSuccessfully(resendOtp: resendOtp));
       } 
     );
@@ -49,8 +50,6 @@ class OtpCubit extends Cubit<OtpState> {
 
   Future<void> saveUserToken(String accessToken ) async {
     await SharedPrefHelper.setData("accessToken", accessToken);
-    
-    
   }
 
 

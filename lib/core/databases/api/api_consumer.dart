@@ -14,9 +14,24 @@ abstract class ApiConsumer {
     bool isFormData = false,
     Options ?options
   });
+   Future<dynamic> patch(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
+    Options ?options
+  });
   Future<dynamic> put(
     String path, {
     dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
+    Options ?options
+  });
+  Future<dynamic> download(
+    String path, {
+    dynamic data,
+   required String savePath,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
     Options ?options

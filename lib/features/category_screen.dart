@@ -48,25 +48,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
               child: Row(
                 children: [
                   Text(
-                    S.of(context).top_categories,
+                    S.of(context).all_categories,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w700,
                       color: isDark ? Colors.white : Colors.black,
                     ),
                   ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      S.of(context).see_all,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: CustomColors.primary2,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  
                 ],
               ),
             ),
@@ -274,17 +263,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
         delegate: SliverChildBuilderDelegate(
           (context, index) => Padding(
             padding: EdgeInsets.only(bottom: 20.h),
-            child: SizedBox(
-              height: 350.h,
-              width: 280,
-              child: GestureDetector(
-                child: CourseCardBig2(course: courses[index], width: 280),
-                onTap: () {
-                  context.pushNamed(Routes.courseDetailsScreen, arguments: {
-                    'course': courses[index].id,
-                    'profile': 2
-                  });
-                },
+            child: Center(
+              child: SizedBox(
+                height: 380.h,
+                width: 280,
+                child: GestureDetector(
+                  child: CourseCardBig2(course: courses[index], width: 280),
+                  onTap: () {
+                    context.pushNamed(Routes.courseDetailsScreen, arguments: {
+                      'course': courses[index].id,
+                      'profile': courses[index].teacherId
+                    });
+                  },
+                ),
               ),
             ),
           ),

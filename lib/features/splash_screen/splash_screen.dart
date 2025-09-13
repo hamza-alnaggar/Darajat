@@ -25,14 +25,16 @@ class _SplashScreenState extends State<SplashScreen> {
         await SharedPrefHelper.getBool('isSignedUp') ?? false;
     final bool otpSuccessfully = 
         await SharedPrefHelper.getBool('otpSuccessfully') ?? false;
+  
 
     // Determine route based on conditions
     String nextRoute;
-    if (otpSuccessfully) {
+   
+      if (otpSuccessfully) {
       nextRoute = Routes.entryPoint;
     } else if (isSignedUp) {
       nextRoute = Routes.otpScreen;
-    } else if (!showOnBoarding) {
+    } else if (showOnBoarding) {
       nextRoute = Routes.loginScreen;
     } else {
       nextRoute = Routes.onboarding;

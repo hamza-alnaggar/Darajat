@@ -18,4 +18,13 @@ class GetProfileRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
+
+  Future<Either<Failure, AuthResponseModel>> getMyProfile() async {
+    try {
+      final response = await remoteDataSource.getUserProfile();
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(Failure(errMessage: e.errorModel.errMessage));
+    }
+  }
 }

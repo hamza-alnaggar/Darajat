@@ -31,8 +31,12 @@ class TopicCubit extends Cubit<TopicState> {
       },
     );
   }
-  void selectTopic(TopicModel topic) {
+  void selectTopic(TopicModel ?topic) {
     selectedTopic = topic;
-    emit(ChangeData());  
+    emit(ChangeTopic());  
   }
+  void resetTopic() {
+    selectedTopic = null;
+  emit(TopicSuccess(topics: [])); 
+}
 }

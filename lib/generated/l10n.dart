@@ -55,84 +55,239 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Title In Page One`
+  /// `Learn Anytime, Anywhere`
   String get on_boarding_title_page_one {
     return Intl.message(
-      'Title In Page One',
+      'Learn Anytime, Anywhere',
       name: 'on_boarding_title_page_one',
       desc: '',
       args: [],
     );
   }
 
-  /// `Title In Page Two`
+  /// `Interactive Lessons`
   String get on_boarding_title_page_two {
     return Intl.message(
-      'Title In Page Two',
+      'Interactive Lessons',
       name: 'on_boarding_title_page_two',
       desc: '',
       args: [],
     );
   }
 
-  /// `Title In Page Three`
+  /// `Learn with Top Instructors`
   String get on_boarding_title_page_three {
     return Intl.message(
-      'Title In Page Three',
+      'Learn with Top Instructors',
       name: 'on_boarding_title_page_three',
       desc: '',
       args: [],
     );
   }
 
-  /// `Title In Page Four`
+  /// `Start Your Journey Today`
   String get on_boarding_title_page_four {
     return Intl.message(
-      'Title In Page Four',
+      'Start Your Journey Today',
       name: 'on_boarding_title_page_four',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sub Title In Page One`
+  /// `Your smart learning platform is here to help you grow.`
   String get on_boarding_sub_title_page_one {
     return Intl.message(
-      'Sub Title In Page One',
+      'Your smart learning platform is here to help you grow.',
       name: 'on_boarding_sub_title_page_one',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sub Title In Page Two`
+  /// `Engaging and simplified lessons for all levels.`
   String get on_boarding_sub_title_page_two {
     return Intl.message(
-      'Sub Title In Page Two',
+      'Engaging and simplified lessons for all levels.',
       name: 'on_boarding_sub_title_page_two',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sub Title In Page Three`
+  /// `Guidance from experts and professionals throughout your journey.`
   String get on_boarding_sub_title_page_three {
     return Intl.message(
-      'Sub Title In Page Three',
+      'Guidance from experts and professionals throughout your journey.',
       name: 'on_boarding_sub_title_page_three',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sub Title In Page Four`
+  /// `Join thousands of learners and achieve your goals.`
   String get on_boarding_sub_title_page_four {
     return Intl.message(
-      'Sub Title In Page Four',
+      'Join thousands of learners and achieve your goals.',
       name: 'on_boarding_sub_title_page_four',
       desc: '',
       args: [],
     );
+  }
+
+  /// `delete`
+  String get delete {
+    return Intl.message('delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Question`
+  String get question {
+    return Intl.message('Question', name: 'question', desc: '', args: []);
+  }
+
+  /// `Please enter an answer`
+  String get enter_answer {
+    return Intl.message(
+      'Please enter an answer',
+      name: 'enter_answer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear`
+  String get clear {
+    return Intl.message('Clear', name: 'clear', desc: '', args: []);
+  }
+
+  /// `Answer`
+  String get answer {
+    return Intl.message('Answer', name: 'answer', desc: '', args: []);
+  }
+
+  /// `Please enter the question`
+  String get enter_question {
+    return Intl.message(
+      'Please enter the question',
+      name: 'enter_question',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type your question here...`
+  String get enter_question_hint {
+    return Intl.message(
+      'Type your question here...',
+      name: 'enter_question_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Answers`
+  String get answers {
+    return Intl.message('Answers', name: 'answers', desc: '', args: []);
+  }
+
+  /// `My courses`
+  String get my_courses {
+    return Intl.message('My courses', name: 'my_courses', desc: '', args: []);
+  }
+
+  /// `Loading courses...`
+  String get loading_courses {
+    return Intl.message(
+      'Loading courses...',
+      name: 'loading_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading courses`
+  String get error_loading_courses {
+    return Intl.message(
+      'Error loading courses',
+      name: 'error_loading_courses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Create your first course to get started`
+  String get create_first_course {
+    return Intl.message(
+      'Create your first course to get started',
+      name: 'create_first_course',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Course`
+  String get create_course {
+    return Intl.message(
+      'Create Course',
+      name: 'create_course',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message('Profile', name: 'profile', desc: '', args: []);
+  }
+
+  /// `My courses arrange`
+  String get my_courses_arrange {
+    return Intl.message(
+      'My courses arrange',
+      name: 'my_courses_arrange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Approved`
+  String get status_approved {
+    return Intl.message(
+      'Approved',
+      name: 'status_approved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Draft`
+  String get status_draft {
+    return Intl.message('Draft', name: 'status_draft', desc: '', args: []);
+  }
+
+  /// `Pending`
+  String get status_pending {
+    return Intl.message('Pending', name: 'status_pending', desc: '', args: []);
+  }
+
+  /// `Rejected`
+  String get status_rejected {
+    return Intl.message(
+      'Rejected',
+      name: 'status_rejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deleted`
+  String get status_deleted {
+    return Intl.message('Deleted', name: 'status_deleted', desc: '', args: []);
   }
 
   /// `Categories`
@@ -275,6 +430,36 @@ class S {
     );
   }
 
+  /// `navigate to teacher view`
+  String get teacher_view {
+    return Intl.message(
+      'navigate to teacher view',
+      name: 'teacher_view',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `navigate to student view`
+  String get student_view {
+    return Intl.message(
+      'navigate to student view',
+      name: 'student_view',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flame of Enthusiasm`
+  String get flame {
+    return Intl.message(
+      'Flame of Enthusiasm',
+      name: 'flame',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Discover Courses`
   String get discover_courses {
     return Intl.message(
@@ -285,11 +470,11 @@ class S {
     );
   }
 
-  /// `Top Categories`
-  String get top_categories {
+  /// `All Categories`
+  String get all_categories {
     return Intl.message(
-      'Top Categories',
-      name: 'top_categories',
+      'All Categories',
+      name: 'all_categories',
       desc: '',
       args: [],
     );
@@ -610,6 +795,346 @@ class S {
     return Intl.message(
       'Change password',
       name: 'change_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password change Successfully`
+  String get password_change_successfully {
+    return Intl.message(
+      'Password change Successfully',
+      name: 'password_change_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current password`
+  String get current_password {
+    return Intl.message(
+      'Current password',
+      name: 'current_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter you current password`
+  String get please_enter_your_current_password {
+    return Intl.message(
+      'Please enter you current password',
+      name: 'please_enter_your_current_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New password`
+  String get new_Password {
+    return Intl.message(
+      'New password',
+      name: 'new_Password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm new password`
+  String get Confirm_New_Password {
+    return Intl.message(
+      'Confirm new password',
+      name: 'Confirm_New_Password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `password do not match`
+  String get Passwords_do_not_match {
+    return Intl.message(
+      'password do not match',
+      name: 'Passwords_do_not_match',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `password must contain`
+  String get Password_must_contain {
+    return Intl.message(
+      'password must contain',
+      name: 'Password_must_contain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `one special character`
+  String get One_special_character {
+    return Intl.message(
+      'one special character',
+      name: 'One_special_character',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `one number`
+  String get One_number {
+    return Intl.message('one number', name: 'One_number', desc: '', args: []);
+  }
+
+  /// `one uppercase letter`
+  String get One_uppercase_letter {
+    return Intl.message(
+      'one uppercase letter',
+      name: 'One_uppercase_letter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `at least 8 characters`
+  String get At_least_8_characters {
+    return Intl.message(
+      'at least 8 characters',
+      name: 'At_least_8_characters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message('Save', name: 'save', desc: '', args: []);
+  }
+
+  /// `Teacher Rules and Guidelines`
+  String get Teacher_Rules {
+    return Intl.message(
+      'Teacher Rules and Guidelines',
+      name: 'Teacher_Rules',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Technical Quality Standards`
+  String get Technical_Quality_Standards {
+    return Intl.message(
+      'Technical Quality Standards',
+      name: 'Technical_Quality_Standards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Educational Value and Content Quality`
+  String get Educational_Value {
+    return Intl.message(
+      'Educational Value and Content Quality',
+      name: 'Educational_Value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Legal and Policy Compliance`
+  String get Legal_Compliance {
+    return Intl.message(
+      'Legal and Policy Compliance',
+      name: 'Legal_Compliance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Student Engagement`
+  String get Student_Engagement {
+    return Intl.message(
+      'Student Engagement',
+      name: 'Student_Engagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monetization (If Applicable)`
+  String get Monetization {
+    return Intl.message(
+      'Monetization (If Applicable)',
+      name: 'Monetization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review and Publication Process`
+  String get Review_Process {
+    return Intl.message(
+      'Review and Publication Process',
+      name: 'Review_Process',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I have read and agree to all the terms and conditions`
+  String get Accept_Rules {
+    return Intl.message(
+      'I have read and agree to all the terms and conditions',
+      name: 'Accept_Rules',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept and Continue`
+  String get Accept_And_Continue {
+    return Intl.message(
+      'Accept and Continue',
+      name: 'Accept_And_Continue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All video lessons must be recorded in High Definition (HD), with a minimum resolution of 720p.`
+  String get Rule_1_1 {
+    return Intl.message(
+      'All video lessons must be recorded in High Definition (HD), with a minimum resolution of 720p.',
+      name: 'Rule_1_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All audio must be clear, audible, and free from background noise and distortions.`
+  String get Rule_1_2 {
+    return Intl.message(
+      'All audio must be clear, audible, and free from background noise and distortions.',
+      name: 'Rule_1_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Courses must be produced using adequate equipment to ensure professional audio and video quality.`
+  String get Rule_1_3 {
+    return Intl.message(
+      'Courses must be produced using adequate equipment to ensure professional audio and video quality.',
+      name: 'Rule_1_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The course must have clear, defined learning objectives and outcomes for students.`
+  String get Rule_2_1 {
+    return Intl.message(
+      'The course must have clear, defined learning objectives and outcomes for students.',
+      name: 'Rule_2_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All course content must be original, created by you, and provide genuine educational value.`
+  String get Rule_2_2 {
+    return Intl.message(
+      'All course content must be original, created by you, and provide genuine educational value.',
+      name: 'Rule_2_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The course must be well-structured with a logical sequence of modules and lessons.`
+  String get Rule_2_3 {
+    return Intl.message(
+      'The course must be well-structured with a logical sequence of modules and lessons.',
+      name: 'Rule_2_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You affirm that you own or possess the necessary legal rights to all content you publish, including videos, text, and resources.`
+  String get Rule_3_1 {
+    return Intl.message(
+      'You affirm that you own or possess the necessary legal rights to all content you publish, including videos, text, and resources.',
+      name: 'Rule_3_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You agree not to post any content that is illegal, offensive, infringes on intellectual property rights, or violates our platform's policies.`
+  String get Rule_3_2 {
+    return Intl.message(
+      'You agree not to post any content that is illegal, offensive, infringes on intellectual property rights, or violates our platform\'s policies.',
+      name: 'Rule_3_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You commit to actively engaging with your students by responding to questions in the Q&A section within a reasonable timeframe.`
+  String get Rule_4_1 {
+    return Intl.message(
+      'You commit to actively engaging with your students by responding to questions in the Q&A section within a reasonable timeframe.',
+      name: 'Rule_4_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You agree to consider student feedback for the continual improvement of your course content.`
+  String get Rule_4_2 {
+    return Intl.message(
+      'You agree to consider student feedback for the continual improvement of your course content.',
+      name: 'Rule_4_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you choose to offer a paid course, you agree to the platform's revenue share model as defined in the pricing and payments policy.`
+  String get Rule_5_1 {
+    return Intl.message(
+      'If you choose to offer a paid course, you agree to the platform\'s revenue share model as defined in the pricing and payments policy.',
+      name: 'Rule_5_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The course price must be set within the allowed price tiers specified by the platform.`
+  String get Rule_5_2 {
+    return Intl.message(
+      'The course price must be set within the allowed price tiers specified by the platform.',
+      name: 'Rule_5_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You understand and accept that every course must be submitted for review and approved by the platform's administration before it is published.`
+  String get Rule_6_1 {
+    return Intl.message(
+      'You understand and accept that every course must be submitted for review and approved by the platform\'s administration before it is published.',
+      name: 'Rule_6_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The platform reserves the right to reject or remove any course that does not meet the quality standards or violates these terms without prior notice.`
+  String get Rule_6_2 {
+    return Intl.message(
+      'The platform reserves the right to reject or remove any course that does not meet the quality standards or violates these terms without prior notice.',
+      name: 'Rule_6_2',
       desc: '',
       args: [],
     );

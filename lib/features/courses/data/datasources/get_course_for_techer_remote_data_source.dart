@@ -36,7 +36,7 @@ class GetCourseForTecherRemoteDataSource {
       case 'draft':
         return EndPoints.draftCourses;
       case 'deleted':
-        return EndPoints.draftCourses;
+        return EndPoints.deletedCourses;
       case 'witharrangement':
         return EndPoints.coursesWithArrangement;
       default:

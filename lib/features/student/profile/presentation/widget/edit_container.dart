@@ -18,7 +18,7 @@ class EditContainer extends StatelessWidget {
     return Card(
       elevation: 5,
       child: Container(
-        height: 80.h,
+        height: 75.h,
         width: 95.w,
         decoration: BoxDecoration(
           color: Colors.white,

@@ -25,13 +25,10 @@ class GetSkillsCubit extends Cubit<GetSkillsState> {
     );
   }
 
-  // Add this method to update available skills
   void updateAvailableSkills(List<SkillSubModel> userSkills) {
-  print('dfakjdfkjadlkfjdlkfj;ljal;kjdf$userSkills');
     availableSkills = allSkills.where(
       (skill) => !userSkills.any((userSkill) => userSkill.id == skill.id)
     ).toList();
-    print('fkdjlfalkjdflkjadflkjas;lkdfjdlksjfalk;sj $availableSkills');
     emit(SkillsListUpdated()); 
   }
 

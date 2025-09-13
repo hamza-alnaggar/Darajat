@@ -23,3 +23,16 @@ class QuizModel {
   }
   
 }
+class QuizResponseModel
+{
+  final QuizModel quiz;
+  final String message;
+
+  QuizResponseModel({required this.quiz, required this.message});
+  
+factory QuizResponseModel.fromJson(Map json){
+   
+    return QuizResponseModel(quiz:QuizModel.fromJson(json['data']) ,message: json['message']) ;
+  }
+
+}

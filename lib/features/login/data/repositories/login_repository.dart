@@ -25,5 +25,17 @@ Future<Either<Failure, AuthResponseModel>> login({
    return Left(Failure(errMessage: e.errorModel.errMessage)) ;
 }
 }
+Future<Either<Failure, LoginFromGoogleModel>> loginWithGoogle({
+  required String token
+}) async {
+  try {
+    final response = await loginRemoteDataSource.loginWithGoogle(
+      token: token
+    );
+    return Right(response);
+  } on ServerException catch (e) {
+   return Left(Failure(errMessage: e.errorModel.errMessage)) ;
+}
+}
 }
 

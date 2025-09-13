@@ -9,10 +9,11 @@ class RateCourseRepository {
   RateCourseRepository({required this.remoteDataSource});
 
   Future<Either<Failure, String>> rateCourse(
-    int courseId
+    int courseId,
+    int rate
       ) async {
     try {
-      final response = await remoteDataSource.rateCourse(courseId);
+      final response = await remoteDataSource.rateCourse(courseId,rate);
       return Right(response);
     } on ServerException catch (e) {
       return Left(Failure(errMessage: e.errorModel.errMessage));

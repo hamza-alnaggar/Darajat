@@ -59,7 +59,6 @@ class ContentUploader extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if(isVideo)
               UploadButton(
@@ -71,6 +70,7 @@ class ContentUploader extends StatelessWidget {
                   onShowFiles();
                 },
               ),
+              SizedBox(width: 10.w,),
               if(isVideo)
               UploadButton(
                 icon: Icons.image,

@@ -1,21 +1,20 @@
 // features/statistics/presentation/cubit/statistics_state.dart
 
+import 'package:learning_management_system/features/statistics/data/models/statistics_item_model.dart';
 
-import 'package:learning_management_system/features/statistics/data/models/statistics_resopnse_model.dart';
+abstract class StatisticsState {}
 
-sealed class StatisticsState {}
+class StatisticsInitial extends StatisticsState {}
 
-final class StatisticsInitial extends StatisticsState {}
+class StatisticsLoading extends StatisticsState {}
 
-final class StatisticsLoading extends StatisticsState {}
-
-final class StatisticsSuccess extends StatisticsState {
-  final StatisticsResponseModel statistics;
+class StatisticsSuccess extends StatisticsState {
+  final List<StatisticsItemModel> statistics;
 
   StatisticsSuccess({required this.statistics});
 }
 
-final class StatisticsFailure extends StatisticsState {
+class StatisticsFailure extends StatisticsState {
   final String errMessage;
 
   StatisticsFailure({required this.errMessage});

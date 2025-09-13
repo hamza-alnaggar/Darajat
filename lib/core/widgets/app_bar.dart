@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:learning_management_system/core/theming/colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final bool showBackButton;
+  bool showBackButton;
   final VoidCallback? onBackPressed;
   final List<Widget>? actions;
 
-  const CustomAppBar({
+   CustomAppBar({
     Key? key,
     required this.title,
     this.showBackButton = true,
@@ -19,8 +20,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     return AppBar(
-      backgroundColor: Colors.transparent, // Important for gradient to show
+      bottom: PreferredSize(preferredSize: preferredSize, child: VerticalDivider(color: CustomColors.primary2,width: double.infinity,thickness: 1,)),
+      iconTheme: IconThemeData(color: CustomColors.primary), 
+      backgroundColor: Colors.transparent,
       foregroundColor: const Color(0xffF5F5F5),
       elevation: 0,
       centerTitle: true,
@@ -33,18 +39,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : null,
       title: Text(
         title,
-        style: const TextStyle(
-          color: Color(0xffF5F5F5),
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
+        style: textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: isDark ? CustomColors.white : Colors.black,
+          ),
       ),
       actions: actions,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF130830),
+            Color(0xFF130830),
               Color(0xFF1b1344),
             ],
             begin: Alignment.topLeft,

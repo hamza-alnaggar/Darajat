@@ -29,5 +29,10 @@ class Routes {
 
   static const String createCourseScreen = '/createCourseScreen';
   static const String sidebar = '/sideBar';
+  static const String staticsScreen = '/staticsScreen';
+  static const String teacherRulesScreen = '/teacherRulesScreen';
+  static const String followedCourses = '/followedCourses';
+  static const String paidScreen = '/paidScreen';
+  static const String getCourseForTeacherByTopic = '/getCourseForTeacherByTopic';
 
 }

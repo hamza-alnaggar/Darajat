@@ -10,7 +10,7 @@ class QuizCreationRemoteDataSource {
 
   QuizCreationRemoteDataSource({required this.api});
 
-  Future<QuizModel> createQuiz({
+  Future<QuizResponseModel> createQuiz({
     required QuizCreateBody request,
     required int episodeId,
     required bool isCopy
@@ -22,9 +22,9 @@ class QuizCreationRemoteDataSource {
       data: request.toJson(),
     );
     
-    return QuizModel.fromJson(response[ApiKey.data]);
+    return QuizResponseModel.fromJson(response);
   }
-  Future<QuizModel> updateQuiz({
+  Future<String> updateQuiz({
     required QuizCreateBody request,
     required int episodeId,
     required bool isCopy
@@ -37,19 +37,19 @@ class QuizCreationRemoteDataSource {
       data: request.toJson(),
     );
     
-    return QuizModel.fromJson(response[ApiKey.data]);
+    return response['message'] ;
   }
-  Future<QuizModel> deleteQuiz({
+  Future<String> deleteQuiz({
     required bool isCooy,
     required int episodeId
 
   }) async {
 
     final response = await api.delete(
-     isCooy? '${EndPoints.deleteQuiz}/$episodeId/copy': '${EndPoints.updateQuiz}/$episodeId',
+      isCooy? '${EndPoints.deleteQuiz}/$episodeId/copy': '${EndPoints.deleteQuiz}/$episodeId',
       options: Options(extra: {"authRequired":true}),
     );
     
-    return QuizModel.fromJson(response[ApiKey.data]);
+    return response['message'];
   }
 }

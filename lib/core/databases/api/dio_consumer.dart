@@ -10,7 +10,6 @@ class DioConsumer extends ApiConsumer {
   final Dio dio;
   
   static const Map<String, String> _defaultHeaders = {
-    'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
 
@@ -30,8 +29,8 @@ class DioConsumer extends ApiConsumer {
           // Apply default headers first (already set, but ensure per-request consistency)
           options.headers.addAll(_defaultHeaders);
 
-          final String local = await SharedPrefHelper.getString('local') ?? 'ar';
-  options.headers['Accept-Language'] = local.isNotEmpty ? local : 'ar';
+          final String local = await SharedPrefHelper.getString('local') ?? 'en';
+        options.headers['Accept-Language'] = local.isNotEmpty ? local : 'en';
           
           if (options.extra['authRequired'] == true) {
             try {
@@ -76,6 +75,23 @@ class DioConsumer extends ApiConsumer {
     Options ?options}) async {
     try {
       var res = await dio.post(
+        path,
+        data: isFormData ? FormData.fromMap(data) : data,
+        queryParameters: queryParameters,
+        options: options
+      );
+      return res.data;
+    } on DioException catch (e) {
+      handleDioException(e);
+    }
+  }
+  Future patch(String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
+    Options ?options}) async {
+    try {
+      var res = await dio.patch(
         path,
         data: isFormData ? FormData.fromMap(data) : data,
         queryParameters: queryParameters,
@@ -152,4 +168,33 @@ class DioConsumer extends ApiConsumer {
       handleDioException(e);
     }
   }
+  @override
+ // in your ApiConsumer implementation
+@override
+Future download(
+  String path, {
+  dynamic data,
+  required String savePath,
+  Map<String, dynamic>? queryParameters,
+  bool isFormData = false,
+  Options? options,
+}) async {
+  try {
+    final res = await dio.download(
+      path, 
+      savePath,
+      data: isFormData ? FormData.fromMap(data ?? {}) : data,
+      queryParameters: queryParameters,
+      options: options,
+      onReceiveProgress: (received, total) {
+    
+      },
+    );
+    return res.data;
+  } on DioException catch (e) {
+    handleDioException(e);
+    rethrow; // or return/throw a custom exception if handleDioException doesn't
+  }
+}
+
 }

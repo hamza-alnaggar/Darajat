@@ -11,7 +11,8 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit({required this.repository}) : super(CategoryInitial());
 
   List<CategoryModel> categoryList = [];
-  CategoryModel ?selectedCategory ;
+
+  CategoryModel ?selectedCategory ; 
 
 
 
@@ -31,6 +32,7 @@ class CategoryCubit extends Cubit<CategoryState> {
       },
     );
   }
+  
   void selectCategory(CategoryModel category) {
     selectedCategory = category;
     emit(ChangeData());  

@@ -23,6 +23,13 @@ class TopicModel {
     required this.id,
     required this.title,
   });
+    @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TopicModel && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   factory TopicModel.fromJson(Map<String, dynamic> json) {
     return TopicModel(

@@ -9,19 +9,27 @@ class QuizCreationCubit extends Cubit<QuizCreationState> {
 
   QuizCreationCubit({required this.repository}) : super(QuizCreationInitial());
 
-  Future<int> createQuiz(QuizCreateBody request, int episodeId,bool isCopy) async {
+  Future<int> createQuiz(
+    QuizCreateBody request,
+    int episodeId,
+    bool isCopy,
+  ) async {
     emit(QuizCreationLoading());
     try {
-      final result = await repository.createQuiz(request: request, episodeId: episodeId,isCopy:isCopy);
-      
+      final result = await repository.createQuiz(
+        request: request,
+        episodeId: episodeId,
+        isCopy: isCopy,
+      );
+
       return result.fold(
         (failure) {
           emit(QuizCreationFailure(errMessage: failure.errMessage));
           return -1;
         },
         (response) {
-          emit(QuizCreationSuccess(response: response));
-          return response.quizId; 
+          emit(QuizCreationSuccess(message: response.message));
+          return response.quiz.quizId;
         },
       );
     } catch (e) {
@@ -29,19 +37,28 @@ class QuizCreationCubit extends Cubit<QuizCreationState> {
       return -1;
     }
   }
-  Future<bool> updateQuiz(QuizCreateBody request,int episodeId,bool isCopy) async {
+
+  Future<bool> updateQuiz(
+    QuizCreateBody request,
+    int episodeId,
+    bool isCopy,
+  ) async {
     emit(QuizCreationLoading());
     try {
-      final result = await repository.updateQuiz(request: request, episodeId: episodeId,isCopy:isCopy);
-      
+      final result = await repository.updateQuiz(
+        request: request,
+        episodeId: episodeId,
+        isCopy: isCopy,
+      );
+
       return result.fold(
         (failure) {
           emit(QuizCreationFailure(errMessage: failure.errMessage));
           return false;
         },
         (response) {
-          emit(QuizCreationSuccess(response: response));
-          return true; 
+          emit(QuizCreationSuccess(message: response));
+          return true;
         },
       );
     } catch (e) {
@@ -49,13 +66,23 @@ class QuizCreationCubit extends Cubit<QuizCreationState> {
       return false;
     }
   }
-  Future<void> deleteQuiz(int episodeId,bool isCopy) async {
+
+  Future<bool> deleteQuiz(int episodeId, bool isCopy) async {
     emit(QuizCreationLoading());
-    final result = await repository.deleteQuiz(episodeId: episodeId,isCopy:isCopy);
-    
-    result.fold(
-      (failure) => emit(QuizCreationFailure(errMessage: failure.errMessage)),
-      (response) => emit(QuizCreationSuccess(response: response)),
+    final result = await repository.deleteQuiz(
+      episodeId: episodeId,
+      isCopy: isCopy,
+    );
+
+    return result.fold(
+      (failure) {
+        emit(QuizCreationFailure(errMessage: failure.errMessage));
+        return false;
+      },
+      (response) {
+        emit(QuizCreationSuccess(message: response));
+        return true;
+      },
     );
   }
 }

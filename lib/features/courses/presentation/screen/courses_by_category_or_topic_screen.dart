@@ -59,7 +59,7 @@ import 'package:skeletonizer/skeletonizer.dart';
                 child: BlocBuilder<TopicCubit, TopicState>(
                   builder: (context, state) {
                     if (state is TopicSuccess) {
-                      return ChipsTopicWidget(ctx: context, topics: state.topics);
+                      return ChipsTopicWidget(ctx: context, topics: state.topics!);
                     } else if (state is TopicLoading) {
                       return _buildTopicLoading();
                     } else if (state is TopicFailure) {

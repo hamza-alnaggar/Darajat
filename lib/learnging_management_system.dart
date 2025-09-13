@@ -22,7 +22,7 @@ class LearngingManagementSystem extends StatefulWidget {
 }
 
 class _LearngingManagementSystemState extends State<LearngingManagementSystem> {
-    String localization = 'ar'; // Use a safe default
+    String localization = 'en'; // Use a safe default
   
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _LearngingManagementSystemState extends State<LearngingManagementSystem> {
 
   Future<void> _loadLocalization() async {
     try {
-      final savedLocal = await SharedPrefHelper.getString('local') ?? 'ar';
+      final savedLocal = await SharedPrefHelper.getString('local') ?? 'en';
       
       // Validate the locale value
       if (savedLocal.isNotEmpty) {

@@ -51,4 +51,12 @@ class CreateUpdateEpisodeRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
+  Future<Either<Failure, String>> deleteFile(int episodeId,bool isCopy) async {
+    try {
+      final data = await remoteDataSource.deletePdf(episodeId,isCopy);
+      return Right(data);
+    } on ServerException catch (e) {
+      return Left(Failure(errMessage: e.errorModel.errMessage));
+    }
+  }
 }

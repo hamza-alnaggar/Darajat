@@ -1,8 +1,8 @@
-// features/profile/presentation/cubit/profile_cubit.dart
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learning_management_system/core/databases/cache/cache_helper.dart';
 import 'package:learning_management_system/features/student/profile/data/models/change_password_profile_body.dart';
 import 'package:learning_management_system/features/student/profile/data/models/sub_models/update_profile_body_sub_model.dart';
 import 'package:learning_management_system/features/student/profile/data/repository/change_password_repository.dart';
@@ -19,7 +19,6 @@ import 'package:learning_management_system/features/student/skills/data/models/s
 class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileRepository getProfileRepository;
   final UpdateProfileRepository updateProfileRepository;
-  final ChangePasswordRepository changePasswordRepository;
   final UpdateProfileImageRepository updateProfileImageRepository;
   AuthResponseModel? profile;
 
@@ -32,17 +31,32 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController workExperienceController = TextEditingController();
   TextEditingController linkedInUrlController = TextEditingController();
   TextEditingController specialityController = TextEditingController();
+  CountryOrLanguageSubModel? country;
+  String? education;
+  CountryOrLanguageSubModel? jobTitle;
+
+
 
   ProfileCubit(
     this.getProfileRepository,
     this.updateProfileRepository,
-    this.changePasswordRepository,
     this.updateProfileImageRepository,
   ) : super(ProfileInitial());
 
   Future<void> loadProfile(int userId) async {
     emit(ProfileLoading());
     final result = await getProfileRepository.getProfile(userId);
+    result.fold((failure) => emit(ProfileError(failure.errMessage)), (
+      profileData,
+    ) {
+      profile = profileData;
+      _initializeControllers(profileData);
+      emit(ProfileLoaded(profile: profileData));
+    });
+  }
+  Future<void> loadMyProrile() async {
+    emit(ProfileLoading());
+    final result = await getProfileRepository.getMyProfile();
     result.fold((failure) => emit(ProfileError(failure.errMessage)), (
       profileData,
     ) {
@@ -61,18 +75,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     workExperienceController.text = user.workExperience ?? '';
     linkedInUrlController.text = user.linkedInUrl ?? '';
     specialityController.text = user.speciality ?? '';
+    country = user.country;
+    education = user.education;
+    jobTitle = user.jobTitle;
   }
 
   Future<void> updateProfile(
-    int? countryId,
-    String? education,
-    int? jobTitleId,
   ) async {
     emit(ProfileLoading());
-
     final body = UpdateProfileBodySubModel(
-      jobTitleId: jobTitleId,
-      countryId: countryId,
+      jobTitleId: jobTitle!.id,
+      countryId: country!.id,
       lastName: lastNameController.text,
       fistName: firstNameController.text,
       linkedInUrl: linkedInUrlController.text,
@@ -90,17 +103,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       updatedProfile,
     ) {
       profile = updatedProfile;
-emit(ProfileLoaded(profile: profile!));});
+      emit(ProfileLoaded(profile: profile!));});
   }
 
-  Future<void> changePassword(ChangePasswordProfileBody body) async {
-    emit(ChangePasswordLoading());
-    final result = await changePasswordRepository.changePasswordInProfile(body);
-    result.fold(
-      (failure) => emit(ChangePasswordError(failure.errMessage)),
-      (success) => emit(ChangePasswordSuccess()),
-    );
-  }
+  
+
 
   Future<void> updateProfileImage(File image) async {
     emit(ProfileLoading());
@@ -124,7 +131,7 @@ emit(ProfileLoaded(profile: profile!));});
         message: '',
         user: profile!.user.copyWith(languages: updatedLanguages),
       );
-      emit(ProfileLoaded(profile: profile!));
+      updateProfile();
     }
   }
 
@@ -139,8 +146,8 @@ emit(ProfileLoaded(profile: profile!));});
         message: '',
         user: profile!.user.copyWith(languages: updatedLanguages),
       );
-      emit(ProfileLoaded(profile: profile!));
-    }
+      updateProfile();
+      }
   }
 
   void updateLanguage(
@@ -164,11 +171,10 @@ emit(ProfileLoaded(profile: profile!));});
         message: '',
         user: profile!.user.copyWith(languages: updatedLanguages),
       );
-      updateProfile(profile?.user.countryId, profile?.user.education, profile?.user.jobTitleId);
+      updateProfile();
     }
   }
 
-  // Skill management
   void addSkill(SkillSubModel skill) {
     if (profile != null) {
       final updatedSkills = List<SkillSubModel>.from(
@@ -181,7 +187,7 @@ emit(ProfileLoaded(profile: profile!));});
         user: profile!.user.copyWith(skills: updatedSkills),
       );
       
-updateProfile(profile?.user.countryId, profile?.user.education, profile?.user.jobTitleId);    }
+updateProfile();    }
   }
 
   void removeSkill(SkillSubModel skill) {
@@ -193,14 +199,14 @@ updateProfile(profile?.user.countryId, profile?.user.education, profile?.user.jo
         message: '',
         user: profile!.user.copyWith(skills: updatedSkills),
       );
-updateProfile(profile?.user.countryId, profile?.user.education, profile?.user.jobTitleId);    }
+updateProfile();    }
   }
 
-  // Add this conversion method
   List<SkillsBodySubModels> _prepareSkillsForUpdate() {
     return profile?.user.skills?.map((skill) {
           return SkillsBodySubModels(skillId: skill.id);
         }).toList() ??
         [];
   }
+
 }

@@ -8,12 +8,17 @@ import 'package:learning_management_system/features/sign_up/data/models/auth_res
 import 'package:learning_management_system/features/sign_up/data/models/sub_models/country_sub_model.dart';
 import 'package:learning_management_system/features/sign_up/presentation/cubit/get_country_cubit.dart';
 import 'package:learning_management_system/features/sign_up/presentation/cubit/get_country_state.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_speci_cubit.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_speci_state.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_univercity_cubit.dart';
+import 'package:learning_management_system/features/sign_up/presentation/cubit/get_univercity_state.dart';
 import 'package:learning_management_system/features/sign_up/presentation/widgets/drop_down_countries.dart';
 import 'package:learning_management_system/features/student/educations/presentation/cubit/get_educations_cubit.dart';
 import 'package:learning_management_system/features/student/educations/presentation/cubit/get_educations_state.dart';
 import 'package:learning_management_system/features/student/job_titles/presentation/cubit/job_title_cubit.dart';
 import 'package:learning_management_system/features/student/job_titles/presentation/cubit/job_title_state.dart';
 import 'package:learning_management_system/features/student/profile/presentation/cubit/profile_cubit.dart';
+import 'package:learning_management_system/generated/l10n.dart';
 
 class EditMainInfoDialog extends StatefulWidget {
   final AuthResponseModel model;
@@ -27,6 +32,8 @@ class EditMainInfoDialog extends StatefulWidget {
 class _EditMainInfoDialogState extends State<EditMainInfoDialog> {
   late ProfileCubit _profileCubit;
   late GetCountryCubit _countryCubit;
+  late GetSpeciCubit _speciCubit;
+  late GetUnivercityCubit _univercityCubit;
   late GetEducationsCubit _educationsCubit;
   late JobTitleCubit _jobTitleCubit;
 
@@ -37,6 +44,8 @@ class _EditMainInfoDialogState extends State<EditMainInfoDialog> {
     _profileCubit = context.read<ProfileCubit>();
     _countryCubit = context.read<GetCountryCubit>();
     _educationsCubit = context.read<GetEducationsCubit>();
+    _speciCubit = context.read<GetSpeciCubit>();        
+    _univercityCubit = context.read<GetUnivercityCubit>(); 
     _jobTitleCubit = context.read<JobTitleCubit>();
 
     _initializeValues();
@@ -52,22 +61,20 @@ class _EditMainInfoDialogState extends State<EditMainInfoDialog> {
     _profileCubit.specialityController.text = user.speciality ?? '';
     _profileCubit.workExperienceController.text = user.workExperience?.toString() ?? '';
     _profileCubit.linkedInUrlController.text = user.linkedInUrl ?? '';
-    
+    _univercityCubit.selectedUnivercity = user.university;
+    _speciCubit.selectedSpeci = user.speciality;
+    _countryCubit.selectedCountry = user.country ;
+    _jobTitleCubit.selectedJobTitle = user.jobTitle;    
     // Dropdown selections
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (user.country != null) {
-        print(user.country);
-        _countryCubit.setInitialCountry(user.country!);
-      }
       
       if (user.education != null) {
         print(user.education);
         _educationsCubit.setInitialEducation(user.education!);
       }
-      
-      if (user.jobTitle != null) {
-        print(user.jobTitle);
-        _jobTitleCubit.setInitialJobTitle(user.jobTitle!);
+      if(user.speciality != null){
+          _speciCubit.setInitialSpeci(user.speciality);
+
       }
     });
   }
@@ -131,16 +138,28 @@ class _EditMainInfoDialogState extends State<EditMainInfoDialog> {
               },
             ),
             SizedBox(height: 25.h),
-            AppTextFormField(
-              hintText: "University",
-              icon: Icons.school,
-              controller: _profileCubit.universityController,
+            BlocBuilder<GetUnivercityCubit, GetUnivercityState>(
+              builder: (context, state) {
+                return CustomDropDown<String>(
+                  selectedVal: _univercityCubit.selectedUnivercity,
+                  list: _univercityCubit.univercityList,
+                  hint: "Univercity",
+                  itemToString: (item) => item,
+                  onChanged: (value) => _univercityCubit.selectUnivercity(value!),
+                );
+              },
             ),
-            SizedBox(height: 10.h),
-            AppTextFormField(
-              hintText: "Speciality",
-              icon: Icons.school,
-              controller: _profileCubit.specialityController,
+            SizedBox(height: 25.h),
+            BlocBuilder<GetSpeciCubit, GetSpeciState>(
+              builder: (context, state) {
+                return CustomDropDown<CountryOrLanguageSubModel>(
+                  selectedVal: _speciCubit.selectedSpeci,
+                  list: _speciCubit.speciList,
+                  hint: "Choose Specialiaze",
+                  itemToString: (item) => item.name,
+                  onChanged: (value) => _speciCubit.selectSeci(value!),
+                );
+              },
             ),
             SizedBox(height: 10.h),
             AppTextFormField(
@@ -158,21 +177,44 @@ class _EditMainInfoDialogState extends State<EditMainInfoDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => context.pop(),
-          child: const Text("Cancel"),
-        ),
-        TextButton(
-          onPressed: () {
-            _profileCubit.updateProfile(
-              _countryCubit.selectedCountry?.id,
-              _educationsCubit.selectedEducation,
-              _jobTitleCubit.selectedJobTitle?.id,
-            );
+        Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () => context.pop(),
+                              style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 16.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                              ),
+                              child: Text(S.of(context).Cancel,),
+                            ),
+                          ),
+                          SizedBox(width: 16.w),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _profileCubit.country = _countryCubit.selectedCountry;
+                                _profileCubit.education =_educationsCubit.selectedEducation;
+                                _profileCubit.jobTitle =  _jobTitleCubit.selectedJobTitle;
+            _profileCubit.updateProfile();
             context.pop();
           },
-          child: const Text("Save"),
-        ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: CustomColors.primary2,
+                                foregroundColor: Colors.white,
+                                padding: EdgeInsets.symmetric(vertical: 16.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                              ),
+                              child: Text(S.of(context).save,style:TextStyle(fontSize: 17.r)),
+                            ),
+                          ),
+                        ],
+                      ),
       ],
     );
   }

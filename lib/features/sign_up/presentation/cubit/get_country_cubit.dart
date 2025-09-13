@@ -25,13 +25,7 @@ class GetCountryCubit extends Cubit<GetCountryState> {
       },
     );
   }
-  void setInitialCountry(String Incountry) {
-  selectedCountry = countryList.firstWhere(
-    (country) => country.name == Incountry,
-    orElse: () => countryList.first,
-  );
-  emit(GetCountrySuccessfully());
-}
+ 
 
  
   void selectCountry(CountryOrLanguageSubModel country) {

@@ -43,7 +43,7 @@ class CommentRemoteDataSource {
     
 
     final response = await api.post(
-    '${EndPoints.getComment}/$episodeId',
+    '${EndPoints.createComment}/$episodeId',
       data: {'content': content},
       options: Options(extra: {'authRequired': true},)
     
@@ -58,7 +58,7 @@ class CommentRemoteDataSource {
 
     
     final response = await api.put(
-      '${EndPoints.getComment}/$commentId',
+      '${EndPoints.updateComment}/$commentId',
       data: {'content': content},
       options: Options(extra: {'authRequired': true},)
     );
@@ -68,7 +68,7 @@ class CommentRemoteDataSource {
   Future<String> deleteComment(int commentId,bool isTeacher) async {
 
     
-    final response = await api.delete('${isTeacher?EndPoints.deleteCommentForTeacher : EndPoints.getComment}/$commentId',options:  Options(extra: {'authRequired': true},));
+    final response = await api.delete('${isTeacher?EndPoints.deleteCommentForTeacher : EndPoints.deleteComment}/$commentId',options:  Options(extra: {'authRequired': true},));
     return response[ApiKey.message];
   }
 
@@ -79,11 +79,5 @@ class CommentRemoteDataSource {
   return CommentModel.fromJson(response['data']);
 }
 
-// Remove like from a comment
-Future<CommentModel> removeLike(int commentId) async {
-  
 
-  final response = await api.delete('${EndPoints.removeLike}/$commentId',options: Options(extra: {'authRequired': true},));
-  return CommentModel.fromJson(response['data']);
-}
 }

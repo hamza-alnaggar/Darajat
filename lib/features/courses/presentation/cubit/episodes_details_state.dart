@@ -10,13 +10,19 @@ class EpisodeDetailInitial extends EpisodeDetailState {}
 class EpisodeDetailLoading extends EpisodeDetailState {}
 
 class EpisodeDetailLoaded extends EpisodeDetailState {
-  final EpisodeModel episode;
-  const EpisodeDetailLoaded(this.episode);
+  final EpisodeResponse episode;
+   EpisodeDetailLoaded(this.episode);
 }
 
 class EpisodeDetailLoadVideoOrPoster extends EpisodeDetailState {
-  
 }
+
+class EpisodeDetailDownloadSuccess extends EpisodeDetailState {
+  final String savedPath;
+  EpisodeDetailDownloadSuccess(this.savedPath);
+}
+
+class EpisodeDetailDownloading extends EpisodeDetailState {}
 
 
 class EpisodeDetailError extends EpisodeDetailState {

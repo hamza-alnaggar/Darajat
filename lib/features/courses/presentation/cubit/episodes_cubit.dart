@@ -12,7 +12,7 @@ class EpisodesListCubit extends Cubit<EpisodesListState> {
     required this.isStudent,
   }) : super(EpisodesListInitial());
 
-  Future<void> getEpisodes(int courseId,bool isCopy) async {
+  Future<void> getEpisodes(int courseId,bool isCopy,bool isStudent) async {
     emit(EpisodesListLoading());
     final result = await repository.getEpisodes(isStudent,isCopy,courseId);
     result.fold(
@@ -20,5 +20,4 @@ class EpisodesListCubit extends Cubit<EpisodesListState> {
       (response) => emit(EpisodesListLoaded(response)),
     );
   }
-  Future<void> refreshEpisodes(int courseId,bool isCopy) => getEpisodes(courseId,isCopy);
 }

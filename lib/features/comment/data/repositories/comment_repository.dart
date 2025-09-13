@@ -88,13 +88,5 @@ class CommentRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
-  Future<Either<Failure, CommentModel>> removeLike(
-      int commentId) async {
-    try {
-      final response = await remoteDataSource.removeLike(commentId);
-      return Right(response);
-    } on ServerException catch (e) {
-      return Left(Failure(errMessage: e.errorModel.errMessage));
-    }
-  }
+
 }

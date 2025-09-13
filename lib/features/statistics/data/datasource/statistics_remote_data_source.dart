@@ -10,16 +10,13 @@ class StatisticsRemoteDataSource {
 
   StatisticsRemoteDataSource({required this.api});
 
-  Future<StatisticsResponseModel> getStatistics() async {
-    final accessToken = await SharedPrefHelper.getString('accessToken');
-    final headers = {
-      'Authorization': 'Bearer $accessToken',
-      'Accept': 'application/json',
-    };
+  Future<StatisticsResponseModel> getStatistics(bool isEnthusiasm) async {
 
     final response = await api.get(
-      EndPoints.statistics,
-      options: Options(headers: headers),
+     isEnthusiasm?EndPoints.statisticsEnthusiasm : EndPoints.statistics,
+      options: Options(extra: {
+       "authRequired" :true
+      }),
     );
 
     return StatisticsResponseModel.fromJson(response);

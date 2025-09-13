@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:learning_management_system/core/helper/extention.dart';
 import 'package:learning_management_system/core/routing/routes.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
+import 'package:learning_management_system/core/widgets/app_bar.dart';
 import 'package:learning_management_system/core/widgets/app_text_button.dart';
 import 'package:learning_management_system/features/courses/data/models/category_response_model.dart';
 import 'package:learning_management_system/features/courses/data/models/course_details_model.dart';
@@ -13,6 +15,7 @@ import 'package:learning_management_system/features/courses/data/models/create_c
 import 'package:learning_management_system/features/courses/data/models/topic_response_model.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/category_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/category_state.dart';
+import 'package:learning_management_system/features/courses/presentation/cubit/create_course_state.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/create_cousre_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/show_course_cubit.dart';
 import 'package:learning_management_system/features/courses/presentation/cubit/show_course_state.dart';
@@ -22,121 +25,100 @@ import 'package:learning_management_system/features/sign_up/presentation/cubit/g
 import 'package:learning_management_system/features/sign_up/data/models/sub_models/country_sub_model.dart';
 import 'package:learning_management_system/features/sign_up/presentation/cubit/get_language_state.dart';
 import 'package:learning_management_system/features/teacher/is_changed_cubit.dart';
-
+import 'package:learning_management_system/generated/l10n.dart';
+import 'package:lottie/lottie.dart';
 
 // ignore: must_be_immutable
 class CreateCourseScreen extends StatefulWidget {
   String? status;
-  final int? courseId;
-  final bool ?isCopy;
+   int? courseId;
+  final bool? isCopy;
+  final VoidCallback? onSuccess;
 
-   CreateCourseScreen({super.key, this.status, required this.courseId,this.isCopy});
+  CreateCourseScreen({
+    super.key,
+    this.status,
+    required this.courseId,
+    this.isCopy,
+    this.onSuccess,
+  });
 
   @override
   State<CreateCourseScreen> createState() => _CreateCourseScreenState();
 }
 
-class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBindingObserver {
+class _CreateCourseScreenState extends State<CreateCourseScreen>
+    with WidgetsBindingObserver {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
+
   CourseDetailsModel? course;
+  bool isRepost = false;
 
-
-  String? _initialTopicTitle;
-  String? _initialCategoryTitle;
-  String? _initialLanguage;
-  File? _courseImage;
-  String? _existingImageUrl; 
+  TopicModel? _initialTopic;
+  CategoryModel? _initialCategory;
+  String? _existingImageUrl;
+  File? newImageFile;
   String? _selectedLevel;
   bool _hasCertificate = true;
   CountryOrLanguageSubModel? _selectedLanguage;
-  int? _courseId; 
-  int? numberOfStudent; 
-  String _status = 'draft'; // Local status state
-
-
+  int? _courseId;
+  int? numberOfStudent;
+  String? _status;
 
   @override
   void initState() {
     super.initState();
-        WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
-    _status = widget.status ?? 'draft';
+    _status = widget.status;
     if (widget.courseId != null)
-      context.read<ShowCourseCubit>().showCourseForTeacher(widget.courseId!,widget.isCopy!);
+      context.read<ShowCourseCubit>().showCourseForTeacher(
+        widget.courseId!,
+        widget.isCopy!,
+      );
   }
-
-
-
-    @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused && (isChanged()|| context.read<IsChangedCubit>().isChanged )) {
-      _showExitConfirmation();
-    }
-  }
-
-  Future<bool> _onWillPop() async {
-    if (isChanged()) {
-      return await _showExitConfirmation() ?? false;
-    }
-    return true;
-  }
-
-  Future<bool?> _showExitConfirmation() async {
-    return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Text('Unsaved Changes'),
-        content: Text('You have unsaved changes. Are you sure you want to leave?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Discard'),
-          ),
-        ],
-      ),
-    );
-  }
-
-
   void _initializeForm() {
     if (course != null) {
       _courseId = course!.id;
       _titleController.text = course!.title;
       _descriptionController.text = course!.description;
-      _priceController.text = course!.price.toString();
+      _priceController.text = course!.price.replaceFirst('\$', '');
       _selectedLevel = course!.difficultyLevel;
       _existingImageUrl = course!.imageUrl;
-      _hasCertificate = course!.hasCertificate;
-      _status = widget.status!; 
-      _initialTopicTitle = course!.topic;
-      _initialLanguage = course!.language;
-      _initialCategoryTitle = course!.category;
       numberOfStudent = course!.numOfStudentsEnrolled;
-      
+      _hasCertificate = course!.hasCertificate;
+      _status = widget.status!;
+
+      _selectedLanguage = course!.language;
+
+
+      final categoryCubit = context.read<CategoryCubit>();
+      categoryCubit.selectedCategory = course!.category;
+      _initialCategory = course!.category!;
+
+      final topicCubit = context.read<TopicCubit>();
+      topicCubit.selectedTopic = course!.topic;
+      _initialTopic = course!.topic;
     }
   }
-  bool isChanged(){
-    if(course != null)
-    return _courseId != course!.id||
-      _titleController.text != course!.title||
-      _descriptionController.text != course!.description||
-      _priceController.text != course!.price.toString()||
-      _selectedLevel != course!.difficultyLevel||
-      _existingImageUrl != course!.imageUrl||
-      _hasCertificate != course!.hasCertificate||
-      _initialTopicTitle != course!.topic||
-      _initialLanguage != course!.language||
-      _initialCategoryTitle != course!.category;
 
-      return false;
+  bool isChanged() {
+    if (course != null) {
+      return _titleController.text != course!.title ||
+          _descriptionController.text != course!.description ||
+          _priceController.text != course!.price.replaceFirst('\$', '') ||
+          _selectedLevel != course!.difficultyLevel ||
+          _hasCertificate != course!.hasCertificate ||
+          course!.language != _selectedLanguage ||
+          course!.category! != context.read<CategoryCubit>().selectedCategory ||
+          course!.topic != context.read<TopicCubit>().selectedTopic ||
+          _existingImageUrl != course!.imageUrl;
+    }
+    
+    return true;
   }
 
   Future<void> _pickImage() async {
@@ -145,51 +127,65 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
     );
     if (pickedFile != null) {
       setState(() {
-        _courseImage = File(pickedFile.path);
-        _existingImageUrl = null; 
+        newImageFile = File(pickedFile.path);
+        _existingImageUrl = null;
       });
     }
   }
 
   void _submitForm() {
     print(widget.status);
-    if (_formKey.currentState!.validate() &&
-        (_courseImage != null || _existingImageUrl != null) &&
-        _selectedLevel != null &&
-        _selectedLanguage != null) {
-      final requestModel = CreateCourseRequestModel(
-        topicId: context.read<TopicCubit>().selectedTopic!.id,
-        languageId: _selectedLanguage!.id,
-        title: _titleController.text,
-        description: _descriptionController.text,
-        image: _courseImage!, 
-        difficultyLevel: _selectedLevel!,
-        price: double.parse(_priceController.text),
-        hasCertificate: _hasCertificate ? "true" : "false",
-      );
+    if (isChanged()) {
+      if (_formKey.currentState!.validate()) {
+        if (_status == 'approved') {
+          context.read<CreateCourseCubit>().updateApprovedCourse(
+            price: double.parse(_priceController.text),
+            courseId: _courseId!,
+          );
+        }
+        if ((newImageFile != null || _existingImageUrl != null) &&
+            _selectedLevel != null &&
+            _selectedLanguage != null &&
+            context.read<TopicCubit>().selectedTopic != null) {
+          final requestModel = CreateCourseRequestModel(
+            topicId: context.read<TopicCubit>().selectedTopic!.id,
+            languageId: _selectedLanguage!.id,
+            title: _titleController.text,
+            description: _descriptionController.text,
+            image: newImageFile,
+            difficultyLevel: _selectedLevel!,
+            price: double.parse(_priceController.text),
+            hasCertificate: _hasCertificate ? 1 : 0,
+          );
 
-      if (course == null) {
-        context.read<CreateCourseCubit>().createCourse(
-          requestModel: requestModel,
-        );
-      } else if (_status == 'draft') {
-        print('okk');
-        context.read<CreateCourseCubit>().updateDraftCourse(
-          requestModel: requestModel,
-          courseId: _courseId!,
-        );
-      } else if (_status == 'approved') {
-        context.read<CreateCourseCubit>().updateApprovedCourse(
-          price: double.parse(_priceController.text),
-          courseId: _courseId!,
-        );
+          if (course == null) {
+            context.read<CreateCourseCubit>().createCourse(
+              requestModel: requestModel,
+            );
+          } else if (_status == 'draft') {
+            context.read<CreateCourseCubit>().updateDraftCourse(
+              requestModel: requestModel,
+              courseId: _courseId!,
+            );
+          } else if (_status == 'pending' || _status == 'rejected') {
+            context.read<CreateCourseCubit>().updateCourseCopy(
+              requestModel: requestModel,
+              courseId: _courseId!,
+            );
+          }
+        } else {
+          _showSnackBar(
+            context,
+            message: 'you should complete all field',
+            contentType: ContentType.failure,
+            title: 'Error',
+            backgroundColor: Colors.red,
+          );
+        }
       }
-      else if(_status  == 'pending' || _status == 'rejected'){
-        context.read<CreateCourseCubit>().updateCourseCopy(
-          requestModel: requestModel,
-          courseId: _courseId!,
-        );
-      }
+    }
+    else{
+      _showSnackBar(context, message: 'No change to update', contentType: ContentType.warning, title: 'Warning !', backgroundColor: Colors.orange);
     }
   }
 
@@ -205,15 +201,15 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: CustomColors.primary.withOpacity(0.3)),
           ),
-          child: _courseImage != null
+          child: newImageFile != null
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.file(_courseImage!, fit: BoxFit.contain),
+                  child: Image.file(newImageFile!, fit: BoxFit.fill),
                 )
               : _existingImageUrl != null
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(_existingImageUrl!, fit: BoxFit.contain),
+                  child: Image.network(_existingImageUrl!, fit: BoxFit.fill),
                 )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -235,27 +231,175 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
     );
   }
 
+  
+  Future<bool> _onWillPop() async {
+    if (_status == "pending" ||
+        _status == "rejected" && isRepost) {
+      return await _showExitConfirmation() ?? false;
+    } 
+    return true;
+  }
+
+  void callCancelUpdating() {
+    context.read<CreateCourseCubit>().cancelUpdate(widget.courseId!);
+  }
+
+  Future<bool?> _showExitConfirmation() async {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text('ًWarrning'),
+        content: Text(
+          'If you make changes and do not repost , this changes will not apply',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => {
+            Navigator.of(context).pop(true),
+            callCancelUpdating()
+            },
+            child: Text('Leave'),
+          ),
+        ],
+      ),
+    );
+  }
+  bool _isLoadingDialogShown = false;
+
+// Replace all showDialog calls with this method
+void _showLoadingDialog() {
+  if (!_isLoadingDialogShown) {
+    _isLoadingDialogShown = true;
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => Lottie.asset('assets/images/loading.json'),
+    ).then((_) => _isLoadingDialogShown = false);
+  }
+}
+
+// Replace all context.pop() for dismissing loading with this method
+void _hideLoadingDialog() {
+  if (_isLoadingDialogShown) {
+    Navigator.of(context, rootNavigator: true).pop();
+    _isLoadingDialogShown = false;
+  }
+}
+
   @override
   Widget build(BuildContext context) {
+    print('is changed ${isChanged()} is change episode ${context.read<IsChangedCubit>().isChanged}');
     final isApprovedUpdate = widget.status == 'approved';
 
-    return BlocListener<ShowCourseCubit, ShowCourseState>(
-      listener: (context, state) {
-        if(state is ShowCourseSuccess)
-        {
-          setState(() {
-            course = state.course;
-            _initializeForm();
-          });
-        }
-      },
+    
+
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ShowCourseCubit, ShowCourseState>(
+          listener: (context, state) {
+            if (state is ShowCourseSuccess) {
+              setState(() {
+                course = state.course;
+                _initializeForm();
+              });
+            } else if (state is ShowCourseLoading) {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) =>
+                    Lottie.asset('assets/images/loading.json'),
+              );
+            } else if (state is ShowCourseFailure) {
+              context.pop();
+              _showSnackBar(
+                context,
+                message: state.errMessage,
+                contentType: ContentType.failure,
+                title: 'Error !',
+                backgroundColor: Colors.red,
+              );
+            }
+          },
+        ),
+        BlocListener<CategoryCubit, CategoryState>(
+          listener: (context, state) {
+            if (state is CategorySuccess && _initialCategory != null ) {
+              final categoryCubit = context.read<CategoryCubit>();
+              context.read<TopicCubit>().getTopicsByCategory(categoryCubit.selectedCategory!.id);
+            }
+          },
+        ),
+        BlocListener<CreateCourseCubit, CreateCourseState>(
+          listener: (context, state) {
+            if (state is CourseSuccess) {
+ _hideLoadingDialog();              _showSnackBar(
+                context,
+                message: state.message,
+                contentType: ContentType.success,
+                title: 'Success !',
+                backgroundColor: Colors.green,
+              );
+            }
+            if (state is CreateCourseSuccessfully) {
+ _hideLoadingDialog();              _showSnackBar(
+                context,
+                message: state.course.message,
+                contentType: ContentType.success,
+                title: 'Success !',
+                backgroundColor: Colors.green,
+              );
+              setState(() {
+                course = state.course.course;
+                _status = state.course.course.status;
+                widget.courseId = state.course.course.id;
+              });
+            }
+            if (state is UpdateStatusSuccessfully) {
+ _hideLoadingDialog();              _showSnackBar(
+                context,
+                message: state.message,
+                contentType: ContentType.success,
+                title: 'Success !',
+                backgroundColor: Colors.green,
+              );
+              if (widget.onSuccess != null) {
+                widget.onSuccess!();
+              }
+              context.pushNamedAndRemoveUntil(
+                Routes.sidebar,
+                predicate: (route) => route.settings.name == Routes.sidebar,
+              );
+            }
+            if (state is CourseLoading) {
+                  _showLoadingDialog();
+
+            }
+            if (state is CourseFailure) {
+              _hideLoadingDialog();     
+              _showSnackBar(
+                context,
+                message: state.errMessage,
+                contentType: ContentType.failure,
+                title: 'Error !',
+                backgroundColor: Colors.red,
+              );
+            }
+          },
+        ),
+      ],
       child: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text(course == null ? 'Create New Course' : 'Update Course'),
-            centerTitle: true,
-            elevation: 0,
+          appBar: CustomAppBar(
+            showBackButton: false,
+            title:course == null ? 'Create New Course' : 'Update Course',
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
@@ -264,47 +408,54 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildStatusIndicator(),
-                        if(_status!='approved')
-                      ElevatedButton(
-  onPressed: isChanged() || context.read<IsChangedCubit>().isChanged ? () {
-    if (_status == 'draft') {
-      // Add your publish logic here
-      context.read<CreateCourseCubit>().publishCourse( widget.courseId!,false);
-    } else {
-      context.read<CreateCourseCubit>().restoreCourse(courseId: widget.courseId!);
-    }
-  } : null, // Set to null when not dirty to disable the button
-  style: ElevatedButton.styleFrom(
-    backgroundColor: isChanged() || context.read<IsChangedCubit>().isChanged
-        ? CustomColors.primary2 
-        : Colors.grey, 
-    foregroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
-    ),
-  ),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Icon(Icons.restore, size: 20),
-      SizedBox(width: 8),
-      Text(
-        _status == 'draft' ? 'Publish' : 'Restore',
-        style: TextStyle(fontSize: 17.r),
-      ),
-    ],
-  ),
-),
-                      ],
-                    ),
-                    SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (_status != null) _buildStatusIndicator(),
+                      if (_status != 'approved' && _status!= null)
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_status == 'draft') {
+                              context.read<CreateCourseCubit>().publishCourse(
+                                widget.courseId!,
+                                false,
+                              );
+                            } else {
+                              context.read<CreateCourseCubit>().publishCourse(
+                                widget.courseId!,
+                                true,
+                              );
+                              setState(() {
+                                isRepost = true;
+                              });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                CustomColors.primary2,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _status == 'draft'? Icon(Icons.publish, size: 20):Icon(Icons.restore, size: 20),
+                              SizedBox(width: 8),
+                              Text(
+                                _status == 'draft'  ? 'Publish' : 'Repost',
+                                style: TextStyle(fontSize: 17.r),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
                   if (!isApprovedUpdate) ...[
                     _buildImagePicker(),
-                  const SizedBox(height: 24),
+                    const SizedBox(height: 24),
                   ],
                   if (!isApprovedUpdate) ...[
                     _buildTitleField(),
@@ -314,7 +465,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
                     _buildDescriptionField(),
                     const SizedBox(height: 20),
                   ],
-                    _buildPriceField(),
+                  _buildPriceField(),
                   const SizedBox(height: 20),
                   if (!isApprovedUpdate) ...[
                     _buildLevelDropdown(),
@@ -336,9 +487,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
                     _buildTopicDropdown(context),
                     const SizedBox(height: 30),
                   ],
-                    _buildActionButtons(),
-                    SizedBox(height: 20),
-                  _buildSubmitButton(widget.courseId!=null),
+                  if(_status == 'approved')
+                  SizedBox(height: 340),
+                  if (_status != null)
+                  _buildActionButtons(),
+                  SizedBox(height: 10.h,),
+                  _buildSubmitButton(course != null),
+                  SizedBox(height: 20.h,)
                 ],
               ),
             ),
@@ -347,10 +502,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
       ),
     );
   }
+
   Widget _buildStatusIndicator() {
     Color statusColor;
-    
-    
+
     switch (_status) {
       case 'approved':
         statusColor = Colors.green;
@@ -364,7 +519,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
       default:
         statusColor = Colors.red;
     }
-    
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -385,11 +540,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
           ),
           SizedBox(width: 8),
           Text(
-            'Status: ${_status[0].toUpperCase() + _status.substring(1)}',
-            style: TextStyle(
-              color: statusColor,
-              fontWeight: FontWeight.bold,
-            ),
+            'Status: ${_status![0].toUpperCase() + _status!.substring(1)}',
+            style: TextStyle(color: statusColor, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -399,11 +551,18 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
   Widget _buildActionButtons() {
     return Row(
       children: [
-        if ((_status == 'approved' && numberOfStudent == 0)  || (_status == 'draft'))
+        if ((_status == 'approved' && numberOfStudent == 0) ||
+            (_status == 'draft'))
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-              _status == 'draft' ?context.read<CreateCourseCubit>().deleteDraftCourse(courseId: widget.courseId!):context.read<CreateCourseCubit>().deleteCourse(courseId: widget.courseId!);
+                _status == 'draft'
+                    ? context.read<CreateCourseCubit>().deleteDraftCourse(
+                        courseId: widget.courseId!,
+                      )
+                    : context.read<CreateCourseCubit>().deleteCourse(
+                        courseId: widget.courseId!,
+                      );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -422,43 +581,20 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
               ),
             ),
           ),
-        if (_status != 'deleted')
         SizedBox(width: 12),
-        
-        if (_status == 'deleted')
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () {
-                context.read<CreateCourseCubit>().restoreCourse(courseId: widget.courseId!);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.restore, size: 20),
-                  SizedBox(width: 8),
-                  Text('Restore'),
-                ],
-              ),
-            ),
-          ),
-        if (_status == 'deleted') SizedBox(width: 12),
-        
+
         Expanded(
           child: ElevatedButton(
             onPressed: () {
-              context.pushNamed(Routes.createEpisodesScreen,arguments: {
-                'isCopy':widget.isCopy,
-                'status':widget.status,
-                'bloc':BlocProvider.of<IsChangedCubit>(context),
-                'courseId':widget.courseId,
-              });
+              context.pushNamed(
+                Routes.createEpisodesScreen,
+                arguments: {
+                  'isCopy': widget.isCopy,
+                  'status': widget.status,
+                  'bloc': BlocProvider.of<IsChangedCubit>(context),
+                  'courseId': widget.courseId,
+                },
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -550,7 +686,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Course Price (\$)',
-        prefixIcon: Icon(Icons.attach_money, color: CustomColors.primary2),
+        prefixIcon: Icon(Icons.attach_money, color: Color(0xff25bd25)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: CustomColors.primary2.withOpacity(0.3)),
@@ -579,7 +715,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
         Text('Course Level', style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 8),
         DropdownButtonFormField<String>(
-          initialValue: _selectedLevel,
+          value: _selectedLevel,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -596,6 +732,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
               child: Text('Intermediate'),
             ),
             DropdownMenuItem(value: 'advanced', child: Text('Advanced')),
+            DropdownMenuItem(value: 'expert', child: Text('Expert')),
           ],
           onChanged: (value) {
             setState(() {
@@ -636,12 +773,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
       builder: (context, state) {
         print(state);
         if (state is GetLanguageSuccessfully) {
-          if (_selectedLanguage == null && _initialLanguage != null) {
-          _selectedLanguage = context.read<GetLanguageCubit>().languageList.firstWhere(
-            (lang) => lang.id == _initialLanguage,
-            orElse: () => context.read<GetLanguageCubit>().languageList.first,
-          );
-        }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -651,7 +782,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<CountryOrLanguageSubModel>(
-                initialValue: _selectedLanguage,
+                value: _selectedLanguage,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -701,17 +832,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
 
     return BlocBuilder<CategoryCubit, CategoryState>(
       builder: (context, state) {
-        if (state is CategorySuccess && _initialCategoryTitle != null) {
-        final catego = context.read<CategoryCubit>().categoryList.firstWhere(
-          (t) => t.title == _initialCategoryTitle,
-          orElse: () => context.read<CategoryCubit>().categoryList.first,
-        );
-        context.read<CategoryCubit>().selectCategory(catego);
-        context.read<TopicCubit>().getTopicsByCategory(catego.id);
-        _initialCategoryTitle = null; 
-      }
-        print(state);
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -722,7 +842,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
             const SizedBox(height: 8),
             DropdownButtonFormField<CategoryModel>(
               isExpanded: true,
-              initialValue: categoryCubit.selectedCategory,
+              value: categoryCubit.selectedCategory,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -735,14 +855,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
               items: categoryCubit.categoryList.map((category) {
                 return DropdownMenuItem(
                   value: category,
-                  child: Text(category.title,),
+                  child: Text(category.title),
                 );
               }).toList(),
               onChanged: (value) {
-                categoryCubit.selectCategory(value!);
-                context.read<TopicCubit>().getTopicsByCategory(
-                  categoryCubit.selectedCategory!.id,
-                );
+                if (value == null) return;
+                categoryCubit.selectCategory(value);
+                context.read<TopicCubit>().resetTopic();
+                context.read<TopicCubit>().getTopicsByCategory(value.id);
               },
               validator: (value) {
                 if (value == null) {
@@ -759,60 +879,70 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
   }
 
   Widget _buildTopicDropdown(BuildContext ctx) {
-    final topicCubit = context.read<TopicCubit>();
     return BlocBuilder<TopicCubit, TopicState>(
       builder: (context, state) {
-        if (state is TopicSuccess && _initialTopicTitle != null) {
-        final topic = context.read<TopicCubit>().topicList.firstWhere(
-          (t) => t.title == _initialTopicTitle,
-          orElse: () => context.read<TopicCubit>().topicList.first,
-        );
-        context.read<TopicCubit>().selectTopic(topic);
-        _initialTopicTitle = null; // Reset after setting
-      }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Course Topic',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<TopicModel>(
-              initialValue: topicCubit.selectedTopic,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: CustomColors.primary2.withOpacity(0.3),
-                  ),
-                ),
-                prefixIcon: Icon(Icons.language, color: CustomColors.primary2),
-              ),
-              items: topicCubit.topicList.map((topic) {
-                return DropdownMenuItem(value: topic, child: Text(topic.title));
-              }).toList(),
-              onChanged: (value) {
-                topicCubit.selectTopic(value!);
-              },
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select a topic';
-                }
-                return null;
-              },
-              hint: const Text('Select course topic'),
-            ),
-          ],
-        );
+        final topicCubit = context.read<TopicCubit>();
+        if (state is TopicLoading) {
+          return Center(
+            child: CircularProgressIndicator(color: CustomColors.primary2),
+          );
+        }
+        if (state is TopicFailure) {
+          return Center(child: Text(state.errMessage));
+        }
+        if(state is TopicSuccess || state is ChangeTopic)
+        return _buildTopicDropdownContent(topicCubit);
+
+        return SizedBox();
       },
+    
+    );
+  }
+
+  Widget _buildTopicDropdownContent(TopicCubit topicCubit) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Course Topic', style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<TopicModel>(
+          value: topicCubit.selectedTopic,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: CustomColors.primary2.withOpacity(0.3),
+              ),
+            ),
+            prefixIcon: Icon(Icons.language, color: CustomColors.primary2),
+          ),
+          items: topicCubit.topicList.map((topic) {
+            return DropdownMenuItem(value: topic, child: Text(topic.title));
+          }).toList(),
+          onChanged: (value) {
+            if (value == null) 
+            return;
+            topicCubit.selectTopic(value);
+          },
+          validator: (value) {
+            if (value == null) {
+              return 'Please select a topic';
+            }
+            return null;
+          },
+          hint: const Text('Select course topic'),
+        ),
+      ],
     );
   }
 
   Widget _buildSubmitButton(bool isUpdate) {
     return SizedBox(
       width: double.infinity,
-      child: AppTextButton(onpressed: _submitForm, buttonText:isUpdate?'Update Course': 'Create Course'),
+      child: AppTextButton(
+        onpressed: _submitForm,
+        buttonText: isUpdate ? 'Update Course' : 'Create Course',
+      ),
     );
   }
 
@@ -820,10 +950,34 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> with WidgetsBin
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    _priceController.dispose();   
-     WidgetsBinding.instance.removeObserver(this);
-
+    _priceController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
   }
+}
+
+void _showSnackBar(
+  BuildContext context, {
+  required String message,
+  required ContentType contentType,
+  required String title,
+  required Color backgroundColor,
+}) {
+  final snackBar = SnackBar(
+    elevation: 0,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.transparent,
+    content: AwesomeSnackbarContent(
+      color: backgroundColor,
+      title: title,
+      message: message,
+
+      contentType: contentType,
+    ),
+  );
+
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(snackBar);
 }

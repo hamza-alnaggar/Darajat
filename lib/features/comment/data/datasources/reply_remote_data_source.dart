@@ -24,7 +24,7 @@ class ReplyRemoteDataSource {
   }) async {
     
     final response = await api.post(
-      '${EndPoints.replies}/$commentId',
+      '${EndPoints.createReplies}/$commentId',
       data: {'content': content},
       options: Options(extra: {'authRequired': true},)
     );
@@ -38,30 +38,23 @@ class ReplyRemoteDataSource {
   }) async {
 
     final response = await api.put(
-      '${EndPoints.replies}/$replyId',
+      '${EndPoints.updateReply}/$replyId',
       data: {'content': content},
       options: Options(extra: {'authRequired': true},)
     );
-    return ReplyModel.fromJson(response);
+    return ReplyModel.fromJson(response['data']);
   }
 
   // Delete a reply
   Future<String> deleteReply(int replyId,bool isTeacher) async {
 
-    final response = await api.delete('${isTeacher? EndPoints.deleteReplieyForTeacher :EndPoints.replies}/$replyId',options: Options(extra: {'authRequired': true},));
+    final response = await api.delete('${isTeacher? EndPoints.deleteReplieyForTeacher :EndPoints.deleteReply}/$replyId',options: Options(extra: {'authRequired': true},));
     return response[ApiKey.message];
   }
 
-  // Add like to a reply
-  Future<ReplyResponseModel> addLikeReply(int replyId) async {
-    final response = await api.post('${EndPoints.addLikeReply}/$replyId',options: Options(extra: {'authRequired': true},));
+  Future<ReplyResponseModel> LikeReply(int replyId) async {
+    final response = await api.post('${EndPoints.LikeReply}/$replyId',options: Options(extra: {'authRequired': true},));
     return ReplyResponseModel.fromJson(response);
   }
-
-  // Remove like from a reply
-  Future<ReplyResponseModel> removeLikeReply(int replyId) async {
-    
-    final response = await api.delete('${EndPoints.removeLikeReply}/$replyId',options:Options(extra: {'authRequired': true},));
-    return ReplyResponseModel.fromJson(response);
-  }
+  
 }

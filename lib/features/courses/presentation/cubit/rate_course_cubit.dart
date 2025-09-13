@@ -10,9 +10,9 @@ class RateCourseCubit extends Cubit<RateCourseState> {
   RateCourseCubit({required this.repository}) : super(RateCourseInitial());
 
   
-  Future<void> rateCourse(int courseId) async {
+  Future<void> rateCourse(int courseId,int rate) async {
     emit(RateCourseLoading());
-    final response = await repository.rateCourse(courseId);
+    final response = await repository.rateCourse(courseId,rate);
     response.fold(
       (failure) => emit(RateCourseFailure(errMessage: failure.errMessage)),
       (publishcourse) => emit(RateCourseSuccess(message: publishcourse)));

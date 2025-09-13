@@ -8,6 +8,7 @@ class ReplyModel {
   final String content;
   final String replyDate;
   final bool isLiked;
+  final bool ?isMyReply;
   final int likes;
   final CommentUserModel user;
 
@@ -17,6 +18,7 @@ class ReplyModel {
     required this.content,
     required this.replyDate,
     required this.user,
+    required this.isMyReply,
     required this.likes,
     required this.isLiked,
   });
@@ -28,6 +30,7 @@ class ReplyModel {
       content: json[ApiKey.content],
       replyDate: json[ApiKey.replyDate],
       likes: json[ApiKey.likes],
+      isMyReply: json['is_my_reply'],
       isLiked: json['is_liked'],
       user: CommentUserModel.fromJson(json['replier']),
     );
@@ -39,6 +42,7 @@ class ReplyModel {
     String? content,
     String? replyDate,
     int? likes,
+    bool ?isMyReply,
     bool? isLiked,
     CommentUserModel? user,
   }) {
@@ -48,6 +52,7 @@ class ReplyModel {
       content: content ?? this.content,
       replyDate: replyDate ?? this.replyDate,
       likes: likes ?? this.likes,
+      isMyReply:  isMyReply ?? this.isMyReply,
       isLiked: isLiked ?? this.isLiked,
       user: user ?? this.user,
     );

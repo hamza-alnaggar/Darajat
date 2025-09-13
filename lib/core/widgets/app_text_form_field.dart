@@ -17,6 +17,7 @@ class AppTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final IconData ?icon;
   final Function(String?)? validator;
+  final Function(String?)? onChange;
 
   const AppTextFormField({
     super.key,
@@ -27,6 +28,7 @@ class AppTextFormField extends StatelessWidget {
     this.enabledBorder,
     this.inputTextStyle,
     this.hintStyle,
+    this.onChange,
     required this.hintText,
     this.isObscureText,
     this.suffixIcon,
@@ -51,6 +53,7 @@ class AppTextFormField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29.r),
       ),
       child: TextFormField(
+        onChanged: (value) => onChange?.call(value),
         maxLength: maxLength,
         controller: controller,
         decoration: InputDecoration(

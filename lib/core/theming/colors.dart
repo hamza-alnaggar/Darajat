@@ -4,8 +4,8 @@ class CustomColors {
   // App theme colors
 
   // Dark Theme
-  static const Color primary = Color(0xff29C3CD);
-  static const Color primary2 = Color(0xFFD27DF4);
+  static const Color primary2 = Color(0xff29C3CD);
+  static const Color primary = Color(0xFFD27DF4);
   static const Color secondary = Color(0xFF1b1344);
 
 

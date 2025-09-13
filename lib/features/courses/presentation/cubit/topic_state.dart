@@ -9,11 +9,11 @@ class TopicInitial extends TopicState {}
 class TopicLoading extends TopicState {}
 
 class TopicSuccess extends TopicState {
-  final List<TopicModel> topics;
+  final List<TopicModel> ?topics;
 
   TopicSuccess({required this.topics});
 }
-class ChangeData extends TopicState{}
+class ChangeTopic extends TopicState{}
 
 class TopicEmpty extends TopicState {}
 

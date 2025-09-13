@@ -19,4 +19,7 @@ final class LoginSuccessfully extends LoginState{
 
   LoginSuccessfully({required this.loginResponseModel});
 }
+final class LoginGoogleSuccessfully extends LoginState{
+
+}
 

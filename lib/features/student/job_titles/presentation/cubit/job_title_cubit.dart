@@ -27,11 +27,5 @@ class JobTitleCubit extends Cubit<JobTitleState> {
     selectedJobTitle = jobTitle;
     emit(JobTitleSelectionChanged());
   }
-  void setInitialJobTitle(String jobTitle) {
-  selectedJobTitle = jobTitles.firstWhere(
-    (job) => job.name == jobTitle,
-    orElse: () => jobTitles.first,
-  );
-  emit(JobTitleLoaded());
-}
+
 }

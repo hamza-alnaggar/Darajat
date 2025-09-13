@@ -50,6 +50,7 @@ class CardOnboarding extends StatelessWidget {
               const Spacer(flex: 1),
               Text(
                 data.title.toUpperCase(),
+  textAlign: TextAlign.center, 
                 style: textTheme.headlineMedium?.copyWith(
                   color: data.titleColor,
                   fontWeight: FontWeight.bold,

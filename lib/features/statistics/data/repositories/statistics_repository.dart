@@ -10,9 +10,9 @@ class StatisticsRepository {
 
   StatisticsRepository({required this.remoteDataSource});
 
-  Future<Either<Failure, StatisticsResponseModel>> getStatistics() async {
+  Future<Either<Failure, StatisticsResponseModel>> getStatistics(bool isEnthusiasm) async {
     try {
-      final response = await remoteDataSource.getStatistics();
+      final response = await remoteDataSource.getStatistics(isEnthusiasm);
       return Right(response);
     } on ServerException catch (e) {
       return Left(Failure(errMessage: e.errorModel.errMessage));

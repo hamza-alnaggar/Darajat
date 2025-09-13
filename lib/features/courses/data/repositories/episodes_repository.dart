@@ -24,8 +24,8 @@ class EpisodesRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
-  
-  Future<Either<Failure, EpisodeModel>> showEpisode(
+
+  Future<Either<Failure, EpisodeResponse>> showEpisode(
       bool isStudent,
       int episodeId) async {
     try {
@@ -35,7 +35,8 @@ class EpisodesRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
-  Future<Either<Failure, String>> finishEpisode(
+
+  Future<Either<Failure, void>> finishEpisode(
       int episodeId) async {
     try {
       final response = await remoteDataSource.finishEpisode(episodeId);
@@ -44,25 +45,19 @@ class EpisodesRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
-  Future<Either<Failure, String>> addLikeToEpisode(
+ Future<Either<Failure, String>> downloadFile( int episodeId,String path) async { try { final response = await remoteDataSource.downloadFile(episodeId,path); return Right(response); } catch (e) { return Left(Failure(errMessage: e.toString())); } }
+  Future<Either<Failure, EpisodeResponse>> LikeEpisode(
       int episodeId) async {
     try {
-      final response = await remoteDataSource.addLikeToEpisode(episodeId);
+      final response = await remoteDataSource.LikeEpisode(episodeId);
       return Right(response);
     } on ServerException catch (e) {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
 
-  Future<Either<Failure, String>> removeLikeFromEpisode(
-      int episodeId) async {
-    try {
-      final response = await remoteDataSource.removeLikeFromEpisode(episodeId);
-      return Right(response);
-    } on ServerException catch (e) {
-      return Left(Failure(errMessage: e.errorModel.errMessage));
-    }
-  }
+
+  
    Future<Either<Failure, Uint8List>> getEpisodePoster(int episodeId,bool isCopy) async {
     try {
       final data = await remoteDataSource.getEpisodePoster(episodeId,isCopy);
@@ -71,6 +66,15 @@ class EpisodesRepository {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
+   Future<Either<Failure, Uint8List>> getFile(int episodeId,bool isCopy) async {
+    try {
+      final data = await remoteDataSource.getEpisodePdf(episodeId,isCopy);
+      return Right(data);
+    } on ServerException catch (e) {
+      return Left(Failure(errMessage: e.errorModel.errMessage));
+    }
+  }
+   
 
   Future<Either<Failure, Stream<Uint8List>>> getEpisodeVideo(int episodeId,bool isCopy) async {
     

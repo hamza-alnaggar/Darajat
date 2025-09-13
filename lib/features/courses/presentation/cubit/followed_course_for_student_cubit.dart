@@ -9,7 +9,7 @@ class FollowedCourseForStudentCubit extends Cubit<FollowedCoursesForStudentState
 
   FollowedCourseForStudentCubit({required this.repository}) : super(GetFollowedCoursesInitial());
   
-  Future<void> rateCourse() async {
+  Future<void> getFollowedCourse() async {
     emit(GetFollowedCoursesLoading());
     final response = await repository.getFlolowedCourseForStudent();
     response.fold(

@@ -6,6 +6,7 @@ class CommentModel {
   final int numOfReplies;
   final String commentDate;
   final int likes;
+  final bool isMyComment;
   final bool isLiked;
   final CommentUserModel user;
 
@@ -16,6 +17,7 @@ class CommentModel {
     required this.commentDate,
     required this.isLiked,
     required this.likes,
+    required this.isMyComment,
     required this.user,
   });
   CommentModel copyWith({
@@ -33,6 +35,7 @@ CommentUserModel ?user
       numOfReplies: numOfReplies ?? this.numOfReplies,
       commentDate: commentDate ?? this.commentDate,
       likes: likes ?? this.likes,
+      isMyComment: this.isMyComment,
       isLiked: isLiked ?? this.isLiked,
       user: user?? this.user
     );
@@ -46,6 +49,7 @@ CommentUserModel ?user
       commentDate: json[ApiKey.commentDate],
       likes: json[ApiKey.likes],
       isLiked: json['is_liked'],
+      isMyComment: json['is_my_comment'],
       user: CommentUserModel.fromJson(json['commenter']),
     );
   }

@@ -9,7 +9,7 @@ class RateCourseRemoteDataSource {
 
   RateCourseRemoteDataSource({required this.api});
 
-  Future<String> rateCourse(int courseId) async {
+  Future<String> rateCourse(int courseId, int rate)async {
 
   final accessToken = 
   await SharedPrefHelper.getString('accessToken');
@@ -19,8 +19,11 @@ class RateCourseRemoteDataSource {
       'Accept': 'application/json',
     };
 
-  final response = await api.post(
-    '${EndPoints.rateCourse}/$courseId',
+  final response = await api.patch(
+    '${EndPoints.rateCourse}/$courseId'
+    ,data: {
+      'rate':rate
+    },
     options: Options(headers: headers)
   );
 

@@ -13,13 +13,30 @@ class LoginRemoteDataSource{
 
   Future<AuthResponseModel>login({required LoginBodyModel loginBodyModel})async{
 
-  final headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-};
-    final response = await api.post(EndPoints.login,data: loginBodyModel.toJson(),options: Options(headers: headers));
+  
+    final response = await api.post(EndPoints.login,data: loginBodyModel.toJson());
   
     return AuthResponseModel.fromJson(response);
   }
+  Future<LoginFromGoogleModel>loginWithGoogle({required String token})async{
 
+ 
+    final response = await api.post('${EndPoints.login}/google',data: {
+      'id_token' : token
+    });
+  
+    return LoginFromGoogleModel.fromJson(response['data']);
+  }
+
+}
+
+class LoginFromGoogleModel{
+ final String token;
+  final int id;
+
+  LoginFromGoogleModel({required this.token, required this.id});
+
+  factory LoginFromGoogleModel.fromJson(Map<String, dynamic> json) {
+    return LoginFromGoogleModel(id: json[ApiKey.id], token:json['token']);
+  }
 }

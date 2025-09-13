@@ -2,6 +2,8 @@
 import 'package:dio/dio.dart';
 import 'package:learning_management_system/core/databases/api/api_consumer.dart';
 import 'package:learning_management_system/core/databases/api/end_points.dart';
+import 'package:learning_management_system/features/courses/data/models/course_details_model.dart';
+import 'package:learning_management_system/features/courses/data/models/course_response_model.dart';
 import 'package:learning_management_system/features/courses/data/models/create_course_request_model.dart';
 
 class CreateCourseRemoteDataSource {
@@ -9,7 +11,7 @@ class CreateCourseRemoteDataSource {
 
   CreateCourseRemoteDataSource({required this.api});
 
-  Future<String> createCourse({
+  Future<CourseDetailsResponse> createCourse({
   required CreateCourseRequestModel requestModel,
 }) async {
 
@@ -23,7 +25,7 @@ class CreateCourseRemoteDataSource {
     })
   );
 
-  return response['message'];
+  return CourseDetailsResponse.fromJson(response);
 }
   Future<String> deleteCourse(
     {
@@ -42,8 +44,7 @@ class CreateCourseRemoteDataSource {
 }
   Future<String> restoreCourse(
   {
-          required int courseId
-
+    required int courseId
   }
 ) async {
 
@@ -72,16 +73,27 @@ class CreateCourseRemoteDataSource {
   return response['message'];
 }
  Future<String> publishCourse(int courseId,bool isCopy) async {
-
-
-  final response = await api.post(
-   isCopy? '${EndPoints.repostCourse}/$courseId':'${EndPoints.publishCourse}/$courseId',
+  
+  if(!isCopy)
+  {final response = await api.patch(
+    '${EndPoints.publishCourse}/$courseId',
     options: Options(extra: {
       'authRequired':true
     })
   );
+  return response['message'] ;
+  }
+else
+ { final response = await api.get(
+   '${EndPoints.repostCourse}/$courseId',
+    options: Options(extra: {
+      'authRequired':true
+    })
+  );
+  return 'repost successfully';
+  }
 
-  return response['message'];
+  
 }
 
 
@@ -104,11 +116,13 @@ Future<String> cancelUpdate(int courseId) async {
 
 
 
-  final response = await api.put(
+  final response = await api.post(
     '${EndPoints.updateDraftCourse}/$courseId',
     isFormData: true,
     data: requestModel.toJson(),
-    options: Options(extra: {
+    options: Options(headers: {
+      'X-HTTP-Method-Override':'PUT'
+    },extra: {
       'authRequired':true
     })
   );
@@ -122,11 +136,14 @@ Future<String> cancelUpdate(int courseId) async {
 
 
 
-  final response = await api.put(
+  final response = await api.post(
     '${EndPoints.updateCourse}/$courseId/copy',
     isFormData: true,
     data: requestModel.toJson(),
-    options: Options(extra: {
+    
+    options: Options(headers: {
+     // 'X-HTTP-Method-Override':'PUT'
+    },extra: {
       'authRequired':true
     })
   );
@@ -140,7 +157,7 @@ Future<String> cancelUpdate(int courseId) async {
 
  
 
-  final response = await api.post(
+  final response = await api.patch(
     '${EndPoints.updateApprovedCourse}/$courseId',
     data: {
       'price' : price

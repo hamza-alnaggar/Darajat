@@ -28,9 +28,3 @@ class ProfileImageUpdateError extends ProfileState {
   ProfileImageUpdateError(this.message);
 }
 
-class ChangePasswordLoading extends ProfileState {}
-class ChangePasswordSuccess extends ProfileState {}
-class ChangePasswordError extends ProfileState {
-  final String message;
-  ChangePasswordError(this.message);
-}

@@ -8,12 +8,12 @@ class StatisticsCubit extends Cubit<StatisticsState> {
 
   StatisticsCubit({required this.repository}) : super(StatisticsInitial());
 
-  Future<void> getStatistics() async {
+  Future<void> getStatistics(bool isEnthusiasm) async {
     emit(StatisticsLoading());
-    final response = await repository.getStatistics();
+    final response = await repository.getStatistics(isEnthusiasm);
     response.fold(
       (failure) => emit(StatisticsFailure(errMessage: failure.errMessage)),
-      (stats) => emit(StatisticsSuccess(statistics: stats)),
+      (stats) => emit(StatisticsSuccess(statistics: stats.data)),
     );
   }
 }

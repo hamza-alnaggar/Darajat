@@ -29,13 +29,12 @@ class QuizCubit extends Cubit<QuizState> {
     failureOrStartQuiz.fold(
       (failure) => emit(QuizFailure(errMessage: failure.errMessage)),
       (quiz) async{
-          print('okkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
           emit(QuizSuccessfully(quizModel: quiz));
       } 
     );
   }
 
-  Future<void> processAnswer({
+  Future<bool> processAnswer({
     required int quizId,
     required int questionNumber,
     required String answer,
@@ -46,12 +45,22 @@ class QuizCubit extends Cubit<QuizState> {
       questionNumber: questionNumber,
       answer: answer,
     );
-    
+
+    bool success = false;
     failureOrResult.fold(
-      (failure) => emit(ProcessAnswerFailure(errMessage: failure.errMessage)),
-      (result) => emit(ProcessAnswerSuccessfully(answerModel: result)),
+      (failure) {
+        emit(ProcessAnswerFailure(errMessage: failure.errMessage));
+        success = false;
+      },
+      (result) {
+        emit(ProcessAnswerSuccessfully(answerModel: result));
+        success = true;
+      },
     );
+
+    return success;
   }
+
   Future<void> calculateQuizResult({
     required int quizId,
     required List<AnswerModel> answers,

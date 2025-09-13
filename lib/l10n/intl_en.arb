@@ -1,16 +1,39 @@
 {
 
-    "on_boarding_title_page_one":"Title In Page One",
-    "on_boarding_title_page_two":"Title In Page Two",
-    "on_boarding_title_page_three":"Title In Page Three",
-    "on_boarding_title_page_four":"Title In Page Four",
-    
-    
-    "on_boarding_sub_title_page_one":"Sub Title In Page One",
-    "on_boarding_sub_title_page_two":"Sub Title In Page Two",
-    "on_boarding_sub_title_page_three":"Sub Title In Page Three",
-    "on_boarding_sub_title_page_four":"Sub Title In Page Four",
-    
+  "on_boarding_title_page_one": "Learn Anytime, Anywhere",
+  "on_boarding_title_page_two": "Interactive Lessons",
+  "on_boarding_title_page_three": "Learn with Top Instructors",
+  "on_boarding_title_page_four": "Start Your Journey Today",
+
+  "on_boarding_sub_title_page_one": "Your smart learning platform is here to help you grow.",
+  "on_boarding_sub_title_page_two": "Engaging and simplified lessons for all levels.",
+  "on_boarding_sub_title_page_three": "Guidance from experts and professionals throughout your journey.",
+  "on_boarding_sub_title_page_four": "Join thousands of learners and achieve your goals.",
+        "delete": "delete",
+
+
+
+  "question": "Question",
+  "enter_answer": "Please enter an answer",
+  "clear": "Clear",
+  "answer": "Answer",
+  "enter_question": "Please enter the question",
+  "enter_question_hint": "Type your question here...",
+  "answers": "Answers",
+
+    "my_courses": "My courses",
+  "loading_courses": "Loading courses...",
+  "error_loading_courses": "Error loading courses",
+  "retry": "Retry",
+  "create_first_course": "Create your first course to get started",
+  "create_course": "Create Course",
+  "profile": "Profile",
+  "my_courses_arrange": "My courses arrange",
+  "status_approved": "Approved",
+  "status_draft": "Draft",
+  "status_pending": "Pending",
+  "status_rejected": "Rejected",
+  "status_deleted": "Deleted",
      "categories": "Categories",
   "category_courses": "Category Courses",
   "no_courses_in_category": "No courses found in this category",
@@ -29,9 +52,14 @@
   "You_are_now_a_verified_teacher": "You're now a verified teacher. Start creating your first course!",
   "Get_Started": "Get Started",
   "Are_you_sure_you_want_to_sign_out": "Are you sure you want to sign out?",
+  "teacher_view":"navigate to teacher view",
+  "student_view":"navigate to student view",
+  "flame":"Flame of Enthusiasm",
+
+ 
 
   "discover_courses": "Discover Courses",
-  "top_categories": "Top Categories",
+  "all_categories": "All Categories",
   "search_results": "Search Results",
   "search_courses_hint": "Search courses",
   "no_courses_found": "No courses found",
@@ -80,7 +108,44 @@
     "check_email":"Check email",
     "check_code":"Check code",
     "set_password":"Set password",
-    "change_password":"Change password"
+    "change_password":"Change password",
+
+    "password_change_successfully":"Password change Successfully",
+    "current_password":"Current password",
+    "please_enter_your_current_password":"Please enter you current password",
+    "new_Password":"New password",
+    "Confirm_New_Password":"Confirm new password",
+    "Passwords_do_not_match":"password do not match",
+    "Password_must_contain":"password must contain",
+
+    "One_special_character":"one special character",
+    "One_number":"one number",
+    "One_uppercase_letter":"one uppercase letter",
+    "At_least_8_characters":"at least 8 characters",
+    "save":"Save",
+    "Teacher_Rules": "Teacher Rules and Guidelines",
+  "Technical_Quality_Standards": "Technical Quality Standards",
+  "Educational_Value": "Educational Value and Content Quality",
+  "Legal_Compliance": "Legal and Policy Compliance",
+  "Student_Engagement": "Student Engagement",
+  "Monetization": "Monetization (If Applicable)",
+  "Review_Process": "Review and Publication Process",
+  "Accept_Rules": "I have read and agree to all the terms and conditions",
+  "Accept_And_Continue": "Accept and Continue",
+  "Rule_1_1": "All video lessons must be recorded in High Definition (HD), with a minimum resolution of 720p.",
+  "Rule_1_2": "All audio must be clear, audible, and free from background noise and distortions.",
+  "Rule_1_3": "Courses must be produced using adequate equipment to ensure professional audio and video quality.",
+  "Rule_2_1": "The course must have clear, defined learning objectives and outcomes for students.",
+  "Rule_2_2": "All course content must be original, created by you, and provide genuine educational value.",
+  "Rule_2_3": "The course must be well-structured with a logical sequence of modules and lessons.",
+  "Rule_3_1": "You affirm that you own or possess the necessary legal rights to all content you publish, including videos, text, and resources.",
+  "Rule_3_2": "You agree not to post any content that is illegal, offensive, infringes on intellectual property rights, or violates our platform's policies.",
+  "Rule_4_1": "You commit to actively engaging with your students by responding to questions in the Q&A section within a reasonable timeframe.",
+  "Rule_4_2": "You agree to consider student feedback for the continual improvement of your course content.",
+  "Rule_5_1": "If you choose to offer a paid course, you agree to the platform's revenue share model as defined in the pricing and payments policy.",
+  "Rule_5_2": "The course price must be set within the allowed price tiers specified by the platform.",
+  "Rule_6_1": "You understand and accept that every course must be submitted for review and approved by the platform's administration before it is published.",
+  "Rule_6_2": "The platform reserves the right to reject or remove any course that does not meet the quality standards or violates these terms without prior notice."
 
 
 }

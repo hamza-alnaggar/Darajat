@@ -39,7 +39,7 @@ class CreateUpdateEpisodeCubit extends Cubit<EpisodeState> {
     required CreateEpisodeBodyModel request,
     required bool  isCopy,
   }) async {
-    try {
+    //try {
       emit(EpisodeLoading());
       
       final response = await repository.updateEpisode(
@@ -55,18 +55,47 @@ class CreateUpdateEpisodeCubit extends Cubit<EpisodeState> {
         ));
         }
       );
-    } catch (e) {
-      emit(EpisodeFailure(errMessage: e.toString()));
-    }
+   // }
+    //  catch (e) {
+    //   emit(EpisodeFailure(errMessage: e.toString()));
+    // }
   }
-  Future<void> deleteEpisode(int courseId,bool isCopy) async {
-    emit(EpisodeLoading());
-    final result = await repository.deleteEpisode(isCopy,courseId);
-    result.fold(
-      (failure) => emit(EpisodeFailure(errMessage:  failure.errMessage)),
-      (message) {
-        emit(EpisodeSuccess(message:  message));
-      } 
-    );
+
+Future<bool> deleteEpisode(int episodeId, bool isCopy) async {
+  emit(EpisodeLoading());
+  final result = await repository.deleteEpisode(isCopy, episodeId);
+
+  return result.fold(
+    (failure) {
+      emit(EpisodeFailure(errMessage: failure.errMessage));
+      return false;
+    },
+    (message) {
+      emit(EpisodeSuccess(message: message));
+      return true;
+    },
+  );
+}
+// inside CreateUpdateEpisodeCubit
+
+Future<bool> deleteEpisodeFile(int episodeId, bool isCopy) async {
+  try {
+  emit(EpisodeLoading());
+  final result = await repository.deleteFile( episodeId,isCopy); 
+  return result.fold(
+    (failure) {
+      emit(EpisodeFailure(errMessage: failure.errMessage));
+      return false;
+    },
+    (message) {
+      emit(EpisodeSuccess(message: message));
+      return true;
+    },
+  );
+  } catch (e) {
+  emit(EpisodeFailure(errMessage: e.toString()));
+  return false;
   }
+}
+
 }

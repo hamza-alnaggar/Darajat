@@ -15,13 +15,9 @@ class LogOutRemoteDataSource {
   Future<LogOutResponseModel>logout()async{
 
 
-    final accessToekn = SharedPrefHelper.getString('accessToken');
-
-    final headers = {
-      'Authorization': 'Bearer $accessToekn'
-    };
-
-    final response = await api.post(EndPoints.logout,options: Options(headers: headers));
+    final response = await api.get(EndPoints.logout,options: Options(extra: {
+      'authRequired':true
+    }));
 
     return LogOutResponseModel.fromJson(response);
   }

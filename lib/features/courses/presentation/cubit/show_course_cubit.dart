@@ -21,6 +21,7 @@ class ShowCourseCubit extends Cubit<ShowCourseState> {
   }
   Future<void> showCourseForTeacher(int courseId,bool isCopy) async {
     emit(ShowCourseLoading());
+
     final response = await teacherRepository.showCourseForTeacher(courseId,isCopy);
     response.fold(
       (failure) => emit(ShowCourseFailure(errMessage: failure.errMessage)),

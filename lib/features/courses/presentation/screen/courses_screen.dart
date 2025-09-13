@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learning_management_system/core/theming/colors.dart';
+import 'package:learning_management_system/core/widgets/app_bar.dart';
 import 'package:learning_management_system/core/widgets/course_card_big_2.dart';
 import 'package:learning_management_system/core/widgets/home.dart';
 import 'package:learning_management_system/features/courses/data/models/course_response_model.dart';
@@ -100,24 +101,11 @@ class _AllCoursesScreenState extends State<AllCoursesScreen> {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
+      appBar: CustomAppBar(
+        title: 
           _screenTitle,
-          style: textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: isDark ? CustomColors.white : Colors.black,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: isDark ? CustomColors.backgroundColor : CustomColors.white,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back, 
-            color: isDark ? CustomColors.white : CustomColors.primary
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
+        
+        
       ),
       body: Container(
         color: isDark ? CustomColors.backgroundColor : CustomColors.white,

@@ -66,20 +66,12 @@ class ReplyRepository {
   Future<Either<Failure, ReplyResponseModel>> addLikeReply(
       int replyId) async {
     try {
-      final response = await remoteDataSource.addLikeReply(replyId);
+      final response = await remoteDataSource.LikeReply(replyId);
       return Right(response);
     } on ServerException catch (e) {
       return Left(Failure(errMessage: e.errorModel.errMessage));
     }
   }
 
-  Future<Either<Failure, ReplyResponseModel>> removeLikeReply(
-      int replyId) async {
-    try {
-      final response = await remoteDataSource.removeLikeReply(replyId);
-      return Right(response);
-    } on ServerException catch (e) {
-      return Left(Failure(errMessage: e.errorModel.errMessage));
-    }
-  }
+  
 }

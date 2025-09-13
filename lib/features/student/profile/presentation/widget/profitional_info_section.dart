@@ -40,7 +40,7 @@ class ProfessionalInfoSection extends StatelessWidget {
             _buildInfoTile(
               icon: Icons.work_outline,
               title: "Role",
-              value: user.jobTitle!,
+              value: user.jobTitle!.name,
               color: textColor,
             ),
             SizedBox(height: 16.h),
@@ -67,15 +67,14 @@ class ProfessionalInfoSection extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
           ],
-          if (user.country != null) ...[
+          if(profile.user.country!=null)
             _buildInfoTile(
               icon: Icons.location_pin,
               title: "Location",
-              value: user.country!,
+              value: user.country!.name,
               color: textColor,
             ),
-          ],
-         if (user.university != null) ...[
+          if (user.university != null) ...[
             SizedBox(height: 16.h),
             _buildInfoTile(
               icon: Icons.school,

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // features/episodes/data/models/episode_response_model.dart
 
 import 'package:learning_management_system/features/student/quiz/data/models/quiz_model.dart';
@@ -43,9 +44,10 @@ class EpisodeModel {
   final String duration;
   final bool ?isLiked;
   final int likes;
+  bool ?hasFile;
   final bool ?isWatched;
   final int views;
-
+  final bool ?isQuizCompleted;
   final QuizModel ?quiz;
 
   EpisodeModel({
@@ -57,34 +59,11 @@ class EpisodeModel {
     required this.likes,
     required this.isWatched,
     required this.views,
-
+    required this.isQuizCompleted,
+    this.hasFile,
     required this.quiz,
   });
 
-  EpisodeModel copyWith({
-    int? id,
-    String? title,
-    int? episodeNumber,
-    String? duration,
-    bool? isLiked,
-    int? likes,
-    bool? isWatched,
-    int? views,
-    String? imageUrl,
-    String? videoUrl,
-    QuizModel? quiz,
-  }) {
-    return EpisodeModel(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      episodeNumber: episodeNumber ?? this.episodeNumber,
-      duration: duration ?? this.duration,
-      isLiked: isLiked ?? this.isLiked,
-      likes: likes ?? this.likes,
-      isWatched: isWatched ?? this.isWatched,
-      views: views ?? this.views,
-      quiz: quiz ?? this.quiz,
-    );}
 
   factory EpisodeModel.fromJson(Map<String, dynamic> json) {
     return EpisodeModel(
@@ -94,9 +73,52 @@ class EpisodeModel {
       views: json['views'],
       likes: json['likes'],
       isWatched: json['is_watched'],
+      hasFile: json['has_file'],
       isLiked: json['is_liked'],
+      isQuizCompleted: json['is_quiz_completed'],
       quiz:json['quiz']!= null? QuizModel.fromJson(json['quiz']) :null,
       episodeNumber: json['episode_number'],
+    );
+  }
+
+  EpisodeModel copyWith({
+    int? id,
+    String? title,
+    int? episodeNumber,
+    String? duration,
+    bool ?isLiked,
+    int? likes,
+    bool ?hasFile,
+    bool ?isWatched,
+    int? views,
+    bool ?isQuizCompleted,
+    QuizModel ?quiz,
+  }) {
+    return EpisodeModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      episodeNumber: episodeNumber ?? this.episodeNumber,
+      duration: duration ?? this.duration,
+      isLiked: isLiked ?? this.isLiked,
+      likes: likes ?? this.likes,
+      hasFile: hasFile ?? this.hasFile,
+      isWatched: isWatched ?? this.isWatched,
+      views: views ?? this.views,
+      isQuizCompleted: isQuizCompleted ?? this.isQuizCompleted,
+      quiz: quiz ?? this.quiz,
+    );
+  }
+}
+class EpisodeResponse {
+ final  EpisodeModel episodeModel ;
+ final  String message;
+
+  EpisodeResponse({required this.episodeModel, required this.message});
+
+  factory EpisodeResponse.fromJson(Map<String, dynamic> json) {
+    return EpisodeResponse(
+      episodeModel:EpisodeModel.fromJson(json['data']) ,
+      message: json['message']
     );
   }
 }

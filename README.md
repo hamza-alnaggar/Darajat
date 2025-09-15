@@ -42,8 +42,7 @@ Darajat is an innovative educational platform designed to facilitate knowledge s
 
 **Backend API:** Laravel (Ali Asaad + Omar Al-Dalati)  
 **Admin Dashboard:** Laravel + Livewire with Blade (Omar Al-Dalati)
-[https://github.com/hamza-alnaggar/Darajat.git
-](https://gitlab.com/ite1041716/project-1)
+https://gitlab.com/ite1041716/project-1
 ## 🚀 Getting Started
 
 ### Prerequisites
